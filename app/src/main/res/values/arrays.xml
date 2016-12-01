@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="challenges_options">
+        <item>Challenge1</item>
+        <item>Challenge2</item>
+        <item>Challenge3</item>
+    </string-array>
+</resources>
