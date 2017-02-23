@@ -6,7 +6,7 @@ import java.util.List;
  * Created by Jan on 27.11.2016.
  */
 
-public interface DataSource<Model> {
+public interface DataSource<Model extends Data> {
     void saveChanges(Model model);
 
     List<Model> retrieveData();

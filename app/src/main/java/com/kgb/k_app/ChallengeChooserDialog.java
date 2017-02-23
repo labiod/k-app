@@ -7,12 +7,14 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 
 import com.kgb.k_app.adapters.ChooseChallengeAdapter;
+import com.kgb.k_app.data.Data;
 import com.kgb.k_app.data.DataSource;
 import com.kgb.k_app.data.StringDataSource;
+import com.kgb.k_app.model.StringData;
 
 public class ChallengeChooserDialog extends DialogFragment {
     interface ChallengeChooserListener {
-        void onItemChoose(DataSource<String> source, int itemChoose);
+        void onItemChoose(DataSource<? extends Data> source, int itemChoose);
         void onCancel();
     }
 
@@ -22,8 +24,8 @@ public class ChallengeChooserDialog extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         final StringDataSource dataSource = new StringDataSource(getActivity());
-        builder.setTitle("Choose challenge");
-        builder.setAdapter(new ChooseChallengeAdapter(getActivity(), dataSource), new DialogInterface.OnClickListener() {
+        builder.setTitle(R.string.choose_challeng_dialog_title);
+        builder.setAdapter(new ChooseChallengeAdapter<>(getActivity(), dataSource), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 if(mListener != null) {
@@ -31,7 +33,7 @@ public class ChallengeChooserDialog extends DialogFragment {
                 }
             }
         });
-        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+        builder.setNegativeButton(R.string.button_cancel_text, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 if(mListener != null) {

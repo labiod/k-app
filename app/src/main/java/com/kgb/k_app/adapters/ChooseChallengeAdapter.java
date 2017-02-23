@@ -10,16 +10,17 @@ import android.widget.ListAdapter;
 import android.widget.TextView;
 
 import com.kgb.k_app.R;
+import com.kgb.k_app.data.Data;
 import com.kgb.k_app.data.DataSource;
 
-public class ChooseChallengeAdapter extends BaseAdapter {
+public class ChooseChallengeAdapter<Model extends Data> extends BaseAdapter {
     private class ViewHolder {
         TextView textItem;
     }
     private Activity mActivity;
-    private DataSource<String> mDataSource;
+    private DataSource<Model> mDataSource;
 
-    public ChooseChallengeAdapter(Activity activity, DataSource<String> dataSource) {
+    public ChooseChallengeAdapter(Activity activity, DataSource<Model> dataSource) {
         mActivity = activity;
         mDataSource = dataSource;
     }
@@ -30,7 +31,7 @@ public class ChooseChallengeAdapter extends BaseAdapter {
     }
 
     @Override
-    public String getItem(int position) {
+    public Model getItem(int position) {
         return mDataSource.get(position);
     }
 
@@ -49,7 +50,7 @@ public class ChooseChallengeAdapter extends BaseAdapter {
             convertView.setTag(holder);
         }
         holder = (ViewHolder) convertView.getTag();
-        holder.textItem.setText(getItem(position));
+        holder.textItem.setText(getItem(position).getName());
         return convertView;
     }
 }

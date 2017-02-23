@@ -3,6 +3,7 @@ package com.kgb.k_app.data;
 import android.app.Activity;
 
 import com.kgb.k_app.R;
+import com.kgb.k_app.model.StringData;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -13,20 +14,20 @@ import java.util.List;
  * Created by Jan on 27.11.2016.
  */
 
-public class StringDataSource implements DataSource<String> {
-    List<String> mData = new ArrayList<>();
+public class StringDataSource implements DataSource<StringData> {
+    List<StringData> mData = new ArrayList<>();
     public StringDataSource(Activity activity) {
         String[] source = activity.getResources().getStringArray(R.array.challenges_options);
-        mData.addAll(Arrays.asList(source));
+        mData.addAll(StringData.asList(source));
     }
 
     @Override
-    public void saveChanges(String s) {
+    public void saveChanges(StringData s) {
 
     }
 
     @Override
-    public List<String> retrieveData() {
+    public List<StringData> retrieveData() {
         return mData;
     }
 
@@ -36,7 +37,7 @@ public class StringDataSource implements DataSource<String> {
     }
 
     @Override
-    public String get(int position) {
+    public StringData get(int position) {
         return mData.get(position);
     }
 

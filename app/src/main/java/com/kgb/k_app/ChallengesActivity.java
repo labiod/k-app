@@ -13,7 +13,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import com.kgb.k_app.data.Data;
 import com.kgb.k_app.data.DataSource;
+import com.kgb.k_app.model.StringData;
 
 public class ChallengesActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, ChallengeChooserDialog.ChallengeChooserListener {
@@ -108,8 +110,8 @@ public class ChallengesActivity extends AppCompatActivity
     }
 
     @Override
-    public void onItemChoose(DataSource<String> source, int itemChoose) {
-        mTextView.setText(source.get(itemChoose));
+    public void onItemChoose(DataSource<? extends Data> source, int itemChoose) {
+        mTextView.setText(source.get(itemChoose).getName());
     }
 
     @Override
