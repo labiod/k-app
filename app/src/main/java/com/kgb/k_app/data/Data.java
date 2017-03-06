@@ -4,17 +4,20 @@ import android.content.ContentValues;
 import android.provider.BaseColumns;
 
 /**
- * @author Krzysztof Betlej <k.betlej@samsung.com>.
+ * @author Krzysztof Betlej <kgbetlej@gmail.com>.
  * @date 2/22/17
- * @copyright Copyright (c) 2016 by Samsung Electronics Polska Sp. z o. o.
+ * @copyright Copyright (c)2017 KGBetlej
  */
 
 public interface Data {
-    int getId();
-
     interface DataEntry extends BaseColumns {
 
     }
+
+    long getId();
+
+    String getIdColumnName();
+
     ContentValues getData();
 
     String getName();

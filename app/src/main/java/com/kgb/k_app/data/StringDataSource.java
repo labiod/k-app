@@ -22,12 +22,17 @@ public class StringDataSource implements DataSource<StringData> {
     }
 
     @Override
-    public void saveChanges(StringData s) {
+    public void confirmedChanges(StringData s) {
 
     }
 
     @Override
     public List<StringData> retrieveData() {
+        return mData;
+    }
+
+    @Override
+    public List<StringData> retrieveData(String where) {
         return mData;
     }
 

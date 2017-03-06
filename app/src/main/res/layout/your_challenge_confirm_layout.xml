@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <TextView
+        android:id="@+id/challenge_name"
+        android:layout_width="100dp"
+        android:inputType="none"
+        android:layout_height="@dimen/line_height"/>
+    <EditText
+        android:id="@+id/challenge_start_date"
+        android:layout_width="100dp"
+        android:layout_height="@dimen/line_height"
+        android:focusable="false"
+        android:inputType="date"
+        />
+    <EditText
+        android:id="@+id/challenge_expire_date"
+        android:layout_width="100dp"
+        android:layout_height="@dimen/line_height"
+        android:inputType="date"
+        android:focusable="false"
+        />
+    <Button
+        android:id="@+id/challenge_confirm"
+        android:layout_width="100dp"
+        android:layout_height="@dimen/line_height"
+        android:text="@string/button_confirm_text"/>
+</LinearLayout>

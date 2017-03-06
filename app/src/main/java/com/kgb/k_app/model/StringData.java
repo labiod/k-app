@@ -2,19 +2,19 @@ package com.kgb.k_app.model;
 
 import android.content.ContentValues;
 
+import com.kgb.k_app.data.BaseData;
 import com.kgb.k_app.data.Data;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 /**
- * @author Krzysztof Betlej <k.betlej@samsung.com>.
+ * @author Krzysztof Betlej <kgbetlej@gmail.com>.
  * @date 2/22/17
- * @copyright Copyright (c) 2016 by Samsung Electronics Polska Sp. z o. o.
+ * @copyright Copyright (c)2017 KGBetlej
  */
 
-public class StringData implements Data {
+public class StringData extends BaseData {
     String mData;
 
     public StringData(String data) {
@@ -23,7 +23,7 @@ public class StringData implements Data {
 
 
     @Override
-    public int getId() {
+    public long getId() {
         return 0;
     }
 

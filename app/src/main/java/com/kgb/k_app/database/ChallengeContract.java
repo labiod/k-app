@@ -3,9 +3,9 @@ package com.kgb.k_app.database;
 import android.provider.BaseColumns;
 
 /**
- * @author Krzysztof Betlej <k.betlej@samsung.com>.
+ * @author Krzysztof Betlej <kgbetlej@gmail.com>.
  * @date 2/21/17
- * @copyright Copyright (c) 2016 by Samsung Electronics Polska Sp. z o. o.
+ * @copyright Copyright (c)2017 KGBetlej
  */
 
 public final class ChallengeContract {
@@ -14,8 +14,16 @@ public final class ChallengeContract {
     public static class ChallengeEntry implements BaseColumns {
         public static final String TABLE_NAME = "challenge";
         public static final String COLUMN_NAME = "name";
+        public static final String COLUMN_DESCRIPTION = "description";
         public static final String COLUMN_TYPE = "type";
         public static final String COLUMN_RATE = "rate";
+    }
+
+    public static class YourChallengeEntry implements BaseColumns {
+        public static final String TABLE_NAME = "your_challenge";
+        public static final String COLUMN_CHALLENGE_ID = "challenge_id";
+        public static final String COLUMN_START_DATE = "start_date";
+        public static final String COLUMN_EXPIRE_DATE = "expire_date";
     }
 
     public static class ChallengeTypeEntry implements BaseColumns {

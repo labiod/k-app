@@ -11,16 +11,23 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.TextView;
+import android.widget.Button;
+import android.widget.ListView;
 
-import com.kgb.k_app.data.Data;
-import com.kgb.k_app.data.DataSource;
-import com.kgb.k_app.model.StringData;
+import com.kgb.k_app.adapters.YourChallengeAdapter;
+import com.kgb.k_app.data.ChallengeDataSource;
+import com.kgb.k_app.database.ChallengeDBHelper;
+import com.kgb.k_app.database.DBConnection;
+import com.kgb.k_app.dialogs.AddChallengeDialog;
+import com.kgb.k_app.dialogs.ChallengeChooserDialog;
+import com.kgb.k_app.model.Challenge;
 
 public class ChallengesActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, ChallengeChooserDialog.ChallengeChooserListener {
+        implements NavigationView.OnNavigationItemSelectedListener, ChallengeChooserDialog.ChallengeChooserListener,
+        AddChallengeDialog.AddChallengeListener {
 
-    private TextView mTextView;
+
+    private YourChallengeAdapter mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +47,10 @@ public class ChallengesActivity extends AppCompatActivity
 //                        .setAction("Action", null).show();
             }
         });
+        ListView listView = (ListView) findViewById(R.id.challenges_list);
+        DBConnection dbConnection = new DBConnection(new ChallengeDBHelper(this));
+        mAdapter = new YourChallengeAdapter(dbConnection);
+        listView.setAdapter(mAdapter);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -49,7 +60,14 @@ public class ChallengesActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        mTextView = (TextView) findViewById(R.id.text_challenge_choose);
+        Button clear = (Button) findViewById(R.id.clear_challenges);
+        clear.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mAdapter.getDataSource().clearChooseChallenges();
+                mAdapter.notifyDataSetChanged();
+            }
+        });
     }
 
     @Override
@@ -78,6 +96,14 @@ public class ChallengesActivity extends AppCompatActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            return true;
+        }
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.add_challenge) {
+            AddChallengeDialog dialog = new AddChallengeDialog();
+            dialog.setListener(ChallengesActivity.this);
+            dialog.show(getFragmentManager(), "add_challenge_fragment");
             return true;
         }
 
@@ -110,8 +136,12 @@ public class ChallengesActivity extends AppCompatActivity
     }
 
     @Override
-    public void onItemChoose(DataSource<? extends Data> source, int itemChoose) {
-        mTextView.setText(source.get(itemChoose).getName());
+    public void onItemChoose(ChallengeDataSource source, int itemChoose) {
+        mAdapter.addChallenge(source.get(itemChoose));
+    }
+
+    @Override
+    public void onItemAdded(Challenge newItem) {
     }
 
     @Override

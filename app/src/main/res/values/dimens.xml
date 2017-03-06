@@ -7,4 +7,5 @@
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="choose_challenge_text_vertical_padding">12dp</dimen>
     <dimen name="choose_challenge_text_horizontal_padding">8dp</dimen>
+    <dimen name="line_height">45dp</dimen>
 </resources>

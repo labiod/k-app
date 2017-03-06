@@ -7,9 +7,11 @@ import java.util.List;
  */
 
 public interface DataSource<Model extends Data> {
-    void saveChanges(Model model);
+    void confirmedChanges(Model model);
 
     List<Model> retrieveData();
+
+    List<Model> retrieveData(String where);
 
     int count();
 
