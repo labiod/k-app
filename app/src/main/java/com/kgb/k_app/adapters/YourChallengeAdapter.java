@@ -1,6 +1,9 @@
 package com.kgb.k_app.adapters;
 
 import android.app.DatePickerDialog;
+import android.content.Context;
+import android.content.res.Resources;
+import android.graphics.drawable.ColorDrawable;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -14,8 +17,10 @@ import android.widget.TextView;
 import com.kgb.k_app.R;
 import com.kgb.k_app.data.YourChallengeDataSource;
 import com.kgb.k_app.database.DBConnection;
+import com.kgb.k_app.helper.ResHelper;
 import com.kgb.k_app.model.Challenge;
 import com.kgb.k_app.model.YourChallenge;
+import com.samsung.android.allshare.Item;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -44,8 +49,11 @@ public class YourChallengeAdapter extends BaseAdapter {
         TextView challengeName;
         TextView challengeStartDate;
         TextView challengeExpireDate;
+        TextView challengeProgress;
         Button confirmButton;
-
+        ViewGroup bottomPanel;
+        int disabledColor;
+        int enabledColor;
     }
     private YourChallengeDataSource mYourChallenges;
     private DatePickerDialog.OnDateSetListener mDatePickerListener = new DatePickerDialog.OnDateSetListener() {
@@ -55,9 +63,10 @@ public class YourChallengeAdapter extends BaseAdapter {
 
             }
             // set selected date into textview
-            mResult.setText(new StringBuilder().append(monthOfYear + 1)
-                    .append("-").append(dayOfMonth).append("-").append(year)
-                    .append(" "));
+            mResult.setText(new StringBuilder()
+                    .append(dayOfMonth).append("-")
+                    .append(monthOfYear + 1).append("-")
+                    .append(year).append(" "));
 
         }
     };
@@ -108,9 +117,10 @@ public class YourChallengeAdapter extends BaseAdapter {
             holder.challengeName = (TextView) convertView.findViewById(R.id.challenge_name);
             holder.challengeStartDate = (TextView) convertView.findViewById(R.id.challenge_start_date);
             holder.challengeExpireDate = (TextView) convertView.findViewById(R.id.challenge_expire_date);
-            if (type == UNCONFIRMED_CHALLENGE) {
-                holder.confirmButton = (Button) convertView.findViewById(R.id.challenge_confirm);
-            }
+            holder.challengeProgress = (TextView) convertView.findViewById(R.id.challenge_progress);
+            holder.bottomPanel = (ViewGroup) convertView.findViewById(R.id.your_challenge_bottom_panel);
+            holder.enabledColor = ResHelper.getColor(convertView.getContext(), R.color.colorEnabledConfirmBackground);
+            holder.disabledColor = ResHelper.getColor(convertView.getContext(), R.color.colorDisabledConfirmBackground);
             holder.confirmButton = (Button) convertView.findViewById(R.id.challenge_confirm);
             convertView.setTag(holder);
         } else {
@@ -118,7 +128,6 @@ public class YourChallengeAdapter extends BaseAdapter {
         }
         holder.challengeName.setText(challenge.getName());
         if (type == UNCONFIRMED_CHALLENGE) {
-            setCurrentDate(holder);
             holder.confirmButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -134,12 +143,19 @@ public class YourChallengeAdapter extends BaseAdapter {
                 }
             });
             prepareDatePickers(holder, challenge);
+            setCurrentDate(holder);
+            holder.confirmButton.setEnabled(canConfirm(challenge));
         } else {
             SimpleDateFormat format = new SimpleDateFormat("dd-mm-yyyy", Locale.ENGLISH);
             holder.challengeStartDate.setText(format.format(challenge.getStartDate()));
             holder.challengeExpireDate.setText(format.format(challenge.getExpireDate()));
+            holder.challengeProgress.setText(challenge.getProgress() + "/" + challenge.getMaxProgress());
         }
         return convertView;
+    }
+
+    private boolean canConfirm(YourChallenge challenge) {
+        return challenge.getStartDate() != null && challenge.getExpireDate() != null;
     }
 
 
@@ -147,7 +163,7 @@ public class YourChallengeAdapter extends BaseAdapter {
         return mYourChallenges;
     }
 
-    private void prepareDatePickers(Holder holder, final YourChallenge challenge) {
+    private void prepareDatePickers(final Holder holder, final YourChallenge challenge) {
         holder.challengeStartDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -170,6 +186,12 @@ public class YourChallengeAdapter extends BaseAdapter {
                 SimpleDateFormat format = new SimpleDateFormat("dd-mm-yyyy", Locale.ENGLISH);
                 try {
                     challenge.setStartDate(format.parse(s.toString()));
+
+                    boolean enabled = canConfirm(challenge);
+                    holder.confirmButton.setEnabled(enabled);
+                    int color = enabled ? holder.enabledColor : holder.disabledColor;
+                    holder.bottomPanel.findViewById(R.id.your_challenge_confirm_left_bg).setBackground(new ColorDrawable(color));
+                    holder.bottomPanel.findViewById(R.id.your_challenge_confirm_right_bg).setBackground(new ColorDrawable(color));
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
@@ -203,6 +225,12 @@ public class YourChallengeAdapter extends BaseAdapter {
                 SimpleDateFormat format = new SimpleDateFormat("dd-mm-yyyy", Locale.ENGLISH);
                 try {
                     challenge.setExpireDate(format.parse(s.toString()));
+
+                    boolean enabled = canConfirm(challenge);
+                    holder.confirmButton.setEnabled(enabled);
+                    int color = enabled ? holder.enabledColor : holder.disabledColor;
+                    holder.bottomPanel.findViewById(R.id.your_challenge_confirm_left_bg).setBackground(new ColorDrawable(color));
+                    holder.bottomPanel.findViewById(R.id.your_challenge_confirm_right_bg).setBackground(new ColorDrawable(color));
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }

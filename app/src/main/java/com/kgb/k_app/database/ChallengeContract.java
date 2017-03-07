@@ -24,6 +24,7 @@ public final class ChallengeContract {
         public static final String COLUMN_CHALLENGE_ID = "challenge_id";
         public static final String COLUMN_START_DATE = "start_date";
         public static final String COLUMN_EXPIRE_DATE = "expire_date";
+        public static final String COLUMN_PROGRESS = "progress";
     }
 
     public static class ChallengeTypeEntry implements BaseColumns {

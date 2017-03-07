@@ -12,7 +12,7 @@ import java.util.Date;
 /**
  * @author Krzysztof Betlej <kgbetlej@gmail.com>.
  * @date 2/21/17
- * @copyright Copyright (c)2017 KGBetlej
+ * @copyright Copyright (c) 2017 KGBetlej
  */
 
 public class Challenge extends BaseData {
@@ -79,5 +79,9 @@ public class Challenge extends BaseData {
 
     public void setRate(int rate) {
         mChallengeRate = rate;
+    }
+
+    public int getRate() {
+        return mChallengeRate;
     }
 }

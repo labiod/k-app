@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * @author Krzysztof Betlej <kgbetlej@gmail.com>.
  * @date 2/22/17
- * @copyright Copyright (c)2017 KGBetlej
+ * @copyright Copyright (c) 2017 KGBetlej
  */
 
 public class StringData extends BaseData {

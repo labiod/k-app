@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * @author Krzysztof Betlej <kgbetlej@gmail.com>.
  * @date 3/6/17
- * @copyright Copyright (c)2017 KGBetlej
+ * @copyright Copyright (c) 2017 KGBetlej
  */
 
 public abstract class BaseDataSource<Model extends Data> implements DataSource<Model>, DBConnection.OnDBChanged {

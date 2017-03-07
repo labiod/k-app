@@ -33,7 +33,7 @@ public class DBInstrumentedTest {
         Context context = InstrumentationRegistry.getTargetContext();
         DBConnection connection = new DBConnection(new ChallengeDBHelper(context));
         ChallengeDataSource challengeDataSource = new ChallengeDataSource(connection);
-        List<Challenge> challengeList = challengeDataSource.retrieveData(true);
+        List<Challenge> challengeList = challengeDataSource.retrieveData();
         for (Challenge challenge : challengeList) {
             assertEquals(1, connection.delete(challenge));
         }
@@ -56,7 +56,7 @@ public class DBInstrumentedTest {
         Context context = InstrumentationRegistry.getTargetContext();
         DBConnection connection = new DBConnection(new ChallengeDBHelper(context));
         ChallengeDataSource challengeDataSource = new ChallengeDataSource(connection);
-        List<Challenge> challengeList = challengeDataSource.retrieveData(true);
+        List<Challenge> challengeList = challengeDataSource.retrieveData();
         assertEquals(1, challengeList.size());
 
         for (Challenge challenge : challengeList) {
@@ -74,6 +74,6 @@ public class DBInstrumentedTest {
         assertTrue(challenges.size() > 0);
         YourChallengeDataSource yourChallengeDataSource = new YourChallengeDataSource(connection);
         YourChallenge yourChallenge = new YourChallenge(challenges.get(0));
-        yourChallenge.setStartDate();
+//        yourChallenge.setStartDate();
     }
 }

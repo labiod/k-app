@@ -20,7 +20,7 @@ import com.kgb.k_app.model.Challenge;
 /**
  * @author Krzysztof Betlej <kgbetlej@gmail.com>.
  * @date 2/23/17
- * @copyright Copyright (c)2017 KGBetlej
+ * @copyright Copyright (c) 2017 KGBetlej
  */
 
 public class AddChallengeDialog extends DialogFragment {

@@ -26,7 +26,8 @@ public class ChallengeDBHelper extends SQLiteOpenHelper {
                     ChallengeContract.YourChallengeEntry._ID + " INTEGER PRIMARY KEY," +
                     ChallengeContract.YourChallengeEntry.COLUMN_CHALLENGE_ID + " INTEGER," +
                     ChallengeContract.YourChallengeEntry.COLUMN_START_DATE + " INTEGER," +
-                    ChallengeContract.YourChallengeEntry.COLUMN_EXPIRE_DATE + " INTEGER)";
+                    ChallengeContract.YourChallengeEntry.COLUMN_EXPIRE_DATE + " INTEGER," +
+                    ChallengeContract.YourChallengeEntry.COLUMN_PROGRESS + " INTEGER)";
 
     private static final String SQL_DELETE_ENTRIES =
             "DROP TABLE IF EXISTS " + ChallengeContract.ChallengeEntry.TABLE_NAME;
