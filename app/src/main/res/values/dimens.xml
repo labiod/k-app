@@ -8,4 +8,8 @@
     <dimen name="choose_challenge_text_vertical_padding">12dp</dimen>
     <dimen name="choose_challenge_text_horizontal_padding">8dp</dimen>
     <dimen name="line_height">45dp</dimen>
+    <dimen name="confirm_button_size">55dp</dimen>
+    <dimen name="small_line_height">25dp</dimen>
+    <dimen name="label_text_size">14sp</dimen>
+    <dimen name="challenge_name_text_size">22sp</dimen>
 </resources>

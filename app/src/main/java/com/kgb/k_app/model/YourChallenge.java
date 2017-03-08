@@ -19,6 +19,7 @@ public class YourChallenge extends BaseData {
     private Challenge mChallenge;
     private Date mStartDate;
     private Date mExpireDate;
+    private int mProgress;
     private long mId = -1;
 
     public YourChallenge(Challenge challenge) {
@@ -44,6 +45,7 @@ public class YourChallenge extends BaseData {
         values.put(ChallengeContract.YourChallengeEntry.COLUMN_CHALLENGE_ID, mChallenge.getId());
         values.put(ChallengeContract.YourChallengeEntry.COLUMN_START_DATE, mStartDate.getTime());
         values.put(ChallengeContract.YourChallengeEntry.COLUMN_EXPIRE_DATE, mExpireDate.getTime());
+        values.put(ChallengeContract.YourChallengeEntry.COLUMN_PROGRESS, mExpireDate.getTime());
         return values;
     }
 
@@ -75,5 +77,13 @@ public class YourChallenge extends BaseData {
 
     public Date getExpireDate() {
         return mExpireDate;
+    }
+
+    public int getProgress() {
+        return mProgress;
+    }
+
+    public int getMaxProgress() {
+        return mChallenge.getRate();
     }
 }
