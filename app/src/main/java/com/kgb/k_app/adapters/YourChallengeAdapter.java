@@ -135,13 +135,6 @@ public class YourChallengeAdapter extends BaseAdapter {
                     notifyDataSetChanged();
                 }
             });
-            holder.confirmButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    mYourChallenges.confirmedChanges(challenge);
-                    notifyDataSetChanged();
-                }
-            });
             prepareDatePickers(holder, challenge);
             setCurrentDate(holder);
             holder.confirmButton.setEnabled(canConfirm(challenge));
