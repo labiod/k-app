@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="10dp"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/challenge_name"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/line_height"
+        android:layout_gravity="center_horizontal"
+        android:textSize="@dimen/challenge_name_text_size"
+        android:inputType="none"/>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal">
+
+        <TextView
+            android:id="@+id/challenge_start_date_label"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/small_line_height"
+            android:inputType="none"
+            android:text="@string/start_date"
+            android:layout_marginLeft="20dp"
+            android:layout_alignParentTop="true"
+            android:labelFor="@+id/challenge_start_date"
+            android:textSize="@dimen/label_text_size"/>
+
+        <EditText
+            android:id="@+id/challenge_start_date"
+            android:layout_width="110dp"
+            android:layout_height="@dimen/line_height"
+            android:focusable="false"
+            android:inputType="date"
+            android:layout_alignStart="@id/challenge_start_date_label"
+            android:layout_below="@id/challenge_start_date_label"
+
+            />
+
+        <TextView
+            android:id="@+id/challenge_expire_date_label"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/small_line_height"
+            android:inputType="none"
+            android:text="@string/end_date"
+            android:layout_marginLeft="20dp"
+            android:layout_alignParentTop="true"
+            android:layout_toRightOf="@id/challenge_start_date"
+            android:textSize="@dimen/label_text_size"
+            android:labelFor="@+id/challenge_expire_date"
+            />
+
+        <EditText
+            android:id="@+id/challenge_expire_date"
+            android:layout_width="110dp"
+            android:layout_height="@dimen/line_height"
+            android:focusable="false"
+            android:inputType="date"
+            android:layout_below="@id/challenge_expire_date_label"
+            android:layout_alignStart="@id/challenge_expire_date_label"
+            />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/your_challenge_bottom_panel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:id="@+id/your_challenge_confirm_left_bg"
+            android:layout_width="wrap_content"
+            android:layout_height="1dp"
+            android:layout_centerVertical="true"
+
+            android:background="@color/colorDisabledConfirmBackground"
+            android:layout_alignParentLeft="true"
+            android:layout_toLeftOf="@+id/challenge_confirm"
+            android:orientation="vertical" />
+        <Button
+            android:id="@+id/challenge_confirm"
+            android:layout_width="@dimen/confirm_button_size"
+            android:layout_height="@dimen/confirm_button_size"
+            android:enabled="false"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/confirm_button_drawable"
+            android:contentDescription="@string/button_confirm_text"/>
+        <LinearLayout
+            android:id="@+id/your_challenge_confirm_right_bg"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_toRightOf="@id/challenge_confirm"
+            android:background="@color/colorDisabledConfirmBackground"
+            android:orientation="vertical" />
+    </RelativeLayout>
+
+</LinearLayout>
