@@ -6,10 +6,12 @@ import java.util.List;
  * Created by Jan on 27.11.2016.
  */
 
-public interface DataSource<Model> {
-    void saveChanges(Model model);
+public interface DataSource<Model extends Data> {
+    void confirmedChanges(Model model);
 
     List<Model> retrieveData();
+
+    List<Model> retrieveData(String where);
 
     int count();
 
