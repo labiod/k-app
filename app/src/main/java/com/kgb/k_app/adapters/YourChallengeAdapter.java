@@ -20,12 +20,10 @@ import com.kgb.k_app.database.DBConnection;
 import com.kgb.k_app.helper.ResHelper;
 import com.kgb.k_app.model.Challenge;
 import com.kgb.k_app.model.YourChallenge;
-import com.samsung.android.allshare.Item;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.List;
 import java.util.Locale;
 
 
