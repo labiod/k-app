@@ -25,7 +25,7 @@
             android:layout_height="@dimen/small_line_height"
             android:inputType="none"
             android:text="@string/start_date"
-            android:layout_marginLeft="20dp"
+            android:layout_marginStart="20dp"
             android:layout_alignParentTop="true"
             android:labelFor="@+id/challenge_start_date"
             android:textSize="@dimen/label_text_size"/>
@@ -45,9 +45,9 @@
             android:layout_height="@dimen/small_line_height"
             android:inputType="none"
             android:text="@string/end_date"
-            android:layout_marginLeft="20dp"
+            android:layout_marginStart="20dp"
             android:layout_alignParentTop="true"
-            android:layout_toRightOf="@id/challenge_start_date"
+            android:layout_toEndOf="@id/challenge_start_date"
             android:textSize="@dimen/label_text_size"
             android:labelFor="@+id/challenge_expire_date"
             />
@@ -66,9 +66,9 @@
             android:layout_height="@dimen/small_line_height"
             android:inputType="none"
             android:text="@string/challenge_progress"
-            android:layout_marginLeft="20dp"
+            android:layout_marginStart="20dp"
             android:layout_alignParentTop="true"
-            android:layout_toRightOf="@id/challenge_expire_date"
+            android:layout_toEndOf="@id/challenge_expire_date"
             android:textSize="@dimen/label_text_size"
             android:labelFor="@+id/challenge_expire_date"
             />

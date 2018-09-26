@@ -17,4 +17,16 @@
     <string name="start_date">Start date:</string>
     <string name="end_date">Expire date:</string>
     <string name="challenge_progress">Progress:</string>
+    <string name="nav_image_content_description">K-app image</string>
+    <string name="nav_header_title_text">K-App</string>
+    <string name="nav_header_desc">android.studio@android.com</string>
+    <string name="challenge_progress_format">%1$i/%2$i</string>
+    <string name="drawer_item_import_text">Import</string>
+    <string name="drawer_item_gallery_text">Gallery</string>
+    <string name="drawer_item_slideshow_text">Slideshow</string>
+    <string name="drawer_item_tools_text">Tools</string>
+    <string name="drawer_category_communicate_text">Communicate</string>
+    <string name="drawer_item_share_text">Share</string>
+    <string name="drawer_item_send_text">Send</string>
+    <string name="content_challenges_clear_button_text">Clear</string>
 </resources>

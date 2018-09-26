@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.kgb.k_app.ChallengesActivity"
+    tools:context="com.kgb.kapp.ChallengesActivity"
     tools:showIn="@layout/app_bar_challenges_activity">
 
         <LinearLayout
@@ -26,7 +26,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/line_height"
                     android:layout_gravity="center_vertical"
-                    android:text="Clear"/>
+                    android:visibility="gone"
+                    android:text="@string/content_challenges_clear_button_text"/>
         </LinearLayout>
 
 
