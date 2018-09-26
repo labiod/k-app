@@ -140,7 +140,7 @@ public class YourChallengeAdapter extends BaseAdapter {
             SimpleDateFormat format = new SimpleDateFormat("dd-mm-yyyy", Locale.ENGLISH);
             holder.challengeStartDate.setText(format.format(challenge.getStartDate()));
             holder.challengeExpireDate.setText(format.format(challenge.getExpireDate()));
-            holder.challengeProgress.setText(challenge.getProgress() + "/" + challenge.getMaxProgress());
+            holder.challengeProgress.setText(parent.getContext().getString(R.string.challenge_progress_format, challenge.getProgress(), challenge.getMaxProgress()));
         }
         return convertView;
     }

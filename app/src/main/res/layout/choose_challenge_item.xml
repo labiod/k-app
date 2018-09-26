@@ -7,5 +7,6 @@
     android:paddingTop="@dimen/choose_challenge_text_vertical_padding"
     android:paddingBottom="@dimen/choose_challenge_text_vertical_padding"
     android:paddingLeft="@dimen/choose_challenge_text_horizontal_padding"
+    android:paddingRight="@dimen/choose_challenge_text_horizontal_padding"
     android:textSize="18sp"
     />

@@ -27,7 +27,7 @@
                     android:layout_height="@dimen/line_height"
                     android:layout_gravity="center_vertical"
                     android:visibility="gone"
-                    android:text="Clear"/>
+                    android:text="@string/content_challenges_clear_button_text"/>
         </LinearLayout>
 
 
