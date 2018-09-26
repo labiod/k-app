@@ -4,6 +4,8 @@ import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.drawable.ColorDrawable;
+import android.support.annotation.NonNull;
+import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -30,10 +32,32 @@ import java.util.Locale;
 /**
  * @author Krzysztof Betlej <kgbetlej@gmail.com>.
  * @date 2/24/17
- * @copyright Copyright (c)2017 KGBetlej
+ * @copyright Copyright (c)2017 BitAge
  */
 
-public class YourChallengeAdapter extends BaseAdapter {
+public class YourChallengeAdapter extends RecyclerView.Adapter<YourChallengeAdapter.Holder> {
+    class Holder extends RecyclerView.ViewHolder {
+        TextView challengeName;
+        TextView challengeStartDate;
+        TextView challengeExpireDate;
+        TextView challengeProgress;
+        Button confirmButton;
+        ViewGroup bottomPanel;
+        int disabledColor;
+        int enabledColor;
+
+        public Holder(View rootView) {
+            super(rootView);
+            challengeName = rootView.findViewById(R.id.challenge_name);
+            challengeStartDate = rootView.findViewById(R.id.challenge_start_date);
+            challengeExpireDate = rootView.findViewById(R.id.challenge_expire_date);
+            challengeProgress = rootView.findViewById(R.id.challenge_progress);
+            bottomPanel = rootView.findViewById(R.id.your_challenge_bottom_panel);
+            enabledColor = ResHelper.getColor(rootView.getContext(), R.color.colorEnabledConfirmBackground);
+            disabledColor = ResHelper.getColor(rootView.getContext(), R.color.colorDisabledConfirmBackground);
+            confirmButton = rootView.findViewById(R.id.challenge_confirm);
+        }
+    }
 
     public static final int UNCONFIRMED_CHALLENGE = 0;
     public static final int CONFIRMED_CHALLENGE = 1;
@@ -43,29 +67,17 @@ public class YourChallengeAdapter extends BaseAdapter {
     private int mDay;
     private TextView mResult;
 
-    private class Holder {
-        TextView challengeName;
-        TextView challengeStartDate;
-        TextView challengeExpireDate;
-        TextView challengeProgress;
-        Button confirmButton;
-        ViewGroup bottomPanel;
-        int disabledColor;
-        int enabledColor;
-    }
     private YourChallengeDataSource mYourChallenges;
     private DatePickerDialog.OnDateSetListener mDatePickerListener = new DatePickerDialog.OnDateSetListener() {
         @Override
         public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-            if (mResult == null) {
-
+            if (mResult != null) {
+                // set selected date into textview
+                mResult.setText(new StringBuilder()
+                        .append(dayOfMonth).append("-")
+                        .append(monthOfYear + 1).append("-")
+                        .append(year).append(" "));
             }
-            // set selected date into textview
-            mResult.setText(new StringBuilder()
-                    .append(dayOfMonth).append("-")
-                    .append(monthOfYear + 1).append("-")
-                    .append(year).append(" "));
-
         }
     };
 
@@ -78,54 +90,19 @@ public class YourChallengeAdapter extends BaseAdapter {
         mDay = c.get(Calendar.DAY_OF_MONTH);
     }
 
+    @NonNull
     @Override
-    public int getCount() {
-        return mYourChallenges.count();
+    public Holder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        LayoutInflater inflater = LayoutInflater.from(parent.getContext());
+        return new Holder(getLayout(inflater, viewType, parent));
     }
 
     @Override
-    public YourChallenge getItem(int position) {
-        return mYourChallenges.get(position);
-    }
-
-    @Override
-    public int getViewTypeCount() {
-        return 2;
-    }
-
-    @Override
-    public int getItemViewType(int position) {
-        return getItem(position).getId() == -1 ? UNCONFIRMED_CHALLENGE : CONFIRMED_CHALLENGE;
-    }
-
-    @Override
-    public long getItemId(int position) {
-        return mYourChallenges.get(position).getId();
-    }
-
-    @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        final Holder holder;
-        int type = getItemViewType(position);
+    public void onBindViewHolder(@NonNull Holder holder, int position) {
         final YourChallenge challenge = getItem(position);
-        if (convertView == null) {
-            LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-            convertView = getLayout(inflater, type, parent);
-            holder = new Holder();
-            holder.challengeName = (TextView) convertView.findViewById(R.id.challenge_name);
-            holder.challengeStartDate = (TextView) convertView.findViewById(R.id.challenge_start_date);
-            holder.challengeExpireDate = (TextView) convertView.findViewById(R.id.challenge_expire_date);
-            holder.challengeProgress = (TextView) convertView.findViewById(R.id.challenge_progress);
-            holder.bottomPanel = (ViewGroup) convertView.findViewById(R.id.your_challenge_bottom_panel);
-            holder.enabledColor = ResHelper.getColor(convertView.getContext(), R.color.colorEnabledConfirmBackground);
-            holder.disabledColor = ResHelper.getColor(convertView.getContext(), R.color.colorDisabledConfirmBackground);
-            holder.confirmButton = (Button) convertView.findViewById(R.id.challenge_confirm);
-            convertView.setTag(holder);
-        } else {
-            holder = (Holder) convertView.getTag();
-        }
+        Context context = holder.itemView.getContext();
         holder.challengeName.setText(challenge.getName());
-        if (type == UNCONFIRMED_CHALLENGE) {
+        if (getItemViewType(position) == UNCONFIRMED_CHALLENGE) {
             holder.confirmButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -140,9 +117,23 @@ public class YourChallengeAdapter extends BaseAdapter {
             SimpleDateFormat format = new SimpleDateFormat("dd-mm-yyyy", Locale.ENGLISH);
             holder.challengeStartDate.setText(format.format(challenge.getStartDate()));
             holder.challengeExpireDate.setText(format.format(challenge.getExpireDate()));
-            holder.challengeProgress.setText(parent.getContext().getString(R.string.challenge_progress_format, challenge.getProgress(), challenge.getMaxProgress()));
+            holder.challengeProgress.setText(context.getString(R.string.challenge_progress_format, challenge.getProgress(), challenge.getMaxProgress()));
         }
-        return convertView;
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return getItem(position).getId() == -1 ? UNCONFIRMED_CHALLENGE : CONFIRMED_CHALLENGE;
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return mYourChallenges.get(position).getId();
+    }
+
+    @Override
+    public int getItemCount() {
+        return mYourChallenges.count();
     }
 
     private boolean canConfirm(YourChallenge challenge) {
@@ -227,6 +218,10 @@ public class YourChallengeAdapter extends BaseAdapter {
                 }
             }
         });
+    }
+
+    private YourChallenge getItem(int position) {
+        return mYourChallenges.get(position);
     }
 
     private void setCurrentDate(Holder holder) {
