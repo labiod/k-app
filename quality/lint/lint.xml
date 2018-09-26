@@ -1,7 +1,5 @@
 <component name="InspectionProjectProfileManager">
     <profile version="1.0">
-        <option name="myName"
-            value="CubiExp4" />
         <inspection_tool class="AndroidLintAllowAllHostnameVerifier"
             enabled="true"
             level="ERROR"
@@ -119,14 +117,6 @@
             level="ERROR"
             enabled_by_default="true" />
         <inspection_tool class="AndroidLintRegistered"
-            enabled="true"
-            level="ERROR"
-            enabled_by_default="true" />
-        <inspection_tool class="AndroidLintSSLCertificateSocketFactoryCreateSocket"
-            enabled="true"
-            level="ERROR"
-            enabled_by_default="true" />
-        <inspection_tool class="AndroidLintSSLCertificateSocketFactoryGetInsecure"
             enabled="true"
             level="ERROR"
             enabled_by_default="true" />

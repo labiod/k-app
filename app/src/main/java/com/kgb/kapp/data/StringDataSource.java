@@ -5,14 +5,8 @@ import android.app.Activity;
 import com.kgb.kapp.R;
 import com.kgb.kapp.model.StringData;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-
-/**
- * Created by Jan on 27.11.2016.
- */
 
 public class StringDataSource implements DataSource<StringData> {
     List<StringData> mData = new ArrayList<>();

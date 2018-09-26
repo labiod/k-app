@@ -43,10 +43,7 @@ public class DBInstrumentedTest {
     public void test2_insertChallenge() {
         Context context = InstrumentationRegistry.getTargetContext();
         DBConnection connection = new DBConnection(new ChallengeDBHelper(context));
-        Challenge challenge = new Challenge();
-        challenge.setName("Test1");
-        challenge.setRate(150);
-        challenge.setType(1);
+        Challenge challenge = new Challenge("Test1", 150, 1);
         long id = connection.insert(challenge);
         assertTrue(id != -1);
     }
