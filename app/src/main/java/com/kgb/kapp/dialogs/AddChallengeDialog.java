@@ -43,13 +43,14 @@ public class AddChallengeDialog extends DialogFragment {
         builder.setPositiveButton(R.string.button_add_text, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                Challenge challenge = new Challenge();
                 TextView challengeName = layout.findViewById(R.id.challenge_name);
-                challenge.setName(challengeName.getText().toString());
                 TextView challengeType = layout.findViewById(R.id.challenge_type);
-                challenge.setType(Integer.parseInt(challengeType.getText().toString()));
                 TextView challengeRate = layout.findViewById(R.id.challenge_rate);
-                challenge.setRate(Integer.parseInt(challengeRate.getText().toString()));
+                Challenge challenge = new Challenge(
+                    challengeName.getText().toString(),
+                    Integer.parseInt(challengeRate.getText().toString()),
+                    Integer.parseInt(challengeType.getText().toString())
+                    );
                 DBConnection dbConnection = new DBConnection(new ChallengeDBHelper(getActivity(),
                 new DatabaseErrorHandler() {
                     @Override
