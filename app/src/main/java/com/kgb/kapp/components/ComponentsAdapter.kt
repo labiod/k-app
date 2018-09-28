@@ -1,5 +1,6 @@
 package com.kgb.kapp.components
 
+import android.content.Intent
 import android.graphics.Color
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -7,12 +8,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.TextView
+import com.kgb.kapp.ChallengeSettingsActivity
 import com.kgb.kapp.R
 
 class ComponentsAdapter(val components: List<ComponentDAO>) : RecyclerView.Adapter<ComponentsAdapter.Holder>() {
     class Holder(root: View) : RecyclerView.ViewHolder(root) {
         val nameView: TextView = root.findViewById(R.id.component_name)
         val finishedButton: ImageButton = root.findViewById(R.id.component_finished_button)
+        val settingsButton: ImageButton = root.findViewById(R.id.component_settings_button)
         val currentGoalView: TextView = root.findViewById(R.id.current_goal)
         val currentStepView: TextView = root.findViewById(R.id.component_level)
     }
@@ -33,6 +36,12 @@ class ComponentsAdapter(val components: List<ComponentDAO>) : RecyclerView.Adapt
         holder.finishedButton.setOnClickListener {
             item.finished = true
             notifyDataSetChanged()
+        }
+
+        holder.settingsButton.setOnClickListener {
+            val intent = Intent(it.context, ChallengeSettingsActivity::class.java)
+            intent.putExtra(ChallengeSettingsActivity.COMPONENT_DATA, components[position])
+            it.context.startActivity(intent)
         }
         holder.nameView.setText(components[position].challengeType.challengeName)
 

@@ -26,10 +26,14 @@
     <string name="level_beginner">Beginner</string>
     <string name="level_intermediate">Intermediate</string>
     <string name="level_progression">Progression</string>
+    <string name="level_custom">Custom</string>
     <string name="challenge_pushup_name">The Pushup</string>
     <string name="challenge_pullup_name">The Pullup</string>
     <string name="challenge_squat_name">The Squat</string>
     <string name="challenge_leg_raise_name">The Leg Raise</string>
     <string name="challenge_bridge_name">The Bridge</string>
     <string name="challenge_handstand_pushup_name">The Handstand Pushup</string>
+
+    <!-- Challlenge Settings screen -->
+    <string name="challenge_settings_confirm">Confirm</string>
 </resources>

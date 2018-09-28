@@ -14,6 +14,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
+        android:textSize="22sp"
         app:layout_constraintEnd_toStartOf="@+id/component_finished_button"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -24,10 +25,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintStart_toEndOf="@+id/component_name"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="x/y" />
+        android:layout_marginEnd="8dp"
+        app:layout_constraintEnd_toStartOf="@+id/component_finished_button"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/component_name"
+        tools:text="Step: x/y" />
 
     <TextView
         android:id="@+id/textView"
@@ -64,13 +66,28 @@
         tools:text="X times y" />
 
     <ImageButton
-        android:id="@+id/component_finished_button"
+        android:id="@+id/component_settings_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
+        android:contentDescription="finish challenge button"
+        android:src="@drawable/perm_group_app_info"
+        android:background="@android:color/transparent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/component_finished_button"
+        app:layout_constraintTop_toTopOf="parent" />
+    <ImageButton
+        android:id="@+id/component_finished_button"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:scaleType="fitCenter"
         android:src="@drawable/confirm_button_drawable"
+        android:background="@android:color/transparent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
