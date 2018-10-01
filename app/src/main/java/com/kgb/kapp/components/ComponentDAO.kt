@@ -35,7 +35,7 @@ class ComponentDAO(val challengeType: ChallengeType, val step: Int, val stepProg
        dest?.let {
            it.writeString(challengeType.toString())
            it.writeInt(step)
-           it.writeString(challengeType.toString())
+           it.writeString(stepProgress.toString())
            it.writeString(finished.toString())
            it.writeInt(goal)
            it.writeInt(series)

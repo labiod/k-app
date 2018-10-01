@@ -100,7 +100,7 @@
             android:inputType="number"
             app:layout_constraintBottom_toBottomOf="@+id/challenge_goal_label"
             app:layout_constraintStart_toStartOf="@+id/guideline"
-            tools:ignore="Autofill" />
+            android:autofillHints="@string/challenge_goal_label_text" />
 
         <TextView
             android:id="@+id/challenge_series_label"
@@ -116,13 +116,14 @@
 
         <EditText
             android:id="@+id/challenge_series"
+
             android:layout_width="60dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:inputType="number"
             app:layout_constraintBottom_toBottomOf="@+id/challenge_series_label"
             app:layout_constraintStart_toStartOf="@+id/guideline"
-            tools:ignore="Autofill" />
+            android:autofillHints="@string/challenge_series_label_text" />
 
         <Button
             android:id="@+id/confirm_changes"

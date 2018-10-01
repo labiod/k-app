@@ -49,7 +49,7 @@ class ChallengesActivityTest {
         activityRule.launchActivity(Intent(InstrumentationRegistry.getTargetContext(), ChallengesActivity::class.java))
 
         //check that button is gone when challenges list is zero
-        onView(withId(R.id.clear_challenges))
+        onView(withId(R.id.challenge_name))
             .check(matches(not(isDisplayed())))
 
         onView(withId(R.id.fab))

@@ -45,7 +45,7 @@ class ComponentsAdapter(val components: List<ComponentDAO>) : RecyclerView.Adapt
         }
         holder.nameView.setText(components[position].challengeType.challengeName)
 
-        holder.currentGoalView.text = context.getString(R.string.challenge_current_goal_format, components[position].goal, components[position].series)
+        holder.currentGoalView.text = context.resources.getQuantityString(R.plurals.challenge_current_goal_format, components[position].series, components[position].goal, components[position].series)
         holder.currentStepView.text = context.getString(R.string.challenge_current_level_format, components[position].step, ComponentDAO.MAX_LEVEL)
     }
 
