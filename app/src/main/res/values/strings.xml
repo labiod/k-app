@@ -1,32 +1,29 @@
 <resources>
     <string name="app_name">K-app</string>
 
-    <string name="navigation_drawer_open">Open navigation drawer</string>
-    <string name="navigation_drawer_close">Close navigation drawer</string>
-
-    <string name="action_settings">Settings</string>
-    <string name="choose_challeng_dialog_title">Choose challenge</string>
-    <string name="button_cancel_text">Cancel</string>
-    <string name="add_challenge">Add challenge</string>
-    <string name="button_add_text">Add</string>
-    <string name="challenge_type">Challenge type:</string>
-    <string name="challenge_name">Challenge name:</string>
-    <string name="challenge_rate">Challenge rate:</string>
     <string name="your_challenges">Your Challenges!</string>
-    <string name="button_confirm_text">Confirm</string>
-    <string name="start_date">Start date:</string>
-    <string name="end_date">Expire date:</string>
-    <string name="challenge_progress">Progress:</string>
-    <string name="nav_image_content_description">K-app image</string>
-    <string name="nav_header_title_text">K-App</string>
-    <string name="nav_header_desc">android.studio@android.com</string>
-    <string name="challenge_progress_format">%1$i/%2$i</string>
-    <string name="drawer_item_import_text">Import</string>
-    <string name="drawer_item_gallery_text">Gallery</string>
-    <string name="drawer_item_slideshow_text">Slideshow</string>
-    <string name="drawer_item_tools_text">Tools</string>
-    <string name="drawer_category_communicate_text">Communicate</string>
-    <string name="drawer_item_share_text">Share</string>
-    <string name="drawer_item_send_text">Send</string>
-    <string name="content_challenges_clear_button_text">Clear</string>
+
+    <string name="challenge_current_level_format">%1$d/%2$d</string>
+
+    <!-- Level progress text -->
+    <string name="level_beginner">Beginner</string>
+    <string name="level_intermediate">Intermediate</string>
+    <string name="level_progression">Progression</string>
+    <string name="level_custom">Custom</string>
+    <string name="challenge_pushup_name">The Pushup</string>
+    <string name="challenge_pullup_name">The Pullup</string>
+    <string name="challenge_squat_name">The Squat</string>
+    <string name="challenge_leg_raise_name">The Leg Raise</string>
+    <string name="challenge_bridge_name">The Bridge</string>
+    <string name="challenge_handstand_pushup_name">The Handstand Pushup</string>
+
+    <!-- Challlenge Settings screen -->
+    <string name="challenge_settings_confirm">Confirm</string>
+    <string name="challenge_step_label_text">Challenge Step:</string>
+    <string name="challenge_step_progresslabel_text">Step progress:</string>
+    <string name="challenge_goal_label_text">Goal:</string>
+    <string name="challenge_series_label_text">Series:</string>
+    <string name="challenge_item_goal_text">Goal</string>
+    <string name="challenge_finish_button_desc">finish challenge button</string>
+    <string name="challenge_settings_button_desc">settings challenge button</string>
 </resources>
