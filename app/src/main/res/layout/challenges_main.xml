@@ -51,6 +51,5 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:srcCompat="@drawable/ic_input_add"
             android:backgroundTint="@color/colorPrimary"/>
-
     </android.support.constraint.ConstraintLayout>
 </layout>
