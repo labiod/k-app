@@ -1,0 +1,2 @@
+# k-app
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/e658657f36e845e4a8c9043a7ab5907b)](https://app.codacy.com/app/labiod/k-app?utm_source=github.com&utm_medium=referral&utm_content=labiod/k-app&utm_campaign=Badge_Grade_Dashboard)
