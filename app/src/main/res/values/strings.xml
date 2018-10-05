@@ -29,5 +29,4 @@
     <string name="challenge_item_goal_text">Goal</string>
     <string name="challenge_finish_button_desc">finish challenge button</string>
     <string name="challenge_settings_button_desc">settings challenge button</string>
-    <string name="challenge_loading_text">Challenge loading…</string>
 </resources>

@@ -69,7 +69,7 @@ class TodayChallengesActivity : AppCompatActivity() {
         viewModelToday = ViewModelProviders.of(this).get(TodayChallengeViewModel::class.java)
         adapter = TodayChallengesAdapter(viewModelToday)
         challenges_list.adapter = adapter
-        viewModelToday.challenges.observe(this, android.arch.lifecycle.Observer { challenges ->
+        viewModelToday.challenges.observe(this, android.arch.lifecycle.Observer {
             adapter!!.notifyDataSetChanged()
         })
     }

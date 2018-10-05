@@ -9,7 +9,7 @@ import com.kgb.kapp.db.converter.ChallengeTypeConverter
 import com.kgb.kapp.db.converter.DateConverter
 import com.kgb.kapp.db.converter.StepProgressConverter
 
-@Database(entities = [ChallengeEntity::class], version = 1)
+@Database(entities = [ChallengeEntity::class], version = 1, exportSchema = false)
 @TypeConverters(DateConverter::class, ChallengeTypeConverter::class, StepProgressConverter::class)
 abstract class ChallengeRoomDB : RoomDatabase() {
     abstract fun noteDao() : ChallengeDao
