@@ -4,6 +4,9 @@ buildscript {
     ext.espressoVersion = '2.2.2'
     ext.supportLibVersion = '27.1.1'
     ext.kotlin_version = '1.2.71'
+    ext.lifecycle_version = "1.1.1"
+    ext.room_version = "1.1.1"
+
     repositories {
         google()
         jcenter()

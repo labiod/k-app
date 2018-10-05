@@ -1,8 +1,8 @@
-package com.kgb.kapp.components
+package com.kgb.kapp.challenge
 
 import com.kgb.kapp.R
 
-enum class ChallengeType(val challengeName: Int) {
+enum class ChallengeType(val challengeResId: Int) {
     PUSHUP(R.string.challenge_pushup_name),
     PULLUP(R.string.challenge_pullup_name),
     SQUAT(R.string.challenge_squat_name),

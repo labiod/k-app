@@ -2,13 +2,12 @@
 <layout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    tools:ignore="UnusedResources">
+    xmlns:tools="http://schemas.android.com/tools">
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context="com.kgb.kapp.ChallengesActivity">
+        tools:context="com.kgb.kapp.TodayChallengesActivity">
 
         <LinearLayout
             android:id="@+id/content_challenges_activity"
@@ -50,7 +49,7 @@
             android:layout_marginBottom="8dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:srcCompat="@android:drawable/ic_input_add" />
-
+            app:srcCompat="@drawable/ic_input_add"
+            android:backgroundTint="@color/colorPrimary"/>
     </android.support.constraint.ConstraintLayout>
 </layout>

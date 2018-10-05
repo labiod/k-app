@@ -1,8 +1,6 @@
 <resources>
     <string name="app_name">K-app</string>
 
-    <string name="your_challenges">Your Challenges!</string>
-
     <string name="challenge_current_level_format">%1$d/%2$d</string>
 
     <!-- Level progress text -->
@@ -17,7 +15,12 @@
     <string name="challenge_bridge_name">The Bridge</string>
     <string name="challenge_handstand_pushup_name">The Handstand Pushup</string>
 
-    <!-- Challlenge Settings screen -->
+    <!-- TodayChallenges screen -->
+    <string name="your_challenges">Your Challenges!</string>
+    <string name="your_challenges_menu_sample_data">Load sample challenges</string>
+    <string name="your_challenges_menu_delete_all">Delete all</string>
+
+    <!-- ChalllengeEdit screen -->
     <string name="challenge_settings_confirm">Confirm</string>
     <string name="challenge_step_label_text">Challenge Step:</string>
     <string name="challenge_step_progresslabel_text">Step progress:</string>

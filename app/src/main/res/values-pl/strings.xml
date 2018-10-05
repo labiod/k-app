@@ -1,0 +1,32 @@
+<resources>
+    <string name="app_name">K-app</string>
+
+    <string name="challenge_current_level_format">%1$d/%2$d</string>
+
+    <!-- Level progress text -->
+    <string name="level_beginner">Początkujący</string>
+    <string name="level_intermediate">Zaawansowany</string>
+    <string name="level_progression">Przejściowy</string>
+    <string name="level_custom">Użytkownika</string>
+    <string name="challenge_pushup_name">Pompki</string>
+    <string name="challenge_pullup_name">Podciągnięcia</string>
+    <string name="challenge_squat_name">Przysiady</string>
+    <string name="challenge_leg_raise_name">Unoszenie nóg</string>
+    <string name="challenge_bridge_name">Mostek</string>
+    <string name="challenge_handstand_pushup_name">Stanie na głowie</string>
+
+    <!-- TodayChallenges screen -->
+    <string name="your_challenges">Twoje wyzwania!</string>
+    <string name="your_challenges_menu_sample_data">Załaduj przykładowe dane</string>
+    <string name="your_challenges_menu_delete_all">Usuń wszystko</string>
+
+    <!-- ChalllengeEdit screen -->
+    <string name="challenge_settings_confirm">Potwierdź</string>
+    <string name="challenge_step_label_text">Poziom wyzwania:</string>
+    <string name="challenge_step_progresslabel_text">postęp:</string>
+    <string name="challenge_goal_label_text">Liczba powtórzeń:</string>
+    <string name="challenge_series_label_text">Liczba serii:</string>
+    <string name="challenge_item_goal_text">Cel:</string>
+    <string name="challenge_finish_button_desc">finish challenge button</string>
+    <string name="challenge_settings_button_desc">settings challenge button</string>
+</resources>

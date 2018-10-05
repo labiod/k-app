@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <plurals name="challenge_current_goal_format">
+        <item quantity="one">%2$d seria po %1$d</item>
+        <item quantity="few">%2$d serie po %1$d</item>
+        <item quantity="many">%2$d serii po %1$d</item>
+    </plurals>
+</resources>

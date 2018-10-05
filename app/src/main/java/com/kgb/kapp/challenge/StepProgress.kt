@@ -1,4 +1,4 @@
-package com.kgb.kapp.components
+package com.kgb.kapp.challenge
 
 import com.kgb.kapp.R
 

@@ -18,15 +18,15 @@ import org.junit.Test
 import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
-class ChallengesActivityTest {
+class TodayChallengesActivityTest {
 
     @Rule
     @JvmField
-    var activityRule = ActivityTestRule(ChallengesActivity::class.java)
+    var activityRule = ActivityTestRule(TodayChallengesActivity::class.java)
 
     @Test
     fun testChallengeActivityActionBar() {
-        activityRule.launchActivity(Intent(InstrumentationRegistry.getTargetContext(), ChallengesActivity::class.java))
+        activityRule.launchActivity(Intent(InstrumentationRegistry.getTargetContext(), TodayChallengesActivity::class.java))
         val challengeTitle = InstrumentationRegistry.getTargetContext().getString(R.string.app_name)
 
         //check that activity has correct title
@@ -37,7 +37,7 @@ class ChallengesActivityTest {
 
     @Test
     fun testChallengePlusButton() {
-        activityRule.launchActivity(Intent(InstrumentationRegistry.getTargetContext(), ChallengesActivity::class.java))
+        activityRule.launchActivity(Intent(InstrumentationRegistry.getTargetContext(), TodayChallengesActivity::class.java))
 
         //check that button is displayed
         onView(withId(R.id.fab))
@@ -46,7 +46,7 @@ class ChallengesActivityTest {
 
     @Test
     fun testChallengeClearButton() {
-        activityRule.launchActivity(Intent(InstrumentationRegistry.getTargetContext(), ChallengesActivity::class.java))
+        activityRule.launchActivity(Intent(InstrumentationRegistry.getTargetContext(), TodayChallengesActivity::class.java))
 
         //check that button is gone when challenges list is zero
         onView(withId(R.id.challenge_name))
