@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string-array name="challenge_step">
+    <integer-array name="challenge_step">
         <item>1</item>
         <item>2</item>
         <item>3</item>
@@ -11,5 +11,5 @@
         <item>8</item>
         <item>9</item>
         <item>10</item>
-    </string-array>
+    </integer-array>
 </resources>

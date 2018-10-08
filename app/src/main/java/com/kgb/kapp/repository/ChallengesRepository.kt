@@ -1,21 +1,25 @@
-package com.kgb.kapp.db
+package com.kgb.kapp.repository
 
 import android.arch.lifecycle.LiveData
 import android.content.Context
 import com.kgb.kapp.challenge.ChallengeType
 import com.kgb.kapp.challenge.StepProgress
+import com.kgb.kapp.db.entity.ChallengeEntity
+import com.kgb.kapp.db.ChallengeRoomDB
+import com.kgb.kapp.db.entity.TemplateEntity
+import com.kgb.kapp.db.entity.UserProgressEntity
 import java.util.*
 import java.util.concurrent.Executors
+import kotlin.collections.ArrayList
 
 
 class ChallengesRepository private constructor(context: Context) {
     val db = ChallengeRoomDB.getInstance(context)
-    val challenges : LiveData<List<ChallengeEntity>> = getAllChallenges()
     val executor = Executors.newSingleThreadExecutor()
 
-    private fun getAllChallenges(): LiveData<List<ChallengeEntity>> {
+    fun getDayChallenges(date: Date): LiveData<List<ChallengeEntity>> {
         val cal = Calendar.getInstance()
-        cal.time = Date()
+        cal.time = date
         cal.set(Calendar.HOUR, 0)
         cal.set(Calendar.MINUTE, 0)
         cal.set(Calendar.SECOND, 0)
@@ -29,20 +33,6 @@ class ChallengesRepository private constructor(context: Context) {
         return db.noteDao().getChallengeAtDate(startDate.time, endDate.time)
     }
 
-    fun addSampleData() {
-        val list = ArrayList<ChallengeEntity>()
-        list.add(ChallengeEntity(ChallengeType.PUSHUP, 1, StepProgress.BEGINNER))
-        list.add(ChallengeEntity(ChallengeType.PULLUP, 1, StepProgress.BEGINNER))
-        list.add(ChallengeEntity(ChallengeType.SQUAT, 1, StepProgress.BEGINNER))
-        list.add(ChallengeEntity(ChallengeType.BRIDGE, 1, StepProgress.BEGINNER))
-        list.add(ChallengeEntity(ChallengeType.LEG_RAISE, 1, StepProgress.BEGINNER))
-        list.add(ChallengeEntity(ChallengeType.HANDSTAND_PUSHUP, 1, StepProgress.BEGINNER))
-        executor.execute {
-            db.noteDao().insertAll(list)
-        }
-
-    }
-
     fun deleteAll() {
         executor.execute {
             db.noteDao().deleteAll()
@@ -52,6 +42,13 @@ class ChallengesRepository private constructor(context: Context) {
     fun update(challenge: ChallengeEntity) {
         executor.execute {
             db.noteDao().insertChallenge(challenge)
+            db.userDao().update(UserProgressEntity(
+                challenge.challengeName,
+                challenge.step,
+                challenge.progress,
+                challenge.goal,
+                challenge.series
+            ))
         }
     }
 
@@ -61,8 +58,31 @@ class ChallengesRepository private constructor(context: Context) {
         }
     }
 
-    fun getChallengeById(challengeId: Int): ChallengeEntity {
+    fun getChallengeById(challengeId: Long): ChallengeEntity {
         return db.noteDao().getChallengeById(challengeId)
+    }
+
+    fun getTemplates(): LiveData<List<TemplateEntity>> {
+        return db.templateDao().getAll()
+    }
+
+    fun loadDataFromTemplate(templateEntity: TemplateEntity, date: Date) {
+        executor.execute {
+            val challengesType = db.templateDao().loadTemplateType(templateEntity.id!!)
+            val challengesList = ArrayList<ChallengeEntity>()
+            for (type in challengesType) {
+                val challengeProgress = db.userDao().getChallengeProgress(type.challengeType)
+                    ?: createUserProgress(type.challengeType)
+                challengesList.add(ChallengeEntity(challengeProgress, date))
+            }
+            db.noteDao().insertAll(challengesList)
+        }
+    }
+
+    private fun createUserProgress(challengeType: ChallengeType): UserProgressEntity {
+        val result = UserProgressEntity.createNew(challengeType)
+        db.userDao().update(result)
+        return result
     }
 
     companion object {

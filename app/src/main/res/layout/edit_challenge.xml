@@ -4,12 +4,23 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
     <data>
+        <import type="com.kgb.kapp.helper.CastHelper" />
+        <import type="com.kgb.kapp.helper.BindingUtil" />
+        <variable
+            name="progress"
+            type="com.kgb.kapp.challenge.StepProgress[]" />
         <variable
             name="steps"
-            type="java.lang.String[]" />
+            type="Integer[]" />
+        <variable
+            name="challenges"
+            type="com.kgb.kapp.challenge.ChallengeType[]" />
         <variable
             name="viewmodel"
             type="com.kgb.kapp.viewmodel.EditChallengeVieModel" />
+        <variable
+            name="editMode"
+            type="Boolean" />
     </data>
 
     <android.support.constraint.ConstraintLayout
@@ -21,19 +32,30 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.45" />
+            app:layout_constraintGuide_percent="0.40" />
+
         <TextView
+            android:id="@+id/challenge_name_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:labelFor="@+id/challenge_step"
+            android:padding="8dp"
+            android:text="@string/challenge_name_label_text"
+            app:layout_constraintEnd_toStartOf="@+id/guideline"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Spinner
             android:id="@+id/challenge_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:textSize="24sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="Challenge name" />
+            android:entries="@{BindingUtil.convertChallengesArrayToStrings(challenges, context)}"
+            android:selectedItemPosition="@{BindingUtil.getIndexForChallenge(viewmodel.challenge.challengeName)}"
+            android:textSize="26sp"
+            app:layout_constraintBottom_toBottomOf="@+id/challenge_name_label"
+            app:layout_constraintStart_toStartOf="@+id/guideline" />
 
         <TextView
             android:id="@+id/challenge_step_label"
@@ -45,7 +67,7 @@
             android:padding="8dp"
             android:text="@string/challenge_step_label_text"
             app:layout_constraintEnd_toStartOf="@+id/guideline"
-            app:layout_constraintTop_toBottomOf="@id/challenge_name" />
+            app:layout_constraintTop_toBottomOf="@+id/challenge_name_label" />
 
         <Spinner
             android:id="@+id/challenge_step"
@@ -53,10 +75,10 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginBottom="8dp"
-            android:entries="@array/challenge_step"
-            app:layout_constraintBottom_toBottomOf="@+id/challenge_step_label"
+            app:bindData="@{steps}"
+            app:layout_constraintBottom_toTopOf="@+id/challenge_step_progress_label"
             app:layout_constraintStart_toStartOf="@+id/guideline"
-            />
+            app:selectItem="@{viewmodel.challenge.step}" />
 
         <TextView
             android:id="@+id/challenge_step_progress_label"
@@ -76,22 +98,23 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginBottom="8dp"
-            android:entries="@{steps}"
+            app:bindData="@{progress}"
+            app:selectItem="@{viewmodel.challenge.progress}"
             app:layout_constraintBottom_toBottomOf="@+id/challenge_step_progress_label"
             app:layout_constraintStart_toStartOf="@+id/guideline"
             />
 
         <TextView
-        android:id="@+id/challenge_goal_label"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:labelFor="@+id/challenge_goal"
-        android:padding="8dp"
-        android:text="@string/challenge_goal_label_text"
-        app:layout_constraintEnd_toStartOf="@+id/guideline"
-        app:layout_constraintTop_toBottomOf="@+id/challenge_step_progress_label" />
+            android:id="@+id/challenge_goal_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:labelFor="@+id/challenge_goal"
+            android:padding="8dp"
+            android:text="@string/challenge_goal_label_text"
+            app:layout_constraintEnd_toStartOf="@+id/guideline"
+            app:layout_constraintTop_toBottomOf="@+id/challenge_step_progress_label" />
 
         <EditText
             android:id="@+id/challenge_goal"
@@ -102,6 +125,7 @@
             android:text="@{Integer.toString(viewmodel.challenge.goal)}"
             app:layout_constraintBottom_toBottomOf="@+id/challenge_goal_label"
             app:layout_constraintStart_toStartOf="@+id/guideline"
+            app:layout_constraintTop_toTopOf="@+id/challenge_goal_label"
             tools:ignore="Autofill" />
 
         <TextView
@@ -114,7 +138,7 @@
             android:padding="8dp"
             android:text="@string/challenge_series_label_text"
             app:layout_constraintEnd_toStartOf="@+id/guideline"
-            app:layout_constraintTop_toBottomOf="@+id/challenge_goal_label" />
+            app:layout_constraintTop_toBottomOf="@+id/challenge_goal" />
 
         <EditText
             android:id="@+id/challenge_series"
@@ -125,6 +149,7 @@
             android:text="@{Integer.toString(viewmodel.challenge.series)}"
             app:layout_constraintBottom_toBottomOf="@+id/challenge_series_label"
             app:layout_constraintStart_toStartOf="@+id/guideline"
+            app:layout_constraintTop_toTopOf="@+id/challenge_series_label"
             tools:ignore="Autofill" />
 
         <Button

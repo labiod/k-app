@@ -12,10 +12,10 @@ import com.kgb.kapp.R
 import com.kgb.kapp.challenge.Constants
 import com.kgb.kapp.challenge.Constants.Companion.MAX_LEVEL
 import com.kgb.kapp.databinding.ComponentListItemBinding
-import com.kgb.kapp.db.ChallengeEntity
-import com.kgb.kapp.viewmodel.TodayChallengeViewModel
+import com.kgb.kapp.db.entity.ChallengeEntity
+import com.kgb.kapp.viewmodel.DayChallengeViewModel
 
-class TodayChallengesAdapter(private val challengesModel : TodayChallengeViewModel)
+class TodayChallengesAdapter(private val challengesModel : DayChallengeViewModel)
     : RecyclerView.Adapter<TodayChallengesAdapter.Holder>() {
     class Holder(val binding: ComponentListItemBinding) : RecyclerView.ViewHolder(binding.root)
 

@@ -2,6 +2,7 @@ package com.kgb.kapp.db
 
 import android.arch.lifecycle.LiveData
 import android.arch.persistence.room.*
+import com.kgb.kapp.db.entity.ChallengeEntity
 
 @Dao
 interface ChallengeDao {
@@ -24,6 +25,6 @@ interface ChallengeDao {
     fun getAll() : LiveData<List<ChallengeEntity>>
 
     @Query("SELECT * FROM challenges WHERE id = :challengeId")
-    fun getChallengeById(challengeId : Int) : ChallengeEntity
+    fun getChallengeById(challengeId : Long) : ChallengeEntity
 
 }
