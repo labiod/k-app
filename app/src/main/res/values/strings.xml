@@ -37,5 +37,5 @@
     <!-- Template screen -->
     <string name="template_name_label_text">Template name:</string>
     <string name="challenges_for_template_label_text">Add challenge:</string>
-    <string name="template_add_new_button_label">Add new...</string>
+    <string name="template_add_new_button_label">Add new…</string>
 </resources>
