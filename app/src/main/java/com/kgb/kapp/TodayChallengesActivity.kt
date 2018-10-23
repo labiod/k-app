@@ -66,7 +66,7 @@ class TodayChallengesActivity : AppCompatActivity() {
         val year = intent.extras.getInt(Constants.CURRENT_DATE_YEAR)
         val calendar = Calendar.getInstance()
         calendar.set(year, month, day)
-        val dateFormat = SimpleDateFormat("EEE MMM d, ''yy")
+        val dateFormat = SimpleDateFormat("EEE MMM d, ''yy", Locale.getDefault())
         binding.todayDate = dateFormat.format(calendar.time)
         initRecyclerView()
         initViewModel(calendar.time)

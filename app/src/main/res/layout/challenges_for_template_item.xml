@@ -18,7 +18,7 @@
             android:id="@+id/label_challenge"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Challenge:"/>
+            android:text="@string/challenge_name_label_text"/>
         <Spinner
             android:id="@+id/challenge_name"
             android:layout_width="wrap_content"

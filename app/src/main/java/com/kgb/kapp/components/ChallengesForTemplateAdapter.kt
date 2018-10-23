@@ -31,7 +31,7 @@ class ChallengesForTemplateAdapter : RecyclerView.Adapter<ChallengesForTemplateA
             }
 
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, pos: Int, id: Long) {
-                challenges[position] = ChallengeType.values()[pos]
+                challenges[holder.adapterPosition] = ChallengeType.values()[pos]
             }
         }
     }
