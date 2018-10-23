@@ -3,20 +3,29 @@ package com.kgb.kapp.repository
 import android.arch.lifecycle.LiveData
 import android.content.Context
 import com.kgb.kapp.challenge.ChallengeType
-import com.kgb.kapp.challenge.StepProgress
-import com.kgb.kapp.db.entity.ChallengeEntity
 import com.kgb.kapp.db.ChallengeRoomDB
+import com.kgb.kapp.db.entity.ChallengeEntity
 import com.kgb.kapp.db.entity.TemplateEntity
 import com.kgb.kapp.db.entity.UserProgressEntity
-import java.util.*
+import com.kgb.kapp.repository.TemplateRepository.Companion.getInstance
+import java.util.Date
+import java.util.Calendar
 import java.util.concurrent.Executors
 import kotlin.collections.ArrayList
 
-
+/**
+ * Repository that used [ChallengeRoomDB] to retrieve and manipulate challenges data
+ * This class have private constructor and will be create only by [getInstance] method
+ */
 class ChallengesRepository private constructor(context: Context) {
-    val db = ChallengeRoomDB.getInstance(context)
-    val executor = Executors.newSingleThreadExecutor()
+    private val db = ChallengeRoomDB.getInstance(context)
+    private val executor = Executors.newSingleThreadExecutor()
 
+    /**
+     * Get all challenges for given date
+     * @param date - given date
+     * @return list of challenges for given date
+     */
     fun getDayChallenges(date: Date): LiveData<List<ChallengeEntity>> {
         val cal = Calendar.getInstance()
         cal.time = date
@@ -33,15 +42,31 @@ class ChallengesRepository private constructor(context: Context) {
         return db.noteDao().getChallengeAtDate(startDate.time, endDate.time)
     }
 
+    /**
+     * Delete all challenges
+     */
     fun deleteAll() {
         executor.execute {
             db.noteDao().deleteAll()
         }
     }
 
+    /**
+     * Update challenge in database
+     * @param challenge - challenge to update
+     */
     fun update(challenge: ChallengeEntity) {
         executor.execute {
             db.noteDao().insertChallenge(challenge)
+        }
+    }
+
+    /**
+     * Update user progress for given challenge
+     * @param challenge - given challenge
+     */
+    fun updateUserProgress(challenge: ChallengeEntity) {
+        executor.execute {
             db.userDao().update(UserProgressEntity(
                 challenge.challengeName,
                 challenge.step,
@@ -52,31 +77,60 @@ class ChallengesRepository private constructor(context: Context) {
         }
     }
 
+    /**
+     * Delete challenge
+     * @param challenge - challenge that will be delete
+     */
     fun deleteChallenge(challenge: ChallengeEntity) {
         executor.execute {
             db.noteDao().deleteChallenge(challenge)
         }
     }
 
+    /**
+     * Get challenge for given id
+     * @param - given challenge
+     * @return challenge entity
+     */
     fun getChallengeById(challengeId: Long): ChallengeEntity {
         return db.noteDao().getChallengeById(challengeId)
     }
 
+    /**
+     * Get list of templates from database
+     * @return list ofr templates
+     */
     fun getTemplates(): LiveData<List<TemplateEntity>> {
         return db.templateDao().getAll()
     }
 
+    /**
+     * Load data from given template and save them to challenges with given date
+     * @param templateEntity - load template
+     * @param date - given date
+     */
     fun loadDataFromTemplate(templateEntity: TemplateEntity, date: Date) {
-        executor.execute {
-            val challengesType = db.templateDao().loadTemplateType(templateEntity.id!!)
-            val challengesList = ArrayList<ChallengeEntity>()
-            for (type in challengesType) {
-                val challengeProgress = db.userDao().getChallengeProgress(type.challengeType)
-                    ?: createUserProgress(type.challengeType)
-                challengesList.add(ChallengeEntity(challengeProgress, date))
+        templateEntity.id?.let {
+            executor.execute {
+                val challengesType = db.templateDao().loadTemplateType(templateEntity.id)
+                val challengesList = ArrayList<ChallengeEntity>()
+                for (type in challengesType) {
+                    val challengeProgress = db.userDao().getChallengeProgress(type.challengeType)
+                        ?: createUserProgress(type.challengeType)
+                    challengesList.add(ChallengeEntity(challengeProgress, date))
+                }
+                db.noteDao().insertAll(challengesList)
             }
-            db.noteDao().insertAll(challengesList)
         }
+    }
+
+    /**
+     * Get Challenge progress for given challenge
+     * @param challengeType - given challenge
+     * @return challenge progress or null if not found
+     */
+    fun getChallengeProgress(challengeType: ChallengeType): UserProgressEntity? {
+        return db.userDao().getChallengeProgress(challengeType)
     }
 
     private fun createUserProgress(challengeType: ChallengeType): UserProgressEntity {
@@ -87,19 +141,26 @@ class ChallengesRepository private constructor(context: Context) {
 
     companion object {
         @Volatile
-        var instance: ChallengesRepository? = null
-        val lock = Any()
+        private var instance: ChallengesRepository? = null
+        private val lock = Any()
 
+        /**
+         * Get instance of [ChallengesRepository] if instance is null, create new one
+         * @param context - context object
+         * @return instance of [ChallengesRepository]
+         */
         fun getInstance(context: Context): ChallengesRepository {
-            if (instance == null) {
-                synchronized(lock) {
-                    if (instance == null) {
-                        instance = ChallengesRepository(context)
-                    }
+            return instance?.let { it } ?: createSync(context)
+        }
+
+        private fun createSync(context: Context): ChallengesRepository {
+            synchronized(lock) {
+                return instance ?: run {
+                    val result = ChallengesRepository(context)
+                    instance = result
+                    result
                 }
             }
-            return instance!!
         }
     }
-
 }

@@ -13,20 +13,22 @@ import com.kgb.kapp.challenge.Constants
 import com.kgb.kapp.challenge.StepProgress
 import com.kgb.kapp.databinding.EditChallengeBinding
 import com.kgb.kapp.viewmodel.EditChallengeVieModel
-import kotlinx.android.synthetic.main.component_list_item.*
 import kotlinx.android.synthetic.main.edit_challenge.*
 
 /**
  * This activity is a setting screen for choose challenge
- * It's bind layout [R.layout.edit_challenge]
+ * It's bind layout R.layout.edit_challenge
  */
 class EditChallengeActivity : AppCompatActivity() {
-    private lateinit var viewModel : EditChallengeVieModel
-    private lateinit var binding : EditChallengeBinding
-    private lateinit var progressArray : Array<StepProgress>
-    private lateinit var stepArray : Array<Int>
+    private lateinit var viewModel: EditChallengeVieModel
+    private lateinit var binding: EditChallengeBinding
+    private lateinit var progressArray: Array<StepProgress>
+    private lateinit var stepArray: Array<Int>
     private var editMode = false
 
+    /**
+     * Method call by android when create activity
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         editMode = intent.extras?.containsKey(Constants.CHALLENGE_ITEM_ID_KEY) ?: false
@@ -98,7 +100,6 @@ class EditChallengeActivity : AppCompatActivity() {
                 binding.challengeStep.setSelection(it.step - 1)
                 binding.challengeStepProgress.setSelection(it.stepProgress.ordinal)
             }
-
         })
         val id = intent.getLongExtra(Constants.CHALLENGE_ITEM_ID_KEY, -1)
         if (id != -1L) {

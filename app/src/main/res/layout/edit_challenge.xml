@@ -4,7 +4,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
     <data>
-        <import type="com.kgb.kapp.helper.CastHelper" />
         <import type="com.kgb.kapp.helper.BindingUtil" />
         <variable
             name="progress"

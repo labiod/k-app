@@ -13,6 +13,10 @@ import com.kgb.kapp.db.entity.TemplateChallengesEntity
 import com.kgb.kapp.db.entity.TemplateEntity
 import com.kgb.kapp.db.entity.UserProgressEntity
 
+/**
+ * Room database class that contains table for all project entities
+ * Instance of this class was create by builder check [ChallengeRoomDB.getInstance] method
+ */
 @Database(entities = [
         ChallengeEntity::class,
         TemplateEntity::class,
@@ -22,20 +26,34 @@ import com.kgb.kapp.db.entity.UserProgressEntity
     version = 3, exportSchema = false)
 @TypeConverters(DateConverter::class, ChallengeTypeConverter::class, StepProgressConverter::class)
 abstract class ChallengeRoomDB : RoomDatabase() {
-    abstract fun noteDao() : ChallengeDao
-    abstract fun templateDao() : TemplateDao
-    abstract fun userDao() : UserDao
+    /**
+     * Return challenge dao object
+     */
+    abstract fun noteDao(): ChallengeDao
+    /**
+     * Return template dao object
+     */
+    abstract fun templateDao(): TemplateDao
+    /**
+     * Return user dao object
+     */
+    abstract fun userDao(): UserDao
 
     companion object {
         private const val DATABASE_NAME = "AppDatabase.db"
 
         @Volatile
-        private var instance : ChallengeRoomDB? = null
+        private var instance: ChallengeRoomDB? = null
 
-        val lock = Any()
+        private val lock = Any()
 
+        /**
+         * Create instance of [ChallengeRoomDB] and save it to instance static field and return it
+         * Build instance of [ChallengeRoomDB] or return instance that was already created
+         * @return instance of [ChallengeRoomDB] class.
+         */
         @JvmStatic
-        fun getInstance(context: Context) : ChallengeRoomDB {
+        fun getInstance(context: Context): ChallengeRoomDB {
             if (instance == null) {
                 synchronized(lock) {
                     if (instance == null) {

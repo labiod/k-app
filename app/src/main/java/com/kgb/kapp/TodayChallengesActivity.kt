@@ -21,26 +21,40 @@ import com.kgb.kapp.viewmodel.DayViewModelFactory
 import com.kgb.kapp.viewmodel.DayChallengeViewModel
 import kotlinx.android.synthetic.main.day_challenges.*
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Date
+import java.util.Calendar
+import java.util.Locale
 
+/**
+ * Activity class that shows challenges for given date
+ */
 class TodayChallengesActivity : AppCompatActivity() {
     private lateinit var binding: DayChallengesBinding
     private lateinit var viewModelDay: DayChallengeViewModel
     private var adapter: TodayChallengesAdapter? = null
 
+    /**
+     * Method call when android system create activity
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         initView()
     }
 
+    /**
+     * Initialize activity menu from R.menu.challenges_menu file
+     */
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.challenges_menu, menu)
         return super.onCreateOptionsMenu(menu)
     }
 
+    /**
+     * Handle all action for item added in [onCreateOptionsMenu] method
+     */
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         val id = item?.itemId ?: 0
-        return when(id) {
+        return when (id) {
             R.id.action_load_template -> {
                 loadTemplateData()
                 true

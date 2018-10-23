@@ -15,17 +15,45 @@ import com.kgb.kapp.databinding.ComponentListItemBinding
 import com.kgb.kapp.db.entity.ChallengeEntity
 import com.kgb.kapp.viewmodel.DayChallengeViewModel
 
-class TodayChallengesAdapter(private val challengesModel : DayChallengeViewModel)
+/**
+ * Adapter for list of challenges for given date
+ * This class used challengesModel (see [DayChallengeViewModel]) to retrieve data from repository
+ * and show them into RecyclerView
+ */
+class TodayChallengesAdapter(private val challengesModel: DayChallengeViewModel)
     : RecyclerView.Adapter<TodayChallengesAdapter.Holder>() {
-    class Holder(val binding: ComponentListItemBinding) : RecyclerView.ViewHolder(binding.root)
+    /**
+     * Holder class that keep all references to views from given layout.
+     */
+    class Holder(
+        /**
+         * binding object
+         */
+        val binding: ComponentListItemBinding
+    ) : RecyclerView.ViewHolder(binding.root)
 
+    /**
+     * Create holder for recycler view item
+     * @param parent - parent for all views
+     * @param viewType - type of created item (see [getItemViewType]
+     * @return instance of [Holder] class
+     */
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
         return Holder(DataBindingUtil.inflate(
             LayoutInflater.from(parent.context), R.layout.component_list_item, parent, false))
     }
 
+    /**
+     * get count of items in adapter
+     * @return number of item in adapter
+     */
     override fun getItemCount() = challengesModel.challenges.value?.size ?: 0
 
+    /**
+     * Bind holder for given adapter position
+     * @param holder - holder created by [onCreateViewHolder] method
+     * @param position - current position on adapter
+     */
     override fun onBindViewHolder(holder: Holder, position: Int) {
         val context = holder.itemView.context
         val item = getItem(position)
@@ -36,8 +64,9 @@ class TodayChallengesAdapter(private val challengesModel : DayChallengeViewModel
             holder.itemView.setBackgroundColor(Color.LTGRAY)
         }
         holder.binding.challengeFinishedButton.setOnClickListener {
-            challengesModel.updateChallenge(item.setFinishChallenge(item.finished.not()))
-
+            val challenge = item.setFinishChallenge(item.finished.not())
+            challengesModel.updateChallenge(challenge)
+            challengesModel.updateProgress(challenge)
         }
 
         holder.binding.challengeEditButton.setOnClickListener {
@@ -58,9 +87,14 @@ class TodayChallengesAdapter(private val challengesModel : DayChallengeViewModel
             R.string.challenge_current_level_format, item.step, MAX_LEVEL)
     }
 
+    /**
+     * Get item type for current position
+     * @param position - given adapter position
+     * @return 1 if item is finished or 0 if not
+     */
     override fun getItemViewType(position: Int) = if (getItem(position).finished) 1 else 0
 
-    private fun getItem(position: Int) : ChallengeEntity {
+    private fun getItem(position: Int): ChallengeEntity {
         return challengesModel.challenges.value!![position]
     }
 }

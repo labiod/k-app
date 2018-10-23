@@ -6,29 +6,31 @@ import android.widget.ArrayAdapter
 import android.widget.Spinner
 import com.kgb.kapp.challenge.ChallengeType
 
+/**
+ * Util class for data binding
+ */
 class BindingUtil {
     companion object {
+        /**
+         * Get index for given challenge type
+         * @param challengeType - given challenge
+         * @return index of give
+         */
         @JvmStatic
         fun getIndexForChallenge(challengeType: ChallengeType?): Int {
-            val challenges = ChallengeType.values()
-            for( ch in challenges) {
-                if (ch == challengeType) {
-                    return ch.ordinal
-                }
-            }
-            return 0
+            return challengeType?.ordinal ?: 0
         }
 
-        @JvmStatic
-        fun getChallengeStepIndex(step: Int): Int {
-            return 0
-        }
-
+        /**
+         * Select given item in current spinner
+         * @param spinner - given view
+         * @param item - given item
+         */
         @JvmStatic
         @BindingAdapter("selectItem")
         fun setSelectItem(spinner: Spinner, item: Any?) {
             spinner.adapter?.let {
-                for( i in 0 until spinner.adapter.count) {
+                for (i in 0 until spinner.adapter.count) {
                     if (spinner.adapter.getItem(i) == item) {
                         spinner.setSelection(i)
                     }
@@ -36,6 +38,11 @@ class BindingUtil {
             }
         }
 
+        /**
+         * Bind given data to current spinner
+         * @param spinner - given spinner
+         * @param data - list of item that will be bind to spinner
+         */
         @JvmStatic
         @BindingAdapter("bindData")
         fun bindData(spinner: Spinner, data: Array<Any>) {
@@ -43,6 +50,12 @@ class BindingUtil {
             spinner.adapter = adapter
         }
 
+        /**
+         * Convert challenges array to proper strings base on lang
+         * @param challenges - challenges to convert
+         * @param context - context object
+         * @return list of challenges name
+         */
         @JvmStatic
         fun convertChallengesArrayToStrings(challenges: Array<ChallengeType>, context: Context): ArrayList<String> {
             val result = ArrayList<String>()

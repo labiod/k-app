@@ -2,7 +2,7 @@
 
 buildscript {
     ext.espressoVersion = '2.2.2'
-    ext.supportLibVersion = '27.1.1'
+    ext.supportLibVersion = '28.0.0'
     ext.kotlin_version = '1.2.71'
     ext.lifecycle_version = "1.1.1"
     ext.room_version = "1.1.1"
@@ -14,7 +14,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.2.0'
+        classpath 'com.android.tools.build:gradle:3.2.1'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath "org.jetbrains.dokka:dokka-android-gradle-plugin:$dokkaVersion"
 

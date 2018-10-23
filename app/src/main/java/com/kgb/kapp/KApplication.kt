@@ -2,17 +2,22 @@ package com.kgb.kapp
 
 import android.app.Application
 
+/**
+ * Application class for K-App
+ */
 class KApplication : Application() {
+    /**
+     * Method call by android when create application
+     */
     override fun onCreate() {
         super.onCreate()
-        _instance = this
+        instance = this
     }
 
     companion object {
-        private lateinit var _instance : KApplication
-        val instance: KApplication
-            get() = _instance
-
-
+        /**
+         * Instance of application
+         */
+        lateinit var instance: KApplication
     }
 }

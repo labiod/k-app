@@ -2,13 +2,11 @@ package com.kgb.kapp
 
 import android.arch.lifecycle.ViewModelProviders
 import android.databinding.DataBindingUtil
-import android.databinding.ViewDataBinding
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.util.Log
-import android.view.View
 import android.widget.Toast
 import com.kgb.kapp.challenge.ChallengeType
 import com.kgb.kapp.challenge.Constants
@@ -17,10 +15,17 @@ import com.kgb.kapp.databinding.ActivityTemplateBinding
 import com.kgb.kapp.db.entity.TemplateEntity
 import com.kgb.kapp.viewmodel.TemplateViewModel
 
+/**
+ * Activity used to create new template
+ */
 class TemplateActivity : AppCompatActivity(), OnExecuteListener {
-    lateinit var binding : ActivityTemplateBinding
-    lateinit var adapter : ChallengesForTemplateAdapter
-    lateinit var model : TemplateViewModel
+    private lateinit var binding: ActivityTemplateBinding
+    private lateinit var adapter: ChallengesForTemplateAdapter
+    private lateinit var model: TemplateViewModel
+
+    /**
+     * Method call by android when create activity
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_template)
@@ -41,7 +46,6 @@ class TemplateActivity : AppCompatActivity(), OnExecuteListener {
             Toast.makeText(this, "New item added", Toast.LENGTH_SHORT).show()
             finish()
         }
-
     }
 
     override fun onFailer(ex: Throwable) {
