@@ -16,13 +16,17 @@ jobs:
       - run:
           name: Download Dependencies
           command: ./gradlew androidDependencies
+
+      - run:
+          name: Compiling
+          command: ./gradlew assemble
       - save_cache:
           paths:
             - ~/.gradle
           key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
       - run:
           name: Run lint
-          command: ./gradlew lint
+          command: ./gradlew lint ktlint
       - store_artifacts:
           path: reports
           destination: reports
@@ -31,4 +35,13 @@ jobs:
           command: ./gradlew test
       - store_test_results:
           path: test-results
+
+      - run:
+          name: Building Dokka docs
+          command: ./gradlew --parallel dokka | grep 'No documentation for' > undocumented.txt || exit 0
+
+      - store_artifacts:
+          name: Uploading Dokka docs
+          path: docs/dokka
+          destination: dokka
       # See https://circleci.com/docs/2.0/deployment-integrations/ for deploy examples

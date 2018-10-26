@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <data>
+        <import type="com.kgb.kapp.helper.BindingUtil" />
+        <variable
+            name="challenges"
+            type="com.kgb.kapp.challenge.ChallengeType[]" />
+        <variable
+            name="selectChallenge"
+            type="com.kgb.kapp.challenge.ChallengeType" />
+    </data>
+    <android.support.constraint.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/label_challenge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/challenge_name_label_text"/>
+        <Spinner
+            android:id="@+id/challenge_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:entries="@{BindingUtil.convertChallengesArrayToStrings(challenges, context)}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/label_challenge"
+            android:selectedItemPosition="@{BindingUtil.getIndexForChallenge(selectChallenge)}"
+            />
+    </android.support.constraint.ConstraintLayout>
+</layout>

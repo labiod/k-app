@@ -5,7 +5,9 @@ import android.support.test.InstrumentationRegistry
 import android.support.test.espresso.Espresso.onView
 import android.support.test.espresso.assertion.ViewAssertions.matches
 import android.support.test.espresso.matcher.BoundedMatcher
-import android.support.test.espresso.matcher.ViewMatchers.*
+import android.support.test.espresso.matcher.ViewMatchers.isAssignableFrom
+import android.support.test.espresso.matcher.ViewMatchers.withId
+import android.support.test.espresso.matcher.ViewMatchers.isDisplayed
 import android.support.test.rule.ActivityTestRule
 import android.support.test.runner.AndroidJUnit4
 import android.support.v7.widget.Toolbar
@@ -17,6 +19,9 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 
+/**
+ * Test for [TodayChallengesActivity] class
+ */
 @RunWith(AndroidJUnit4::class)
 class TodayChallengesActivityTest {
 
@@ -29,17 +34,16 @@ class TodayChallengesActivityTest {
         activityRule.launchActivity(Intent(InstrumentationRegistry.getTargetContext(), TodayChallengesActivity::class.java))
         val challengeTitle = InstrumentationRegistry.getTargetContext().getString(R.string.app_name)
 
-        //check that activity has correct title
+        // check that activity has correct title
         onView(isAssignableFrom(Toolbar::class.java))
             .check(matches(withTitle(challengeTitle)))
     }
-
 
     @Test
     fun testChallengePlusButton() {
         activityRule.launchActivity(Intent(InstrumentationRegistry.getTargetContext(), TodayChallengesActivity::class.java))
 
-        //check that button is displayed
+        // check that button is displayed
         onView(withId(R.id.fab))
             .check(matches(isDisplayed()))
     }
@@ -48,7 +52,7 @@ class TodayChallengesActivityTest {
     fun testChallengeClearButton() {
         activityRule.launchActivity(Intent(InstrumentationRegistry.getTargetContext(), TodayChallengesActivity::class.java))
 
-        //check that button is gone when challenges list is zero
+        // check that button is gone when challenges list is zero
         onView(withId(R.id.challenge_name))
             .check(matches(not(isDisplayed())))
 

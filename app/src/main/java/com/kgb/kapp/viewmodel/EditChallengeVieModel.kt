@@ -4,36 +4,71 @@ import android.app.Application
 import android.arch.lifecycle.AndroidViewModel
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
+import com.kgb.kapp.challenge.ChallengeType
 import com.kgb.kapp.challenge.StepProgress
-import com.kgb.kapp.db.ChallengeEntity
-import com.kgb.kapp.db.ChallengesRepository
+import com.kgb.kapp.db.entity.ChallengeEntity
+import com.kgb.kapp.db.entity.UserProgressEntity
+import com.kgb.kapp.repository.ChallengesRepository
+import java.util.Date
 import java.util.concurrent.Executors
 
+/**
+ * View model used in [com.kgb.kapp.EditChallengeActivity] class
+ * Contains challenge that will be edit
+ */
 class EditChallengeVieModel(application: Application) : AndroidViewModel(application) {
     private val executor = Executors.newSingleThreadExecutor()
     private val repository = ChallengesRepository.getInstance(application)
+    private val _challengeProgress = MutableLiveData<UserProgressEntity>()
+    /**
+     * Getter for _challengeProgress field
+     */
+    val challengeProgress: LiveData<UserProgressEntity>
+        get() = _challengeProgress
+
     private val _challenge = MutableLiveData<ChallengeEntity>()
-    val challenge : LiveData<ChallengeEntity>
+    /**
+     * Getter for _challenge field
+     */
+    val challenge: LiveData<ChallengeEntity>
         get() = _challenge
 
-    fun loadChallenge(noteId: Int) {
+    /**
+     * Load challenge for given id and put result to _challenge field
+     * If user want to get this data it must observe challenge getter:
+     * Example:
+     *
+     * @param noteId - challenge id
+     */
+    fun loadChallenge(noteId: Long) {
         executor.execute {
             val note = repository.getChallengeById(noteId)
             _challenge.postValue(note)
         }
     }
 
-    fun applyChanges(step: Int, progress: StepProgress, goal: Int, series: Int) {
-        _challenge.value?.let {
-            repository.update(ChallengeEntity(
-                it.id,
-                it.challengeName,
-                step,
-                progress,
-                it.date,
-                series,
-                goal,
-                it.finished))
+    /**
+     * Update current challenge with given data
+     * @param challengeType - challenge type
+     * @param step - challenge step
+     * @param progress - step progress
+     * @param goal - challenge goal
+     * @param series - challenge series
+     */
+    fun applyChanges(challengeType: ChallengeType, step: Int, progress: StepProgress, goal: Int, series: Int) {
+        repository.update(_challenge.value?.applyChanges(step, progress, goal, series)
+            ?: ChallengeEntity(null, challengeType, step, progress, Date(), series, goal))
+    }
+
+    /**
+     * Load challenge progress for given challenge type
+     * @param challengeType - given challenge type
+     */
+    fun loadChallengeProgress(challengeType: ChallengeType) {
+        executor.execute {
+            val progress = repository.getChallengeProgress(challengeType)
+                ?: UserProgressEntity.createNew(challengeType)
+            _challengeProgress.postValue(progress)
         }
     }
 }

@@ -17,11 +17,13 @@
 
     <!-- TodayChallenges screen -->
     <string name="your_challenges">Twoje wyzwania!</string>
-    <string name="your_challenges_menu_sample_data">Załaduj przykładowe dane</string>
+    <string name="your_challenges_menu_template_data">Załaduj dane z szablonu</string>
+    <string name="your_challenges_menu_create_template">Utwórz nowy szablon</string>
     <string name="your_challenges_menu_delete_all">Usuń wszystko</string>
 
     <!-- ChalllengeEdit screen -->
     <string name="challenge_settings_confirm">Potwierdź</string>
+    <string name="challenge_name_label_text">Nazwa wyzwania:</string>
     <string name="challenge_step_label_text">Poziom wyzwania:</string>
     <string name="challenge_step_progresslabel_text">postęp:</string>
     <string name="challenge_goal_label_text">Liczba powtórzeń:</string>
@@ -29,4 +31,11 @@
     <string name="challenge_item_goal_text">Cel:</string>
     <string name="challenge_finish_button_desc">finish challenge button</string>
     <string name="challenge_settings_button_desc">settings challenge button</string>
+    <string name="edit_challenge_title">Edytuj wyzwanie</string>
+    <string name="new_challenge_title">Dodaj nowe wyzwanie</string>
+
+    <!-- Template screen -->
+    <string name="template_name_label_text">Nazwa szablonu:</string>
+    <string name="challenges_for_template_label_text">Dodaj wyzwanie:</string>
+    <string name="template_add_new_button_label">Dodaj nowy…</string>
 </resources>

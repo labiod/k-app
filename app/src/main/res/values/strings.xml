@@ -17,11 +17,13 @@
 
     <!-- TodayChallenges screen -->
     <string name="your_challenges">Your Challenges!</string>
-    <string name="your_challenges_menu_sample_data">Load sample challenges</string>
+    <string name="your_challenges_menu_template_data">Load data from template</string>
+    <string name="your_challenges_menu_create_template">Create template</string>
     <string name="your_challenges_menu_delete_all">Delete all</string>
 
     <!-- ChalllengeEdit screen -->
     <string name="challenge_settings_confirm">Confirm</string>
+    <string name="challenge_name_label_text">Challenge name:</string>
     <string name="challenge_step_label_text">Challenge Step:</string>
     <string name="challenge_step_progresslabel_text">Step progress:</string>
     <string name="challenge_goal_label_text">Goal:</string>
@@ -29,4 +31,11 @@
     <string name="challenge_item_goal_text">Goal</string>
     <string name="challenge_finish_button_desc">finish challenge button</string>
     <string name="challenge_settings_button_desc">settings challenge button</string>
+    <string name="edit_challenge_title">Edit Challenge</string>
+    <string name="new_challenge_title">Add new Challenge</string>
+
+    <!-- Template screen -->
+    <string name="template_name_label_text">Template name:</string>
+    <string name="challenges_for_template_label_text">Add challenge:</string>
+    <string name="template_add_new_button_label">Add new…</string>
 </resources>

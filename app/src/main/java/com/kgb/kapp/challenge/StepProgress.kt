@@ -2,9 +2,29 @@ package com.kgb.kapp.challenge
 
 import com.kgb.kapp.R
 
-enum class StepProgress(val levelTextRes: Int, val id: Int) {
-    BEGINNER(R.string.level_beginner, 1),
-    ADVANCE(R.string.level_intermediate, 2),
-    PROGRESSION(R.string.level_progression, 3),
-    CUSTOM(R.string.level_custom, 4)
+/**
+ * Enum class that contains all progress for challenge step
+ */
+enum class StepProgress(
+    /**
+     * res id value to display proper name for support lang
+     */
+    val levelTextRes: Int
+) {
+    /**
+     * beginner step
+     */
+    BEGINNER(R.string.level_beginner),
+    /**
+     * advance step
+     */
+    ADVANCE(R.string.level_intermediate),
+    /**
+     * progression step
+     */
+    PROGRESSION(R.string.level_progression),
+    /**
+     * custom step
+     */
+    CUSTOM(R.string.level_custom)
 }
