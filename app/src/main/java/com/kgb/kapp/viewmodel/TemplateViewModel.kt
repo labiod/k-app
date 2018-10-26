@@ -1,7 +1,6 @@
 package com.kgb.kapp.viewmodel
 
-import android.app.Application
-import android.arch.lifecycle.AndroidViewModel
+import android.arch.lifecycle.ViewModel
 import com.kgb.kapp.OnExecuteListener
 import com.kgb.kapp.db.entity.TemplateEntity
 import com.kgb.kapp.repository.TemplateRepository
@@ -10,8 +9,7 @@ import com.kgb.kapp.repository.TemplateRepository
  * View model class used in [com.kgb.kapp.TemplateActivity]
  *
  */
-class TemplateViewModel(application: Application) : AndroidViewModel(application) {
-    private val repository = TemplateRepository.getInstance(application)
+class TemplateViewModel(private val repository: TemplateRepository) : ViewModel() {
 
     /**
      * Insert template to repository

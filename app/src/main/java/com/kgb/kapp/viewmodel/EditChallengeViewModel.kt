@@ -1,9 +1,8 @@
 package com.kgb.kapp.viewmodel
 
-import android.app.Application
-import android.arch.lifecycle.AndroidViewModel
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
+import android.arch.lifecycle.ViewModel
 import com.kgb.kapp.challenge.ChallengeType
 import com.kgb.kapp.challenge.StepProgress
 import com.kgb.kapp.db.entity.ChallengeEntity
@@ -16,9 +15,8 @@ import java.util.concurrent.Executors
  * View model used in [com.kgb.kapp.EditChallengeActivity] class
  * Contains challenge that will be edit
  */
-class EditChallengeVieModel(application: Application) : AndroidViewModel(application) {
+class EditChallengeViewModel(private val repository: ChallengesRepository) : ViewModel() {
     private val executor = Executors.newSingleThreadExecutor()
-    private val repository = ChallengesRepository.getInstance(application)
     private val _challengeProgress = MutableLiveData<UserProgressEntity>()
     /**
      * Getter for _challengeProgress field

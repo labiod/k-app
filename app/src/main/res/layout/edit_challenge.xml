@@ -16,7 +16,7 @@
             type="com.kgb.kapp.challenge.ChallengeType[]" />
         <variable
             name="viewmodel"
-            type="com.kgb.kapp.viewmodel.EditChallengeVieModel" />
+            type="com.kgb.kapp.viewmodel.EditChallengeViewModel" />
         <variable
             name="editMode"
             type="Boolean" />
