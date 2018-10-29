@@ -4,16 +4,13 @@ import android.arch.lifecycle.ViewModel
 import android.arch.lifecycle.ViewModelProvider
 import android.util.Log
 import com.kgb.kapp.challenge.Constants
-import com.kgb.kapp.repository.ChallengesRepository
-import java.util.Date
+import com.kgb.kapp.repository.TemplateRepository
 
 /**
- * Model factory class used to create [DayChallengeViewModel] with given date
+ * Model factory class used to create [TemplateViewModel] with given date
  */
-class DayViewModelFactory(
-    private val challengesDate: Date,
-    private val repository: ChallengesRepository
-) : ViewModelProvider.NewInstanceFactory() {
+class TemplateViewModelFactory(private val repository: TemplateRepository)
+    : ViewModelProvider.NewInstanceFactory() {
     /**
      * Create [DayChallengeViewModel] for given date
      * @param modelClass - class for created object
@@ -22,7 +19,7 @@ class DayViewModelFactory(
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         try {
-            return DayChallengeViewModel(challengesDate, repository) as T
+            return TemplateViewModel(repository) as T
         } catch (ex: InstantiationException) {
             Log.e(Constants.GLOBAL_TAG, "error:", ex)
             return super.create(modelClass)

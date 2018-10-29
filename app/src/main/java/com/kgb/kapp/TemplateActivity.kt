@@ -1,6 +1,5 @@
 package com.kgb.kapp
 
-import android.arch.lifecycle.ViewModelProviders
 import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
@@ -14,6 +13,7 @@ import com.kgb.kapp.components.ChallengesForTemplateAdapter
 import com.kgb.kapp.databinding.ActivityTemplateBinding
 import com.kgb.kapp.db.entity.TemplateEntity
 import com.kgb.kapp.viewmodel.TemplateViewModel
+import javax.inject.Inject
 
 /**
  * Activity used to create new template
@@ -21,12 +21,14 @@ import com.kgb.kapp.viewmodel.TemplateViewModel
 class TemplateActivity : AppCompatActivity(), OnExecuteListener {
     private lateinit var binding: ActivityTemplateBinding
     private lateinit var adapter: ChallengesForTemplateAdapter
-    private lateinit var model: TemplateViewModel
+    @Inject
+    lateinit var model: TemplateViewModel
 
     /**
      * Method call by android when create activity
      */
     override fun onCreate(savedInstanceState: Bundle?) {
+        KApplication.instance.activityInjector.inject(this)
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_template)
         adapter = ChallengesForTemplateAdapter()
@@ -38,7 +40,6 @@ class TemplateActivity : AppCompatActivity(), OnExecuteListener {
         binding.confirmChanges.setOnClickListener {
             createTemplate()
         }
-        model = ViewModelProviders.of(this).get(TemplateViewModel::class.java)
     }
 
     override fun onSucessed() {

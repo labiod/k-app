@@ -1,6 +1,5 @@
 package com.kgb.kapp
 
-import android.arch.lifecycle.ViewModelProviders
 import android.content.DialogInterface
 import android.content.Intent
 import android.databinding.DataBindingUtil
@@ -17,26 +16,28 @@ import com.kgb.kapp.challenge.Constants
 import com.kgb.kapp.components.TemplatesDialogAdapter
 import com.kgb.kapp.components.TodayChallengesAdapter
 import com.kgb.kapp.databinding.DayChallengesBinding
-import com.kgb.kapp.viewmodel.DayViewModelFactory
 import com.kgb.kapp.viewmodel.DayChallengeViewModel
 import kotlinx.android.synthetic.main.day_challenges.*
 import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.Calendar
 import java.util.Locale
+import javax.inject.Inject
 
 /**
  * Activity class that shows challenges for given date
  */
 class TodayChallengesActivity : AppCompatActivity() {
+    @Inject
+    lateinit var viewModelDay: DayChallengeViewModel
+
     private lateinit var binding: DayChallengesBinding
-    private lateinit var viewModelDay: DayChallengeViewModel
+
     private var adapter: TodayChallengesAdapter? = null
 
     /**
      * Method call when android system create activity
      */
     override fun onCreate(savedInstanceState: Bundle?) {
+        KApplication.instance.activityInjector.inject(this)
         super.onCreate(savedInstanceState)
         initView()
     }
@@ -75,15 +76,10 @@ class TodayChallengesActivity : AppCompatActivity() {
 
     private fun initView() {
         binding = DataBindingUtil.setContentView(this, R.layout.day_challenges)
-        val day = intent.extras.getInt(Constants.CURRENT_DATE_DAY)
-        val month = intent.extras.getInt(Constants.CURRENT_DATE_MONTH)
-        val year = intent.extras.getInt(Constants.CURRENT_DATE_YEAR)
-        val calendar = Calendar.getInstance()
-        calendar.set(year, month, day)
         val dateFormat = SimpleDateFormat("EEE MMM d, ''yy", Locale.getDefault())
-        binding.todayDate = dateFormat.format(calendar.time)
+        binding.todayDate = viewModelDay.getDate(dateFormat)
         initRecyclerView()
-        initViewModel(calendar.time)
+        initViewModel()
         fab.setOnClickListener {
             val intent = Intent(it.context, EditChallengeActivity::class.java)
             startActivity(intent)
@@ -124,8 +120,7 @@ class TodayChallengesActivity : AppCompatActivity() {
         challenges_list.addItemDecoration(DividerItemDecoration(this, layoutManager.orientation))
     }
 
-    private fun initViewModel(date: Date) {
-        viewModelDay = ViewModelProviders.of(this, DayViewModelFactory(date)).get(DayChallengeViewModel::class.java)
+    private fun initViewModel() {
         adapter = TodayChallengesAdapter(viewModelDay)
         challenges_list.adapter = adapter
         viewModelDay.challenges.observe(this, android.arch.lifecycle.Observer {

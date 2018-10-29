@@ -1,19 +1,19 @@
 package com.kgb.kapp.viewmodel
 
-import android.app.Application
-import android.arch.lifecycle.AndroidViewModel
 import android.arch.lifecycle.LiveData
+import android.arch.lifecycle.ViewModel
 import com.kgb.kapp.db.entity.ChallengeEntity
 import com.kgb.kapp.db.entity.TemplateEntity
 import com.kgb.kapp.repository.ChallengesRepository
+import java.text.DateFormat
 import java.util.Date
 
 /**
  * View model class used in [com.kgb.kapp.TodayChallengesActivity] class
  * Contains challenges for selected date and list of templates added by user
  */
-class DayChallengeViewModel(application: Application, private val date: Date) : AndroidViewModel(application) {
-    private val repository = ChallengesRepository.getInstance(application)
+class DayChallengeViewModel(private val date: Date, private val repository: ChallengesRepository) : ViewModel() {
+
     private val _challenges = repository.getDayChallenges(date)
     /**
      * Getter for _challenges field
@@ -66,4 +66,6 @@ class DayChallengeViewModel(application: Application, private val date: Date) : 
     fun updateProgress(item: ChallengeEntity) {
         repository.updateUserProgress(item)
     }
+
+    fun getDate(formater: DateFormat) = formater.format(date)
 }

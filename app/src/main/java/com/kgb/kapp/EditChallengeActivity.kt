@@ -1,7 +1,6 @@
 package com.kgb.kapp
 
 import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProviders
 import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
@@ -12,15 +11,17 @@ import com.kgb.kapp.challenge.ChallengeType
 import com.kgb.kapp.challenge.Constants
 import com.kgb.kapp.challenge.StepProgress
 import com.kgb.kapp.databinding.EditChallengeBinding
-import com.kgb.kapp.viewmodel.EditChallengeVieModel
+import com.kgb.kapp.viewmodel.EditChallengeViewModel
 import kotlinx.android.synthetic.main.edit_challenge.*
+import javax.inject.Inject
 
 /**
  * This activity is a setting screen for choose challenge
  * It's bind layout R.layout.edit_challenge
  */
 class EditChallengeActivity : AppCompatActivity() {
-    private lateinit var viewModel: EditChallengeVieModel
+    @Inject
+    lateinit var viewModel: EditChallengeViewModel
     private lateinit var binding: EditChallengeBinding
     private lateinit var progressArray: Array<StepProgress>
     private lateinit var stepArray: Array<Int>
@@ -30,6 +31,7 @@ class EditChallengeActivity : AppCompatActivity() {
      * Method call by android when create activity
      */
     override fun onCreate(savedInstanceState: Bundle?) {
+        KApplication.instance.activityInjector.inject(this)
         super.onCreate(savedInstanceState)
         editMode = intent.extras?.containsKey(Constants.CHALLENGE_ITEM_ID_KEY) ?: false
         initDataBinder()
@@ -92,7 +94,6 @@ class EditChallengeActivity : AppCompatActivity() {
     }
 
     private fun initViewModel() {
-        viewModel = ViewModelProviders.of(this).get(EditChallengeVieModel::class.java)
         viewModel.challengeProgress.observe(this, Observer { ch ->
             ch?.let {
                 binding.challengeGoal.setText(it.goal.toString())
