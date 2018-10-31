@@ -5,11 +5,14 @@ import com.kgb.kapp.di.module.DayChallengesActivityModule
 import dagger.Subcomponent
 import dagger.android.AndroidInjector
 
+/**
+ * Sub-component for DayChallengesActivityModule
+ */
 @Subcomponent(modules = [DayChallengesActivityModule::class])
 abstract class DayChallengesActivityComponent : AndroidInjector<TodayChallengesActivity> {
 
     @Subcomponent.Builder
-    internal abstract class Builder() : AndroidInjector.Builder<TodayChallengesActivity>() {
+    internal abstract class Builder : AndroidInjector.Builder<TodayChallengesActivity>() {
         abstract fun plus(module: DayChallengesActivityModule)
 
         override fun seedInstance(instance: TodayChallengesActivity?) {

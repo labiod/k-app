@@ -14,7 +14,7 @@ android {
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "com.kgb.kapp.runner.KApplicationRunner"
     }
     buildTypes {
         release {
@@ -39,13 +39,13 @@ configurations {
 }
 
 dependencies {
+    implementation project(':data')
+
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "com.android.support:appcompat-v7:$supportLibVersion"
     implementation "com.android.support:design:$supportLibVersion"
     implementation 'com.android.support.constraint:constraint-layout:2.0.0-alpha2'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation 'android.arch.lifecycle:extensions:1.1.1'
-
     implementation "android.arch.lifecycle:extensions:$lifecycle_version"
     implementation "android.arch.persistence.room:runtime:$room_version"
     implementation "com.google.dagger:dagger:2.16"

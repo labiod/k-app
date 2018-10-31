@@ -8,7 +8,8 @@ import com.kgb.kapp.db.entity.ChallengeEntity
 import com.kgb.kapp.db.entity.TemplateEntity
 import com.kgb.kapp.db.entity.UserProgressEntity
 import com.kgb.kapp.repository.TemplateRepository.Companion.getInstance
-import java.util.*
+import java.util.Calendar
+import java.util.Date
 import java.util.concurrent.Executors
 
 /**
@@ -87,7 +88,7 @@ class DBChallengesRepository private constructor(context: Context) : ChallengesR
 
     /**
      * Get challenge for given id
-     * @param - given challenge
+     * @param challengeId - given challenge
      * @return challenge entity
      */
     override fun getChallengeById(challengeId: Long): ChallengeEntity {

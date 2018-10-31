@@ -6,18 +6,22 @@ import android.support.test.espresso.Espresso.onView
 import android.support.test.espresso.assertion.ViewAssertions.matches
 import android.support.test.espresso.matcher.BoundedMatcher
 import android.support.test.espresso.matcher.ViewMatchers.isAssignableFrom
-import android.support.test.espresso.matcher.ViewMatchers.withId
 import android.support.test.espresso.matcher.ViewMatchers.isDisplayed
-import android.support.test.rule.ActivityTestRule
+import android.support.test.espresso.matcher.ViewMatchers.withId
+import android.support.test.espresso.matcher.ViewMatchers.withText
 import android.support.test.runner.AndroidJUnit4
 import android.support.v7.widget.Toolbar
 import android.view.View
-import org.hamcrest.CoreMatchers.not
+import com.kgb.kapp.challenge.Constants
+import com.kgb.kapp.rules.DaggerActivityTestRule
 import org.hamcrest.Description
 import org.hamcrest.Matcher
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Locale
 
 /**
  * Test for [TodayChallengesActivity] class
@@ -27,8 +31,20 @@ class TodayChallengesActivityTest {
 
     @Rule
     @JvmField
-    var activityRule = ActivityTestRule(TodayChallengesActivity::class.java)
+    var activityRule = DaggerActivityTestRule(TodayChallengesActivity::class.java)
 
+    private val calendar = Calendar.getInstance()
+    private val dateFormat = SimpleDateFormat("EEE MMM d, ''yy", Locale.getDefault())
+
+    init {
+        calendar.set(Calendar.DAY_OF_MONTH, 2)
+        calendar.set(Calendar.MONTH, 11)
+        calendar.set(Calendar.YEAR, 18)
+    }
+
+    /**
+     * Test that title in current view was set correctly
+     */
     @Test
     fun testChallengeActivityActionBar() {
         activityRule.launchActivity(Intent(InstrumentationRegistry.getTargetContext(), TodayChallengesActivity::class.java))
@@ -39,6 +55,9 @@ class TodayChallengesActivityTest {
             .check(matches(withTitle(challengeTitle)))
     }
 
+    /**
+     * Test that plus button was init correctly
+     */
     @Test
     fun testChallengePlusButton() {
         activityRule.launchActivity(Intent(InstrumentationRegistry.getTargetContext(), TodayChallengesActivity::class.java))
@@ -48,15 +67,24 @@ class TodayChallengesActivityTest {
             .check(matches(isDisplayed()))
     }
 
+    /**
+     * Test that view was init correctly
+     */
     @Test
-    fun testChallengeClearButton() {
-        activityRule.launchActivity(Intent(InstrumentationRegistry.getTargetContext(), TodayChallengesActivity::class.java))
+    fun testDayChallengeViewInitCorrectly() {
+        val intent = Intent(InstrumentationRegistry.getTargetContext(), TodayChallengesActivity::class.java)
 
-        // check that button is gone when challenges list is zero
-        onView(withId(R.id.challenge_name))
-            .check(matches(not(isDisplayed())))
+        intent.putExtra(Constants.CURRENT_DATE_DAY, calendar.get(Calendar.DAY_OF_MONTH))
+        intent.putExtra(Constants.CURRENT_DATE_MONTH, calendar.get(Calendar.MONTH))
+        intent.putExtra(Constants.CURRENT_DATE_YEAR, calendar.get(Calendar.YEAR))
+        activityRule.launchActivity(intent)
 
-        onView(withId(R.id.fab))
+        val dateText = dateFormat.format(calendar.time)
+
+        // check that date was init correctly
+        onView(withId(R.id.todayDateView))
+            .check(matches(isDisplayed()))
+            .check(matches(withText(dateText)))
     }
 
     private fun withTitle(expectedTitle: CharSequence): Matcher<View> {

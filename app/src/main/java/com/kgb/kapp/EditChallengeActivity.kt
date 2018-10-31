@@ -94,19 +94,19 @@ class EditChallengeActivity : AppCompatActivity() {
     }
 
     private fun initViewModel() {
-        viewModel.challengeProgress.observe(this, Observer { ch ->
-            ch?.let {
-                binding.challengeGoal.setText(it.goal.toString())
-                binding.challengeSeries.setText(it.series.toString())
-                binding.challengeStep.setSelection(it.step - 1)
-                binding.challengeStepProgress.setSelection(it.stepProgress.ordinal)
-            }
-        })
         val id = intent.getLongExtra(Constants.CHALLENGE_ITEM_ID_KEY, -1)
         if (id != -1L) {
             viewModel.loadChallenge(id)
         } else {
             viewModel.loadChallengeProgress(ChallengeType.values()[0])
+            viewModel.challengeProgress.observe(this, Observer { ch ->
+                ch?.let {
+                    binding.challengeGoal.setText(it.goal.toString())
+                    binding.challengeSeries.setText(it.series.toString())
+                    binding.challengeStep.setSelection(it.step - 1)
+                    binding.challengeStepProgress.setSelection(it.stepProgress.ordinal)
+                }
+            })
         }
         binding.viewmodel = viewModel
     }

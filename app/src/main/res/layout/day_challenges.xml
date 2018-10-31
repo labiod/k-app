@@ -23,6 +23,7 @@
             android:background="#3999"
             android:orientation="vertical">
             <TextView
+                android:id="@+id/todayDateView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@{todayDate}"
@@ -30,6 +31,7 @@
                 android:textSize="18sp"
                 tools:text="Today date:" />
             <TextView
+                android:id="@+id/yourChallengeView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/your_challenges"
