@@ -12,6 +12,9 @@ import dagger.android.support.AndroidSupportInjectionModule
 import dagger.android.support.DaggerApplication
 import javax.inject.Singleton
 
+/**
+ * Application component for dagger
+ */
 @Singleton
 @Component(modules = [
         AndroidSupportInjectionModule::class,
@@ -30,5 +33,8 @@ interface ApplicationComponent : AndroidInjector<DaggerApplication> {
         fun build(): ApplicationComponent
     }
 
+    /**
+     * Inject application to dagger component
+     */
     fun inject(app: KApplication)
 }

@@ -13,7 +13,7 @@ import javax.inject.Inject
 /**
  * Application class for K-App
  */
-class KApplication : DaggerApplication(), HasActivityInjector {
+open class KApplication : DaggerApplication(), HasActivityInjector {
 
     @Inject
     lateinit var activityInjector: DispatchingAndroidInjector<Activity>
@@ -28,12 +28,16 @@ class KApplication : DaggerApplication(), HasActivityInjector {
     }
 
     override fun applicationInjector(): AndroidInjector<out DaggerApplication> {
-        appComponent = DaggerApplicationComponent.builder()
-                .application(this)
-                .plus(RepositoryModule(this))
-                .build()
+        appComponent = getComponent()
         appComponent.inject(this)
         return appComponent
+    }
+
+    protected open fun getComponent(): ApplicationComponent {
+        return DaggerApplicationComponent.builder()
+            .application(this)
+            .plus(RepositoryModule(this))
+            .build()
     }
 
     companion object {
