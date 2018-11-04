@@ -6,8 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
+import com.bitage.kapp.model.ChallengeType
 import com.kgb.kapp.R
-import com.kgb.kapp.challenge.ChallengeType
 import com.kgb.kapp.databinding.ChallengesForTemplateItemBinding
 
 /**

@@ -3,13 +3,13 @@ package com.kgb.kapp.viewmodel
 import android.arch.lifecycle.ViewModel
 import android.arch.lifecycle.ViewModelProvider
 import android.util.Log
+import com.bitage.kapp.repository.ChallengeRepository
 import com.kgb.kapp.challenge.Constants
-import com.kgb.kapp.repository.ChallengesRepository
 
 /**
  * Model factory class used to create [EditChallengeViewModel] with given date
  */
-class EditChallengeViewModelFactory(private val repository: ChallengesRepository)
+class EditChallengeViewModelFactory(private val repository: ChallengeRepository)
     : ViewModelProvider.NewInstanceFactory() {
     /**
      * Create [DayChallengeViewModel] for given date

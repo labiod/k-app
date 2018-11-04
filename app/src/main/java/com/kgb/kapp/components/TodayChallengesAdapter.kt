@@ -7,12 +7,13 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.bitage.kapp.model.Challenge
 import com.kgb.kapp.EditChallengeActivity
 import com.kgb.kapp.R
 import com.kgb.kapp.challenge.Constants
 import com.kgb.kapp.challenge.Constants.Companion.MAX_LEVEL
 import com.kgb.kapp.databinding.ComponentListItemBinding
-import com.kgb.kapp.db.entity.ChallengeEntity
+import com.kgb.kapp.helper.ChallengeTypeResMapper
 import com.kgb.kapp.viewmodel.DayChallengeViewModel
 
 /**
@@ -79,7 +80,7 @@ class TodayChallengesAdapter(private val challengesModel: DayChallengeViewModel)
             challengesModel.deleteChallenge(item)
         }
 
-        holder.binding.challengeName.setText(item.challengeName.challengeResId)
+        holder.binding.challengeName.setText(ChallengeTypeResMapper.valueOf(item.challengeName.name).resId)
 
         holder.binding.currentGoal.text = context.resources.getQuantityString(
             R.plurals.challenge_current_goal_format, item.series, item.goal, item.series)
@@ -94,7 +95,7 @@ class TodayChallengesAdapter(private val challengesModel: DayChallengeViewModel)
      */
     override fun getItemViewType(position: Int) = if (getItem(position).finished) 1 else 0
 
-    private fun getItem(position: Int): ChallengeEntity {
+    private fun getItem(position: Int): Challenge {
         return challengesModel.challenges.value!![position]
     }
 }

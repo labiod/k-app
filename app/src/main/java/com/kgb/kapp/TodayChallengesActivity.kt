@@ -32,6 +32,7 @@ class TodayChallengesActivity : AppCompatActivity() {
     private lateinit var binding: DayChallengesBinding
 
     private var adapter: TodayChallengesAdapter? = null
+    private var templateAdapter: TemplatesDialogAdapter? = null
 
     /**
      * Method call when android system create activity
@@ -91,19 +92,16 @@ class TodayChallengesActivity : AppCompatActivity() {
     }
 
     private fun loadTemplateData() {
-        val adapter = TemplatesDialogAdapter(viewModelDay.templates)
-        viewModelDay.templates.observe(this, android.arch.lifecycle.Observer {
-            adapter.notifyDataSetChanged()
-        })
+
         val onChooseListener = DialogInterface.OnClickListener { dialog, which ->
             Log.d(Constants.GLOBAL_TAG, "on choose $which")
-            adapter.getItem(which)?.let {
+            templateAdapter?.getItem(which)?.let {
                 viewModelDay.loadDataFromTemplate(it)
             }
         }
         val dialog = AlertDialog.Builder(this)
             .setTitle("Templates list")
-            .setAdapter(adapter, onChooseListener)
+            .setAdapter(templateAdapter, onChooseListener)
             .create()
         dialog.show()
     }
@@ -122,9 +120,13 @@ class TodayChallengesActivity : AppCompatActivity() {
 
     private fun initViewModel() {
         adapter = TodayChallengesAdapter(viewModelDay)
+        templateAdapter = TemplatesDialogAdapter(viewModelDay.templates)
         challenges_list.adapter = adapter
         viewModelDay.challenges.observe(this, android.arch.lifecycle.Observer {
-            adapter!!.notifyDataSetChanged()
+            adapter?.notifyDataSetChanged()
+        })
+        viewModelDay.templates.observe(this, android.arch.lifecycle.Observer {
+            templateAdapter?.notifyDataSetChanged()
         })
     }
 }

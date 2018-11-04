@@ -1,10 +1,13 @@
 package com.kgb.kapp.viewmodel
 
 import android.arch.lifecycle.LiveData
+import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
-import com.kgb.kapp.db.entity.ChallengeEntity
-import com.kgb.kapp.db.entity.TemplateEntity
-import com.kgb.kapp.repository.ChallengesRepository
+import com.bitage.kapp.model.Challenge
+import com.bitage.kapp.model.Template
+import com.bitage.kapp.repository.ChallengeRepository
+import com.bitage.kapp.repository.TemplateRepository
+import io.reactivex.disposables.CompositeDisposable
 import java.text.DateFormat
 import java.util.Date
 
@@ -12,22 +15,36 @@ import java.util.Date
  * View model class used in [com.kgb.kapp.TodayChallengesActivity] class
  * Contains challenges for selected date and list of templates added by user
  */
-class DayChallengeViewModel(private val date: Date, private val repository: ChallengesRepository) : ViewModel() {
+class DayChallengeViewModel(private val date: Date,
+                            private val repository: ChallengeRepository,
+                            private val templateRepository: TemplateRepository) : KViewModel() {
 
-    private val _challenges = repository.getDayChallenges(date)
+    private val _challenges = MutableLiveData<List<Challenge>>()
     /**
      * Getter for _challenges field
      */
-    val challenges: LiveData<List<ChallengeEntity>>
+    val challenges: LiveData<List<Challenge>>
         get() = _challenges
 
-    private val _templates = repository.getTemplates()
+    private val _templates = MutableLiveData<List<Template>>()
     /**
      * Getter for _templates field
      */
-    val templates: LiveData<List<TemplateEntity>>
+    val templates: LiveData<List<Template>>
         get() = _templates
 
+    init {
+        addDisposable(repository.getDayChallenges(date).subscribe({
+            _challenges.postValue(it)
+        }) {
+            error(it)
+        })
+        addDisposable(templateRepository.getTemplates().subscribe({
+            _templates.postValue(it)
+        }) {
+            println(it)
+        })
+    }
     /**
      * Delete all challenges from repository
      */
@@ -39,7 +56,7 @@ class DayChallengeViewModel(private val date: Date, private val repository: Chal
      * Update challenge by given entity in repository
      * @param - item to update
      */
-    fun updateChallenge(item: ChallengeEntity) {
+    fun updateChallenge(item: Challenge) {
         repository.update(item)
     }
 
@@ -47,24 +64,29 @@ class DayChallengeViewModel(private val date: Date, private val repository: Chal
      * Delete given challenge from repository
      * @param item - item to delete
      */
-    fun deleteChallenge(item: ChallengeEntity) {
-        repository.deleteChallenge(item)
+    fun deleteChallenge(item: Challenge) {
+        addDisposable(repository.deleteChallenge(item)
+            .subscribe {
+                repository.getDayChallenges(date)
+            })
     }
 
     /**
      * load given template data to repository for actual date
      * @param templateEntity - template to load
      */
-    fun loadDataFromTemplate(templateEntity: TemplateEntity) {
-        repository.loadDataFromTemplate(templateEntity, date)
+    fun loadDataFromTemplate(templateEntity: Template) {
+        templateRepository.loadDataFromTemplate(templateEntity, date)
     }
 
     /**
      * Update progress for given challenge
      * @param item - given challenge
      */
-    fun updateProgress(item: ChallengeEntity) {
-        repository.updateUserProgress(item)
+    fun updateProgress(item: Challenge) {
+        addDisposable(repository.updateUserProgress(item).subscribe {
+            repository.getDayChallenges(date)
+        })
     }
 
     fun getDate(formater: DateFormat) = formater.format(date)

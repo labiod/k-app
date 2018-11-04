@@ -6,13 +6,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.TextView
+import com.bitage.kapp.model.Template
 import com.kgb.kapp.R
-import com.kgb.kapp.db.entity.TemplateEntity
 
 /**
  * Adapter for template entity
  */
-class TemplatesDialogAdapter(private val data: LiveData<List<TemplateEntity>>) : BaseAdapter() {
+class TemplatesDialogAdapter(private val data: LiveData<List<Template>>) : BaseAdapter() {
     /**
      * Get view for current position
      * @param position - current position

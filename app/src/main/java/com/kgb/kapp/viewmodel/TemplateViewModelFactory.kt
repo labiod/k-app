@@ -3,8 +3,8 @@ package com.kgb.kapp.viewmodel
 import android.arch.lifecycle.ViewModel
 import android.arch.lifecycle.ViewModelProvider
 import android.util.Log
+import com.bitage.kapp.repository.TemplateRepository
 import com.kgb.kapp.challenge.Constants
-import com.kgb.kapp.repository.TemplateRepository
 
 /**
  * Model factory class used to create [TemplateViewModel] with given date

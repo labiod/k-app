@@ -1,9 +1,10 @@
 package com.kgb.kapp.di.module
 
 import android.arch.lifecycle.ViewModelProviders
+import com.bitage.kapp.repository.ChallengeRepository
+import com.bitage.kapp.repository.TemplateRepository
 import com.kgb.kapp.TodayChallengesActivity
 import com.kgb.kapp.challenge.Constants
-import com.kgb.kapp.repository.ChallengesRepository
 import com.kgb.kapp.viewmodel.DayChallengeViewModel
 import com.kgb.kapp.viewmodel.DayViewModelFactory
 import dagger.Module
@@ -14,9 +15,13 @@ import java.util.Calendar
 @Module
 class DayChallengesActivityModule(private val activity: TodayChallengesActivity) {
     @Provides
-    fun provideViewModel(repository: ChallengesRepository): DayChallengeViewModel {
+    fun provideViewModel(
+        repository: ChallengeRepository,
+        templateRepository: TemplateRepository
+    ): DayChallengeViewModel {
         val date = getCurrentDate(activity)
-        return ViewModelProviders.of(activity, DayViewModelFactory(date, repository)).get(DayChallengeViewModel::class.java)
+        return ViewModelProviders.of(activity, DayViewModelFactory(date, repository, templateRepository))
+            .get(DayChallengeViewModel::class.java)
     }
 
     private fun getCurrentDate(activity: TodayChallengesActivity): Date {

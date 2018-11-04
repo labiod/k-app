@@ -7,9 +7,9 @@ import android.support.v7.app.AppCompatActivity
 import android.view.View
 import android.widget.AdapterView
 import android.widget.Toast
-import com.kgb.kapp.challenge.ChallengeType
+import com.bitage.kapp.model.ChallengeType
+import com.bitage.kapp.model.StepProgress
 import com.kgb.kapp.challenge.Constants
-import com.kgb.kapp.challenge.StepProgress
 import com.kgb.kapp.databinding.EditChallengeBinding
 import com.kgb.kapp.viewmodel.EditChallengeViewModel
 import kotlinx.android.synthetic.main.edit_challenge.*
@@ -104,7 +104,7 @@ class EditChallengeActivity : AppCompatActivity() {
                     binding.challengeGoal.setText(it.goal.toString())
                     binding.challengeSeries.setText(it.series.toString())
                     binding.challengeStep.setSelection(it.step - 1)
-                    binding.challengeStepProgress.setSelection(it.stepProgress.ordinal)
+                    binding.challengeStepProgress.setSelection(it.progress.ordinal)
                 }
             })
         }

@@ -7,13 +7,13 @@
         <import type="com.kgb.kapp.helper.BindingUtil" />
         <variable
             name="progress"
-            type="com.kgb.kapp.challenge.StepProgress[]" />
+            type="com.bitage.kapp.model.StepProgress[]" />
         <variable
             name="steps"
             type="Integer[]" />
         <variable
             name="challenges"
-            type="com.kgb.kapp.challenge.ChallengeType[]" />
+            type="com.bitage.kapp.model.ChallengeType[]" />
         <variable
             name="viewmodel"
             type="com.kgb.kapp.viewmodel.EditChallengeViewModel" />

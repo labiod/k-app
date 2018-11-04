@@ -1,18 +1,29 @@
+
 apply plugin: 'kotlin'
-apply plugin: 'org.jetbrains.dokka'
 
-dokka {
-    outputFormat = 'html'
-    outputDirectory = "$buildDir/javadoc"
-    skipEmptyPackages = true
-    reportUndocumented = true
-}
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
 
-configurations {
-    ktlint
+configurations.all {
+    resolutionStrategy {
+        force "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    }
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation project(':domain')
+
+    implementation kotlinDependencies.javaxAnnotation
+    implementation kotlinDependencies.javaxInject
+    implementation kotlinDependencies.rxKotlin
+    implementation kotlinDependencies.kotlin
+    implementation androidComponentDependencies.roomRuntime
+    implementation androidComponentDependencies.roomRxJava
+
+    annotationProcessor androidComponentDependencies.roomCompiler
+    kapt androidComponentDependencies.roomCompiler
+    compileOnly kotlinDependencies.javaxAnnotation
+
+    testImplementation testDependencies.junit
+    testImplementation testDependencies.mockito
 }

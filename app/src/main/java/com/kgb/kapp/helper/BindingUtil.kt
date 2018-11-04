@@ -4,7 +4,7 @@ import android.content.Context
 import android.databinding.BindingAdapter
 import android.widget.ArrayAdapter
 import android.widget.Spinner
-import com.kgb.kapp.challenge.ChallengeType
+import com.bitage.kapp.model.ChallengeType
 
 /**
  * Util class for data binding
@@ -60,7 +60,7 @@ class BindingUtil {
         fun convertChallengesArrayToStrings(challenges: Array<ChallengeType>, context: Context): ArrayList<String> {
             val result = ArrayList<String>()
             challenges.forEach {
-                result.add(context.getString(it.challengeResId))
+                result.add(context.getString(ChallengeTypeResMapper.valueOf(it.name).resId))
             }
             return result
         }

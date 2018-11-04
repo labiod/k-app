@@ -2,12 +2,10 @@ package com.kgb.kapp.viewmodel
 
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
-import android.arch.lifecycle.ViewModel
-import com.kgb.kapp.challenge.ChallengeType
-import com.kgb.kapp.challenge.StepProgress
-import com.kgb.kapp.db.entity.ChallengeEntity
-import com.kgb.kapp.db.entity.UserProgressEntity
-import com.kgb.kapp.repository.ChallengesRepository
+import com.bitage.kapp.model.Challenge
+import com.bitage.kapp.model.ChallengeType
+import com.bitage.kapp.model.StepProgress
+import com.bitage.kapp.repository.ChallengeRepository
 import java.util.Date
 import java.util.concurrent.Executors
 
@@ -15,20 +13,20 @@ import java.util.concurrent.Executors
  * View model used in [com.kgb.kapp.EditChallengeActivity] class
  * Contains challenge that will be edit
  */
-class EditChallengeViewModel(private val repository: ChallengesRepository) : ViewModel() {
+class EditChallengeViewModel(private val repository: ChallengeRepository) : KViewModel() {
     private val executor = Executors.newSingleThreadExecutor()
-    private val _challengeProgress = MutableLiveData<UserProgressEntity>()
+    private val _challengeProgress = MutableLiveData<Challenge>()
     /**
      * Getter for _challengeProgress field
      */
-    val challengeProgress: LiveData<UserProgressEntity>
+    val challengeProgress: LiveData<Challenge>
         get() = _challengeProgress
 
-    private val _challenge = MutableLiveData<ChallengeEntity>()
+    private val _challenge = MutableLiveData<Challenge>()
     /**
      * Getter for _challenge field
      */
-    val challenge: LiveData<ChallengeEntity>
+    val challenge: LiveData<Challenge>
         get() = _challenge
 
     /**
@@ -39,10 +37,12 @@ class EditChallengeViewModel(private val repository: ChallengesRepository) : Vie
      * @param noteId - challenge id
      */
     fun loadChallenge(noteId: Long) {
-        executor.execute {
-            val note = repository.getChallengeById(noteId)
-            _challenge.postValue(note)
-        }
+        val note = repository.getChallengeById(noteId)
+        addDisposable(note.subscribe({ next ->
+            _challenge.postValue(next)
+        }) { err ->
+            println("[KGB] $err")
+        })
     }
 
     /**
@@ -54,8 +54,9 @@ class EditChallengeViewModel(private val repository: ChallengesRepository) : Vie
      * @param series - challenge series
      */
     fun applyChanges(challengeType: ChallengeType, step: Int, progress: StepProgress, goal: Int, series: Int) {
+
         repository.update(_challenge.value?.applyChanges(step, progress, goal, series)
-            ?: ChallengeEntity(null, challengeType, step, progress, Date(), series, goal))
+            ?: Challenge(null, challengeType, step, progress, Date(), series, goal))
     }
 
     /**
@@ -63,10 +64,9 @@ class EditChallengeViewModel(private val repository: ChallengesRepository) : Vie
      * @param challengeType - given challenge type
      */
     fun loadChallengeProgress(challengeType: ChallengeType) {
-        executor.execute {
-            val progress = repository.getChallengeProgress(challengeType)
-                ?: UserProgressEntity.createNew(challengeType)
-            _challengeProgress.postValue(progress)
-        }
+        val progress = repository.getDefaultChallengeValues(challengeType)
+        addDisposable(progress.subscribe { challenge ->
+            _challengeProgress.postValue(challenge)
+        })
     }
 }
