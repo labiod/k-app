@@ -6,9 +6,7 @@ import android.arch.persistence.room.Insert
 import android.arch.persistence.room.OnConflictStrategy
 import android.arch.persistence.room.Query
 import com.bitage.kapp.entity.ChallengeEntity
-import io.reactivex.Completable
 import io.reactivex.Flowable
-import io.reactivex.Maybe
 
 /**
  * Dao class that retrieve and manipulate (update/insert/delete) challenges data from database
@@ -19,7 +17,7 @@ interface ChallengeDao {
      * Insert challenge to database
      */
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertChallenge(challengeEntity: ChallengeEntity): Long
+    fun insertChallenge(challenge: ChallengeEntity): Long
 
     /**
      * Insert list of challenges to database

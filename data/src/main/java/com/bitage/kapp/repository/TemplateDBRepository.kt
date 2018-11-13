@@ -2,11 +2,11 @@ package com.bitage.kapp.repository
 
 import com.bitage.kapp.mapper.EntityMapper
 import com.bitage.kapp.db.ChallengeDB
+import com.bitage.kapp.db.entity.TemplateChallengesEntity
 import com.bitage.kapp.entity.ChallengeEntity
 import com.bitage.kapp.entity.UserProgressEntity
 import com.bitage.kapp.model.ChallengeType
 import com.bitage.kapp.model.Template
-import com.kgb.kapp.db.entity.TemplateChallengesEntity
 import io.reactivex.BackpressureStrategy
 import io.reactivex.Completable
 import io.reactivex.Flowable
@@ -30,7 +30,7 @@ class TemplateDBRepository(private val db: ChallengeDB) : TemplateRepository {
     override fun insertTemplate(template: Template): Completable {
         return Completable.create { c ->
             try {
-                val id = db.templateDao().insertTemplate(EntityMapper.mapTemplateToTemplateEntity(template))
+                val id = db.templateDao().insertTemplate(EntityMapper.mapToTemplateEntity(template))
                 template.challenges.forEach {
                     db.templateDao().insertChallengeForTemplate(TemplateChallengesEntity(null, id, it))
                 }
@@ -47,7 +47,7 @@ class TemplateDBRepository(private val db: ChallengeDB) : TemplateRepository {
      */
     override fun getTemplates(): Flowable<List<Template>> {
         val result: Flowable<List<Template>> = Flowable.create({ e ->
-            e.onNext(EntityMapper.mapTemplateEntitiesToTemplateList(db.templateDao().getAll()))
+            e.onNext(EntityMapper.mapToTemplateList(db.templateDao().getAll()))
         }, BackpressureStrategy.LATEST)
         return result.subscribeOn(Schedulers.io())
     }

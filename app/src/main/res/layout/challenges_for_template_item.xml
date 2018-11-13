@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
     <data>
-        <import type="com.kgb.kapp.helper.BindingUtil" />
+        <import type="com.bitage.kapp.helper.BindingUtil" />
         <variable
             name="challenges"
             type="com.bitage.kapp.model.ChallengeType[]" />

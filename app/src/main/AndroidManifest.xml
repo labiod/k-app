@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.kgb.kapp">
+    package="com.bitage.kapp">
 
     <application
         android:allowBackup="false"
@@ -10,7 +10,7 @@
         android:name=".KApplication"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".ChallengesMainActivity"
+            android:name="com.bitage.kapp.home.HomeActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme">
             <intent-filter>
@@ -21,16 +21,16 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".TodayChallengesActivity"
+            android:name=".daychallenges.TodayChallengesActivity"
             android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
             </intent-filter>
         </activity>
         <activity
-            android:name=".TemplateActivity"
+            android:name=".template.TemplateActivity"
             android:theme="@style/AppTheme" />
-        <activity android:name="com.kgb.kapp.EditChallengeActivity" />
+        <activity android:name=".editchallenge.EditChallengeActivity" />
     </application>
 
 </manifest>

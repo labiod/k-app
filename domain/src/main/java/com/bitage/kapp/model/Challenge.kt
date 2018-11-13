@@ -2,6 +2,9 @@ package com.bitage.kapp.model
 
 import java.util.Date
 
+/**
+ * Challenge model class
+ */
 class Challenge(
     val id: Long? = null,
     /**

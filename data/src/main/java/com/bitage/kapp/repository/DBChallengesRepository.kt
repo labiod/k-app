@@ -41,7 +41,7 @@ class DBChallengesRepository(private val db: ChallengeDB) : ChallengeRepository 
         val result: Flowable<List<Challenge>> = Flowable.create({ e ->
             db.noteDao().getChallengeAtDate(startDate.time, endDate.time).
                 subscribe { next ->
-                    e.onNext(EntityMapper.mapChallengeEntitiesListToChallengeList(next))
+                    e.onNext(EntityMapper.mapToChallengeList(next))
                 }
 
         }, BackpressureStrategy.LATEST)
@@ -64,9 +64,8 @@ class DBChallengesRepository(private val db: ChallengeDB) : ChallengeRepository 
      */
     override fun update(challenge: Challenge): Completable {
         executor.execute {
-            db.noteDao().insertChallenge(EntityMapper.mapChallengeToChallengeEntity(challenge))
+            db.noteDao().insertChallenge(EntityMapper.mapToChallengeEntity(challenge))
         }
-
         return Completable.complete()
     }
 
@@ -99,7 +98,7 @@ class DBChallengesRepository(private val db: ChallengeDB) : ChallengeRepository 
     override fun deleteChallenge(challenge: Challenge): Completable {
         val result: Completable = Completable.create { e ->
             try {
-                db.noteDao().deleteChallenge(EntityMapper.mapChallengeToChallengeEntity(challenge))
+                db.noteDao().deleteChallenge(EntityMapper.mapToChallengeEntity(challenge))
                 e.onComplete()
             } catch (ex: Exception) {
                 e.onError(ex)
@@ -116,7 +115,7 @@ class DBChallengesRepository(private val db: ChallengeDB) : ChallengeRepository 
      */
     override fun getChallengeById(challengeId: Long): Flowable<Challenge?> {
         val result: Flowable<Challenge?> = Flowable.create({e ->
-            e.onNext(EntityMapper.mapChallengeEntityToChallenge(db.noteDao().getChallengeById(challengeId)))
+            e.onNext(EntityMapper.mapProgressToChallenge(db.noteDao().getChallengeById(challengeId)))
         }, BackpressureStrategy.LATEST)
         return result.subscribeOn(Schedulers.io())
     }

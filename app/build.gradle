@@ -9,12 +9,12 @@ android {
     compileSdkVersion 28
     buildToolsVersion '28.0.3'
     defaultConfig {
-        applicationId "com.kgb.kapp"
+        applicationId "com.bitage.kapp"
         minSdkVersion 21
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
-        testInstrumentationRunner "com.kgb.kapp.runner.KApplicationRunner"
+        testInstrumentationRunner "com.bitage.kapp.runner.KApplicationRunner"
     }
     buildTypes {
         release {
@@ -40,6 +40,7 @@ configurations {
 
 dependencies {
     implementation project(':data')
+    implementation project(':presentation')
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation supportDependencies.appCompatV7

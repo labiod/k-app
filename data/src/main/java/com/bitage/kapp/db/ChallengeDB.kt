@@ -1,8 +1,8 @@
 package com.bitage.kapp.db
 
-import com.kgb.kapp.db.TemplateDao
-import com.kgb.kapp.db.UserDao
-
+/**
+ * Interface for database fo challenges
+ */
 interface ChallengeDB {
     /**
      * Return challenge dao object

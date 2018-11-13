@@ -1,4 +1,4 @@
-package com.kgb.kapp.db.entity
+package com.bitage.kapp.db.entity
 
 import android.arch.persistence.room.Entity
 import android.arch.persistence.room.ForeignKey

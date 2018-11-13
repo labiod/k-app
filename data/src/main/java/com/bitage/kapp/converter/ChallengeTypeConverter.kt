@@ -1,4 +1,4 @@
-package com.kgb.kapp.db.converter
+package com.bitage.kapp.db.converter
 
 import android.arch.persistence.room.TypeConverter
 import com.bitage.kapp.model.ChallengeType

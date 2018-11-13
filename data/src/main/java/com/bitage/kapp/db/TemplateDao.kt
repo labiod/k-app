@@ -1,12 +1,11 @@
-package com.kgb.kapp.db
+package com.bitage.kapp.db
 
 import android.arch.persistence.room.Dao
 import android.arch.persistence.room.Insert
 import android.arch.persistence.room.OnConflictStrategy
 import android.arch.persistence.room.Query
 import com.bitage.kapp.entity.TemplateEntity
-import com.kgb.kapp.db.entity.TemplateChallengesEntity
-import io.reactivex.Flowable
+import com.bitage.kapp.db.entity.TemplateChallengesEntity
 
 /**
  * Dao class that retrieve and manipulate (update/insert/delete) template data from database

@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
     <data>
-        <import type="com.kgb.kapp.helper.BindingUtil" />
+        <import type="com.bitage.kapp.helper.BindingUtil" />
         <variable
             name="progress"
             type="com.bitage.kapp.model.StepProgress[]" />
@@ -16,7 +16,7 @@
             type="com.bitage.kapp.model.ChallengeType[]" />
         <variable
             name="viewmodel"
-            type="com.kgb.kapp.viewmodel.EditChallengeViewModel" />
+            type="com.bitage.kapp.editchallenge.EditChallengeViewModel" />
         <variable
             name="editMode"
             type="Boolean" />

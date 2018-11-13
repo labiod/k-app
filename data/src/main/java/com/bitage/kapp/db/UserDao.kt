@@ -1,4 +1,4 @@
-package com.kgb.kapp.db
+package com.bitage.kapp.db
 
 import android.arch.persistence.room.Dao
 import android.arch.persistence.room.Insert

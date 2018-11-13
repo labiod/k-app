@@ -2,12 +2,13 @@ package com.bitage.kapp.repository
 
 import com.bitage.kapp.model.Challenge
 import com.bitage.kapp.model.ChallengeType
-import com.bitage.kapp.model.Template
 import io.reactivex.Completable
 import io.reactivex.Flowable
-import io.reactivex.Maybe
 import java.util.Date
 
+/**
+ * Interface for challenge repository
+ */
 interface ChallengeRepository {
     /**
      * Get Challenge Entity for give Id

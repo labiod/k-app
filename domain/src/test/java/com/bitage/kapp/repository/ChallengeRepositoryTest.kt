@@ -11,9 +11,15 @@ import org.junit.Test
 import org.mockito.Mockito.`when`
 import java.util.Date
 
+/**
+ * Challenge repository test class
+ */
 class ChallengeRepositoryTest {
     private lateinit var repository: ChallengeRepository
 
+    /**
+     * Test that repository get correct challenge
+     */
     @Test
     fun testGetChallengeById() {
         val basicChallenge = Challenge(1L, ChallengeType.BRIDGE, 1, StepProgress.BEGINNER, Date(), 1, 10)
