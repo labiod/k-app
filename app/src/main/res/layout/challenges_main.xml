@@ -12,7 +12,7 @@
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context="com.kgb.kapp.TodayChallengesActivity">
+        tools:context=".daychallenges.TodayChallengesActivity">
         <CalendarView
             android:id="@+id/challenges_calendar"
             android:layout_width="match_parent"

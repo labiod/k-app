@@ -9,12 +9,12 @@ android {
     compileSdkVersion 28
     buildToolsVersion '28.0.3'
     defaultConfig {
-        applicationId "com.kgb.kapp"
+        applicationId "com.bitage.kapp"
         minSdkVersion 21
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
-        testInstrumentationRunner "com.kgb.kapp.runner.KApplicationRunner"
+        testInstrumentationRunner "com.bitage.kapp.runner.KApplicationRunner"
     }
     buildTypes {
         release {
@@ -40,28 +40,30 @@ configurations {
 
 dependencies {
     implementation project(':data')
+    implementation project(':presentation')
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation "com.android.support:appcompat-v7:$supportLibVersion"
-    implementation "com.android.support:design:$supportLibVersion"
-    implementation 'com.android.support.constraint:constraint-layout:2.0.0-alpha2'
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation "android.arch.lifecycle:extensions:$lifecycle_version"
-    implementation "android.arch.persistence.room:runtime:$room_version"
-    implementation "com.google.dagger:dagger:2.16"
-    implementation "com.google.dagger:dagger-android:2.16"
-    implementation "com.google.dagger:dagger-android-support:2.16"
+    implementation supportDependencies.appCompatV7
+    implementation supportDependencies.design
+    implementation supportDependencies.constraintLayout
+    implementation kotlinDependencies.kotlin
+    implementation androidComponentDependencies.archRuntime
+    implementation androidComponentDependencies.archExtensions
+    implementation androidComponentDependencies.roomRuntime
+    implementation daggerDependencies.core
+    implementation daggerDependencies.android
+    implementation daggerDependencies.androidSupport
 
-    kapt "android.arch.persistence.room:compiler:$room_version"
-    kapt "com.google.dagger:dagger-compiler:2.16"
-    kapt "com.google.dagger:dagger-android-processor:2.16"
-    compileOnly "javax.annotation:jsr250-api:1.0"
+    kapt androidComponentDependencies.roomCompiler
+    kapt daggerDependencies.compiler
+    kapt daggerDependencies.processor
+    compileOnly kotlinDependencies.javaxAnnotation
 
-    ktlint "com.github.shyiko:ktlint:0.29.0"
+    ktlint kotlinDependencies.ktlint
 
-    testImplementation 'junit:junit:4.12'
-    kaptAndroidTest "com.google.dagger:dagger-compiler:2.16"
-    androidTestImplementation("com.android.support.test.espresso:espresso-core:$espressoVersion", {
+    testImplementation testDependencies.junit
+    kaptAndroidTest daggerDependencies.compiler
+    androidTestImplementation(testDependencies.espressoCore, {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
 }

@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
     <data>
-        <import type="com.kgb.kapp.helper.BindingUtil" />
+        <import type="com.bitage.kapp.helper.BindingUtil" />
         <variable
             name="challenges"
-            type="com.kgb.kapp.challenge.ChallengeType[]" />
+            type="com.bitage.kapp.model.ChallengeType[]" />
         <variable
             name="selectChallenge"
-            type="com.kgb.kapp.challenge.ChallengeType" />
+            type="com.bitage.kapp.model.ChallengeType" />
     </data>
     <android.support.constraint.ConstraintLayout
         xmlns:android="http://schemas.android.com/apk/res/android"

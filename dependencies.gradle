@@ -1,0 +1,72 @@
+
+allprojects {
+    repositories {
+        jcenter()
+    }
+}
+
+ext {
+    espressoVersion = '2.2.2'
+    daggerVersion = "2.16"
+    supportLibVersion = '28.0.0'
+    kotlinVersion = '1.3.0'
+    rxKotlinVersion = '2.1.0'
+    rxAndroidVersion = '2.0.1'
+    dokkaVersion = "0.9.17"
+    lifecycle_version = "1.1.1"
+    roomVersion = "1.1.1"
+    javaxAnnotationVersion = '1.0'
+    javaxInjectVersion = '1'
+    androidAnnotationsVersion = '21.0.3'
+    constraintLayoutVersion = "2.0.0-alpha2"
+
+    jUnitVersion = '4.12'
+    mockitoKotlinVersion = '1.5.0'
+
+    kotlinDependencies = [
+            javaxAnnotation:    "javax.annotation:jsr250-api:${javaxAnnotationVersion}",
+            javaxInject:        "javax.inject:javax.inject:${javaxInjectVersion}",
+            androidAnnotations: "com.android.support:support-annotations:${androidAnnotationsVersion}",
+            rxKotlin:           "io.reactivex.rxjava2:rxkotlin:${rxKotlinVersion}",
+            kotlin:             "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${kotlinVersion}",
+            ktlint:             "com.github.shyiko:ktlint:0.29.0"
+    ]
+
+    testDependencies = [
+            junit:              "junit:junit:${jUnitVersion}",
+            espressoCore:       "com.android.support.test.espresso:espresso-core:${espressoVersion}",
+            espressoIntents:    "com.android.support.test.espresso:espresso-intents:${espressoVersion}",
+            espressoContrib:    "com.android.support.test.espresso:espresso-contrib:${espressoVersion}",
+            mockito:            "com.nhaarman:mockito-kotlin:${mockitoKotlinVersion}"
+    ]
+
+    androidComponentDependencies = [
+            archRuntime:        "android.arch.lifecycle:runtime:${roomVersion}",
+            archExtensions:     "android.arch.lifecycle:extensions:${roomVersion}",
+            archCompiler:       "android.arch.lifecycle:compiler:${roomVersion}",
+            roomRuntime:        "android.arch.persistence.room:runtime:${roomVersion}",
+            roomCompiler:       "android.arch.persistence.room:compiler:${roomVersion}",
+            roomRxJava:         "android.arch.persistence.room:rxjava2:${roomVersion}"
+    ]
+
+    rxDependencies = [
+            rxAndroid:          "io.reactivex.rxjava2:rxandroid:${rxAndroidVersion}",
+    ]
+
+    daggerDependencies = [
+            compiler:           "com.google.dagger:dagger-compiler:${daggerVersion}",
+            core:               "com.google.dagger:dagger:${daggerVersion}",
+            android:            "com.google.dagger:dagger-android:${daggerVersion}",
+            androidSupport:     "com.google.dagger:dagger-android-support:${daggerVersion}",
+            processor:          "com.google.dagger:dagger-android-processor:${daggerVersion}",
+    ]
+
+    supportDependencies = [
+            supportV4:          "com.android.support:support-v4:${supportLibVersion}",
+            supportV13:         "com.android.support:support-v13:${supportLibVersion}",
+            appCompatV7:        "com.android.support:appcompat-v7:${supportLibVersion}",
+            recyclerView:       "com.android.support:recyclerview-v7:${supportLibVersion}",
+            design:             "com.android.support:design:${supportLibVersion}",
+            constraintLayout:   "com.android.support.constraint:constraint-layout:$constraintLayoutVersion"
+    ]
+}
