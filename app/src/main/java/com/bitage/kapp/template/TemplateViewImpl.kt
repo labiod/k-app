@@ -6,7 +6,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.widget.Toast
 import com.bitage.kapp.R
-import com.bitage.kapp.adapter.ChallengesForTemplateAdapter
+import com.bitage.kapp.ui.adapter.ChallengesForTemplateAdapter
 import com.bitage.kapp.databinding.ActivityTemplateBinding
 import com.bitage.kapp.model.ChallengeType
 import com.bitage.kapp.model.Template

@@ -1,4 +1,4 @@
-package com.bitage.kapp.adapter
+package com.bitage.kapp.ui.adapter
 
 import android.content.Intent
 import android.databinding.DataBindingUtil

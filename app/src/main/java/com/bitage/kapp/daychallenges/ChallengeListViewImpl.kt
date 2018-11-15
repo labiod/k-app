@@ -11,8 +11,8 @@ import android.util.Log
 import android.view.View
 import com.bitage.kapp.presentation.Constants
 import com.bitage.kapp.R
-import com.bitage.kapp.adapter.TemplatesDialogAdapter
-import com.bitage.kapp.adapter.TodayChallengesAdapter
+import com.bitage.kapp.ui.adapter.TemplatesDialogAdapter
+import com.bitage.kapp.ui.adapter.TodayChallengesAdapter
 import com.bitage.kapp.databinding.DayChallengesBinding
 import com.bitage.kapp.editchallenge.EditChallengeActivity
 import com.bitage.kapp.template.TemplateActivity
