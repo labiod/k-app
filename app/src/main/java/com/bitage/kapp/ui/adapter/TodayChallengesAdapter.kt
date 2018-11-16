@@ -57,35 +57,36 @@ class TodayChallengesAdapter(private val challengesModel: DayChallengeViewModel)
      */
     override fun onBindViewHolder(holder: Holder, position: Int) {
         val context = holder.itemView.context
-        val item = getItem(position)
-        if (item.finished) {
-            holder.binding.challengeEditButton.visibility = View.GONE
-            holder.binding.challengeDeleteButton.visibility = View.GONE
-            holder.binding.challengeFinishedButton.setImageResource(R.drawable.ic_challenge_revert)
-            holder.itemView.setBackgroundColor(Color.LTGRAY)
-        }
-        holder.binding.challengeFinishedButton.setOnClickListener {
-            val challenge = item.setFinishChallenge(item.finished.not())
-            challengesModel.updateChallenge(challenge)
-            challengesModel.updateProgress(challenge)
-        }
+        getItem(position)?.let { item ->
+            if (item.finished) {
+                holder.binding.challengeEditButton.visibility = View.GONE
+                holder.binding.challengeDeleteButton.visibility = View.GONE
+                holder.binding.challengeFinishedButton.setImageResource(R.drawable.ic_challenge_revert)
+                holder.itemView.setBackgroundColor(Color.LTGRAY)
+            }
+            holder.binding.challengeFinishedButton.setOnClickListener {
+                val challenge = item.setFinishChallenge(item.finished.not())
+                challengesModel.updateChallenge(challenge)
+                challengesModel.updateProgress(challenge)
+            }
 
-        holder.binding.challengeEditButton.setOnClickListener {
-            val intent = Intent(it.context, EditChallengeActivity::class.java)
-            intent.putExtra(Constants.CHALLENGE_ITEM_ID_KEY, item.id)
-            it.context.startActivity(intent)
+            holder.binding.challengeEditButton.setOnClickListener {
+                val intent = Intent(it.context, EditChallengeActivity::class.java)
+                intent.putExtra(Constants.CHALLENGE_ITEM_ID_KEY, item.id)
+                it.context.startActivity(intent)
+            }
+
+            holder.binding.challengeDeleteButton.setOnClickListener {
+                challengesModel.deleteChallenge(item)
+            }
+
+            holder.binding.challengeName.setText(ChallengeTypeResMapper.valueOf(item.challengeName.name).resId)
+
+            holder.binding.currentGoal.text = context.resources.getQuantityString(
+                R.plurals.challenge_current_goal_format, item.series, item.goal, item.series)
+            holder.binding.stepLevel.text = context.getString(
+                R.string.challenge_current_level_format, item.step, MAX_LEVEL)
         }
-
-        holder.binding.challengeDeleteButton.setOnClickListener {
-            challengesModel.deleteChallenge(item)
-        }
-
-        holder.binding.challengeName.setText(ChallengeTypeResMapper.valueOf(item.challengeName.name).resId)
-
-        holder.binding.currentGoal.text = context.resources.getQuantityString(
-            R.plurals.challenge_current_goal_format, item.series, item.goal, item.series)
-        holder.binding.stepLevel.text = context.getString(
-            R.string.challenge_current_level_format, item.step, MAX_LEVEL)
     }
 
     /**
@@ -93,9 +94,7 @@ class TodayChallengesAdapter(private val challengesModel: DayChallengeViewModel)
      * @param position - given adapter position
      * @return 1 if item is finished or 0 if not
      */
-    override fun getItemViewType(position: Int) = if (getItem(position).finished) 1 else 0
+    override fun getItemViewType(position: Int) = if (getItem(position)?.finished == true) 1 else 0
 
-    private fun getItem(position: Int): Challenge {
-        return challengesModel.challenges.value!![position]
-    }
+    private fun getItem(position: Int): Challenge? = challengesModel.challenges.value?.get(position)
 }

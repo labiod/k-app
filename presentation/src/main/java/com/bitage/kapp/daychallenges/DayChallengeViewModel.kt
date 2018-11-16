@@ -41,7 +41,7 @@ class DayChallengeViewModel(private val date: Date,
         addDisposable(templateRepository.getTemplates().subscribe({
             _templates.postValue(it)
         }) {
-            println(it)
+            error(it)
         })
     }
     /**
@@ -89,7 +89,15 @@ class DayChallengeViewModel(private val date: Date,
     }
 
     /**
-     * Get
+     * Get date in given format
+     * @param dateformat - date format
+     * @return string date
      */
-    fun getDate(formater: DateFormat) = formater.format(date)
+    fun getDate(dateformat: DateFormat) = dateformat.format(date)
+
+    /**
+     * Get date in miliseconds
+     * @return time in miliseconds
+     */
+    fun getTime() = date.time
 }

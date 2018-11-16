@@ -2,36 +2,56 @@
 <android.support.constraint.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:id="@+id/rootLayout"
+    android:animateLayoutChanges="true">
 
-    <Button
+    <ImageButton
         android:id="@+id/leftButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:text="left"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/rightButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:text="right"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginBottom="8dp"
+        android:background="@android:color/transparent"
+        android:contentDescription="@string/round_calendar_left_buttont_desc"
+        android:scaleType="fitCenter"
+        android:src="@drawable/calendar_prev_day_drawable"
+        app:layout_constraintBottom_toBottomOf="@+id/selectedDayLayout"
+        app:layout_constraintEnd_toStartOf="@+id/selectedDayLayout"
         app:layout_constraintTop_toTopOf="parent" />
-    <LinearLayout
+
+    <ImageButton
+        android:id="@+id/rightButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@+id/challengesCalendar"
-        app:layout_constraintEnd_toStartOf="@+id/rightButton"
-        app:layout_constraintStart_toEndOf="@+id/leftButton"
-        app:layout_constraintTop_toTopOf="parent"
-        android:padding="8dp">
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:background="@android:color/transparent"
+        android:contentDescription="@string/round_calendar_right_button_desc"
+        android:src="@drawable/calendar_next_day_drawable"
+        app:layout_constraintBottom_toBottomOf="@+id/selectedDayLayout"
+        app:layout_constraintStart_toEndOf="@+id/selectedDayLayout"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/selectedDayLayout"
+        android:layout_width="200dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/round_drawable"
+        android:orientation="horizontal"
+        android:padding="8dp"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
         <TextView
             android:id="@+id/selectedDay"
             android:layout_width="wrap_content"
@@ -40,21 +60,53 @@
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
-            android:text="23"
-            />
-    </LinearLayout>
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="23 Nov, 18" />
 
+        <TextView
+            android:id="@+id/progressView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/selectedDay"
+            tools:text="3/5" />
+    </android.support.constraint.ConstraintLayout>
 
-
-    <CalendarView
-        android:id="@+id/challengesCalendar"
-        android:layout_width="match_parent"
+    <ImageButton
+        android:id="@+id/expandCalendar"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:visibility="gone"
+        android:background="@android:color/transparent"
+        android:contentDescription="@string/round_calendar_expand_button_desc"
+        android:src="@drawable/calendar_icon_drawable"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/leftButton" />
+        app:layout_constraintTop_toBottomOf="@+id/selectedDayLayout" />
+
+    <CalendarView
+        android:id="@+id/challengesCalendar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/calendar_background"
+        android:scaleX="0.9"
+        android:scaleY="0.9"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 </android.support.constraint.ConstraintLayout>

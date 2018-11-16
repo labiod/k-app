@@ -13,9 +13,7 @@ class DateConverter {
      * @return date for given timestamp
      */
     @TypeConverter
-    fun toDate(timestamp: Long?): Date? {
-        return timestamp?.let { Date(timestamp) }
-    }
+    fun toDate(timestamp: Long?): Date? = timestamp?.let { Date(timestamp) }
 
     /**
      * Convert [Date] to timestamp
@@ -23,7 +21,5 @@ class DateConverter {
      * @return timestamp for give date
      */
     @TypeConverter
-    fun toTimestamp(time: Date?): Long? {
-        return time?.let { time.time }
-    }
+    fun toTimestamp(time: Date?): Long? = time?.let { time.time }
 }

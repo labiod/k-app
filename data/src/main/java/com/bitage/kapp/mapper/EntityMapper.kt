@@ -60,9 +60,8 @@ class EntityMapper {
          * @param templates - list of templates to convert
          * @return list of [Template]
          */
-        fun mapToTemplateList(templates: List<TemplateEntity>): List<Template> {
-            return templates.map { template -> mapToTemplate(template) }
-        }
+        fun mapToTemplateList(templates: List<TemplateEntity>): List<Template>
+            = templates.map { template -> mapToTemplate(template) }
 
         /**
          * Map [Template] to [TemplateEntity]

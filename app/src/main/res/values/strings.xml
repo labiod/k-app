@@ -15,6 +15,10 @@
     <string name="challenge_bridge_name">The Bridge</string>
     <string name="challenge_handstand_pushup_name">The Handstand Pushup</string>
 
+    <!-- Home screen -->
+    <string name="home_screen_manage_template_menu">Menage template</string>
+    <string name="home_hello_user_text">Hello $User</string>
+
     <!-- TodayChallenges screen -->
     <string name="your_challenges">Your Challenges!</string>
     <string name="your_challenges_menu_template_data">Load data from template</string>
@@ -38,4 +42,11 @@
     <string name="template_name_label_text">Template name:</string>
     <string name="challenges_for_template_label_text">Add challenge:</string>
     <string name="template_add_new_button_label">Add new…</string>
+    <string name="activity_template_item_text">Template list</string>
+
+    <!-- RoundCalendarView -->
+    <string name="show_progress_templ_text">%1$d/%2$d</string>
+    <string name="round_calendar_left_buttont_desc">left</string>
+    <string name="round_calendar_right_button_desc">right</string>
+    <string name="round_calendar_expand_button_desc">expand calendar button</string>
 </resources>

@@ -1,4 +1,3 @@
-
 apply plugin: 'kotlin'
 
 sourceCompatibility = 1.8
@@ -21,7 +20,7 @@ dependencies {
     implementation androidComponentDependencies.roomRxJava
 
     annotationProcessor androidComponentDependencies.roomCompiler
-    kapt androidComponentDependencies.roomCompiler
+
     compileOnly kotlinDependencies.javaxAnnotation
 
     testImplementation testDependencies.junit
