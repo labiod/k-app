@@ -23,13 +23,28 @@ import javax.inject.Singleton
         RepositoryModule::class
 ])
 interface ApplicationComponent : AndroidInjector<DaggerApplication> {
+    /**
+     * Builder class for application component
+     */
     @Component.Builder
     interface Builder {
+        /**
+         * Method get builder for application instance
+         * @param application - current application instance
+         * @return builder for application component
+         */
         @BindsInstance
         fun application(application: Application): Builder
 
+        /**
+         * Method attach [RepositoryModule] to application component
+         * @param module - repository module
+         */
         fun plus(module: RepositoryModule): Builder
 
+        /**
+         * Build application component
+         */
         fun build(): ApplicationComponent
     }
 

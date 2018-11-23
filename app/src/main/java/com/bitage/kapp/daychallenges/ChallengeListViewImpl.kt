@@ -1,5 +1,6 @@
 package com.bitage.kapp.daychallenges
 
+import android.arch.lifecycle.Observer
 import android.content.DialogInterface
 import android.content.Intent
 import android.databinding.DataBindingUtil
@@ -11,12 +12,13 @@ import android.util.Log
 import android.view.View
 import com.bitage.kapp.presentation.Constants
 import com.bitage.kapp.R
-import com.bitage.kapp.adapter.TemplatesDialogAdapter
-import com.bitage.kapp.adapter.TodayChallengesAdapter
+import com.bitage.kapp.ui.adapter.TemplatesDialogAdapter
+import com.bitage.kapp.ui.adapter.TodayChallengesAdapter
 import com.bitage.kapp.databinding.DayChallengesBinding
 import com.bitage.kapp.editchallenge.EditChallengeActivity
 import com.bitage.kapp.template.TemplateActivity
 import java.text.SimpleDateFormat
+import java.util.Calendar
 import java.util.Locale
 
 /**
@@ -88,7 +90,12 @@ class ChallengeListViewImpl(private val activity: TodayChallengesActivity) : Cha
         initRecyclerView()
         initViewModel()
         binding.fab.setOnClickListener {
+            val calendar = Calendar.getInstance()
+            calendar.timeInMillis = viewModel.getTime()
             val intent = Intent(it.context, EditChallengeActivity::class.java)
+            intent.putExtra(Constants.CURRENT_DATE_DAY, calendar.get(Calendar.DAY_OF_MONTH))
+            intent.putExtra(Constants.CURRENT_DATE_MONTH, calendar.get(Calendar.MONTH))
+            intent.putExtra(Constants.CURRENT_DATE_YEAR, calendar.get(Calendar.YEAR))
             activity.startActivity(intent)
         }
     }
@@ -103,6 +110,9 @@ class ChallengeListViewImpl(private val activity: TodayChallengesActivity) : Cha
     private fun initViewModel() {
         adapter = TodayChallengesAdapter(viewModel)
         templateAdapter = TemplatesDialogAdapter(viewModel.templates)
+        viewModel.templates.observe(activity, Observer {
+            templateAdapter?.notifyDataSetChanged()
+        })
         binding.challengesList.adapter = adapter
         viewModel.challenges.observe(activity, android.arch.lifecycle.Observer {
             adapter?.notifyDataSetChanged()

@@ -2,7 +2,7 @@ package com.bitage.kapp
 
 import com.bitage.kapp.db.ChallengeDB
 import com.bitage.kapp.di.ApplicationComponent
-import com.bitage.kapp.di.component.DaggerApplicationComponent
+import com.bitage.kapp.di.DaggerApplicationComponent
 import com.bitage.kapp.di.module.RepositoryModule
 import com.bitage.kapp.repository.ChallengeRepository
 import com.bitage.kapp.repository.TemplateRepository

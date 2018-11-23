@@ -1,4 +1,4 @@
-package com.bitage.kapp.adapter
+package com.bitage.kapp.ui.adapter
 
 import android.databinding.DataBindingUtil
 import android.support.v7.widget.RecyclerView

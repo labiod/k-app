@@ -23,6 +23,13 @@ android {
         }
     }
 
+    lintOptions {
+        abortOnError true
+        checkReleaseBuilds false
+        ignoreWarnings false
+        warningsAsErrors true
+    }
+
 }
 
 dependencies {
@@ -31,8 +38,13 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
     implementation kotlinDependencies.kotlin
-    implementation 'com.android.support:appcompat-v7:28.0.0'
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'com.android.support.test:runner:1.0.2'
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+    implementation kotlinDependencies.rxKotlin
+
+    implementation supportDependencies.appCompatV7
+    implementation rxDependencies.rxAndroid
+
+    testImplementation testDependencies.junit
+    androidTestImplementation(testDependencies.espressoCore, {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
 }

@@ -5,21 +5,24 @@ import android.arch.lifecycle.ViewModelProvider
 import android.util.Log
 import com.bitage.kapp.repository.ChallengeRepository
 import com.bitage.kapp.presentation.Constants
+import java.util.Date
 
 /**
  * Model factory class used to create [EditChallengeViewModel] with given date
  */
-class EditChallengeViewModelFactory(private val repository: ChallengeRepository)
-    : ViewModelProvider.NewInstanceFactory() {
+class EditChallengeViewModelFactory(
+    private val repository: ChallengeRepository,
+    private val date: Date
+) : ViewModelProvider.NewInstanceFactory() {
     /**
-     * Create [DayChallengeViewModel] for given date
+     * Create [EditChallengeViewModel] for given date
      * @param modelClass - class for created object
-     * @return [DayChallengeViewModel] instance
+     * @return [EditChallengeViewModel] instance
      */
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         try {
-            return EditChallengeViewModel(repository) as T
+            return EditChallengeViewModel(repository, date) as T
         } catch (ex: InstantiationException) {
             Log.e(Constants.GLOBAL_TAG, "error:", ex)
             return super.create(modelClass)

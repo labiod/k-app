@@ -1,12 +1,17 @@
 package com.bitage.kapp.home.di
 
+import android.arch.lifecycle.ViewModelProviders
 import com.bitage.kapp.home.HomePresenter
 import com.bitage.kapp.home.HomeActivity
 import com.bitage.kapp.home.HomePresenterImpl
 import com.bitage.kapp.home.HomeView
 import com.bitage.kapp.home.HomeViewImpl
+import com.bitage.kapp.home.HomeViewModel
+import com.bitage.kapp.home.HomeViewModelFactory
+import com.bitage.kapp.repository.ChallengeRepository
 import dagger.Module
 import dagger.Provides
+import java.util.Date
 
 /**
  * Dagger module for [HomeActivity]. Provide presenter and view for this activity
@@ -18,8 +23,17 @@ class HomeActivityModule(private val activity: HomeActivity) {
      * @return [HomeView] implementation
      */
     @Provides
-    fun provideHomeView(): HomeView {
-        return HomeViewImpl(activity)
+    fun provideHomeView(): HomeView = HomeViewImpl(activity)
+
+    /**
+     * Provide viewModel for activity
+     * @param repository - repository for challenges data
+     * @return [HomeViewModel] implementation
+     */
+    @Provides
+    fun provideHomeViewModel(repository: ChallengeRepository): HomeViewModel {
+        return ViewModelProviders.of(activity, HomeViewModelFactory(repository, Date()))
+            .get(HomeViewModel::class.java)
     }
 
     /**
@@ -28,7 +42,8 @@ class HomeActivityModule(private val activity: HomeActivity) {
      * @return [HomePresenter] implementation
      */
     @Provides
-    fun provideHomePresenter(view: HomeView): HomePresenter {
-        return HomePresenterImpl(view)
-    }
+    fun provideHomePresenter(
+        viewModel: HomeViewModel,
+        view: HomeView
+    ): HomePresenter = HomePresenterImpl(viewModel, view)
 }

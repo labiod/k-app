@@ -14,7 +14,7 @@ import java.util.concurrent.Executors
  * View model for edit challenge
  * Contains challenge that will be edit
  */
-class EditChallengeViewModel(private val repository: ChallengeRepository) : KViewModel() {
+class EditChallengeViewModel(private val repository: ChallengeRepository, private val date: Date) : KViewModel() {
     private val executor = Executors.newSingleThreadExecutor()
     private val _challengeProgress = MutableLiveData<Challenge>()
     /**
@@ -39,10 +39,8 @@ class EditChallengeViewModel(private val repository: ChallengeRepository) : KVie
      */
     fun loadChallenge(noteId: Long) {
         val note = repository.getChallengeById(noteId)
-        addDisposable(note.subscribe({ next ->
+        addDisposable(note.subscribe{ next ->
             _challenge.postValue(next)
-        }) { err ->
-            // do nothing
         })
     }
 
@@ -57,7 +55,7 @@ class EditChallengeViewModel(private val repository: ChallengeRepository) : KVie
     fun applyChanges(challengeType: ChallengeType, step: Int, progress: StepProgress, goal: Int, series: Int) {
 
         repository.update(_challenge.value?.applyChanges(step, progress, goal, series)
-            ?: Challenge(null, challengeType, step, progress, Date(), series, goal))
+            ?: Challenge(null, challengeType, step, progress, date, series, goal))
     }
 
     /**

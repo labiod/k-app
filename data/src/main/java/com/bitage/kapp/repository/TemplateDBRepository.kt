@@ -47,7 +47,11 @@ class TemplateDBRepository(private val db: ChallengeDB) : TemplateRepository {
      */
     override fun getTemplates(): Flowable<List<Template>> {
         val result: Flowable<List<Template>> = Flowable.create({ e ->
-            e.onNext(EntityMapper.mapToTemplateList(db.templateDao().getAll()))
+            db.templateDao().getAll()
+                .subscribe { next ->
+                    e.onNext(EntityMapper.mapToTemplateList(next))
+                }
+
         }, BackpressureStrategy.LATEST)
         return result.subscribeOn(Schedulers.io())
     }

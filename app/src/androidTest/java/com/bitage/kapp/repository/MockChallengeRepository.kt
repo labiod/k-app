@@ -24,31 +24,17 @@ class MockChallengeRepository : ChallengeRepository {
         return Flowable.just(challenges.first { it.id == challengeId })
     }
 
-    override fun getDayChallenges(date: Date): Flowable<List<Challenge>> {
-        return Flowable.just(challenges)
-    }
+    override fun getDayChallenges(date: Date): Flowable<List<Challenge>> = Flowable.just(challenges)
 
-    override fun update(challenge: Challenge): Completable {
-        // do nothing for update
-        return Completable.complete()
-    }
+    override fun update(challenge: Challenge): Completable = Completable.complete()
 
-    override fun deleteChallenge(challenge: Challenge): Completable {
-        // do nothing for update
-        return Completable.complete()
-    }
+    override fun deleteChallenge(challenge: Challenge): Completable = Completable.complete()
 
     override fun getDefaultChallengeValues(challengeType: ChallengeType): Flowable<Challenge> {
         return Flowable.just(EntityMapper.mapProgressToChallenge(UserProgressEntity.createNew(challengeType)))
     }
 
-    override fun updateUserProgress(challenge: Challenge): Completable {
-        // do nothing for update
-        return Completable.complete()
-    }
+    override fun updateUserProgress(challenge: Challenge): Completable = Completable.complete()
 
-    override fun deleteAll(): Flowable<Boolean> {
-        // do nothing for deleteAll
-        return Flowable.just(true)
-    }
+    override fun deleteAll(): Flowable<Boolean> = Flowable.just(true)
 }

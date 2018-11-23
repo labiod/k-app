@@ -16,7 +16,9 @@ jobs:
       - run:
           name: Download Dependencies
           command: ./gradlew androidDependencies
-
+      - run:
+          name: KtLint checks
+          command: ./gradlew ktlint
       - run:
           name: Compiling
           command: ./gradlew assemble
@@ -25,8 +27,8 @@ jobs:
             - ~/.gradle
           key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
       - run:
-          name: Run lint
-          command: ./gradlew lint ktlint
+          name: Lint checks
+          command: ./gradlew lint
       - store_artifacts:
           path: reports
           destination: reports

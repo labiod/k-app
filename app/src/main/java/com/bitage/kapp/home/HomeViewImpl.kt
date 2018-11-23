@@ -1,5 +1,6 @@
 package com.bitage.kapp.home
 
+import android.arch.lifecycle.Observer
 import android.content.Intent
 import android.databinding.DataBindingUtil
 import android.view.View
@@ -7,6 +8,8 @@ import com.bitage.kapp.presentation.Constants
 import com.bitage.kapp.R
 import com.bitage.kapp.daychallenges.TodayChallengesActivity
 import com.bitage.kapp.databinding.ChallengesMainBinding
+import com.bitage.kapp.ui.view.RoundCalendarView
+import io.reactivex.functions.Consumer
 
 /**
  * Implementation of home screen
@@ -14,6 +17,7 @@ import com.bitage.kapp.databinding.ChallengesMainBinding
 class HomeViewImpl(private val activity: HomeActivity) : HomeView {
 
     private lateinit var binding: ChallengesMainBinding
+    private lateinit var viewModel: HomeViewModel
 
     /**
      * Controls lifecycle of this view. It should be called in presenter onCreate method
@@ -31,17 +35,38 @@ class HomeViewImpl(private val activity: HomeActivity) : HomeView {
     }
 
     /**
+     * Init view with view model
+     * @param viewModel - view model for home screen
+     */
+    override fun initModel(viewModel: HomeViewModel) {
+        this.viewModel = viewModel
+        binding.viewmodel = viewModel
+        viewModel.dateData.observe(activity, Observer {
+            viewModel.getDayChallengesState(Consumer {
+                binding.roundCalendar.setProgress(it.first, it.second)
+            })
+        })
+        viewModel.dateData.postValue(binding.roundCalendar.getSelectedDate())
+    }
+
+    /**
      * get the real android view
      */
     override fun androidView(): View = binding.root
 
     private fun initCalendar() {
-        binding.challengesCalendar.setOnDateChangeListener { view, year, month, dayOfMonth ->
-            val intent = Intent(activity, TodayChallengesActivity::class.java)
-            intent.putExtra(Constants.CURRENT_DATE_DAY, dayOfMonth)
-            intent.putExtra(Constants.CURRENT_DATE_MONTH, month)
-            intent.putExtra(Constants.CURRENT_DATE_YEAR, year)
-            activity.startActivity(intent)
-        }
+        binding.roundCalendar.setOnDateListener(object : RoundCalendarView.OnDateListener {
+            override fun onClick(view: RoundCalendarView, year: Int, month: Int, dayOfMonth: Int) {
+                val intent = Intent(activity, TodayChallengesActivity::class.java)
+                intent.putExtra(Constants.CURRENT_DATE_DAY, dayOfMonth)
+                intent.putExtra(Constants.CURRENT_DATE_MONTH, month)
+                intent.putExtra(Constants.CURRENT_DATE_YEAR, year)
+                activity.startActivity(intent)
+            }
+
+            override fun onDateChange(view: RoundCalendarView, year: Int, month: Int, dayOfMonth: Int) {
+                viewModel.dateData.postValue(binding.roundCalendar.getSelectedDate())
+            }
+        })
     }
 }

@@ -12,6 +12,8 @@ import com.bitage.kapp.editchallenge.EditChallengeViewModel
 import com.bitage.kapp.editchallenge.EditChallengeViewModelFactory
 import dagger.Module
 import dagger.Provides
+import java.util.Calendar
+import java.util.Date
 
 /**
  * Module for [EditChallengeActivity]. Provide presenter, view model and view for this activity
@@ -26,7 +28,7 @@ class EditChallengeActivityModule(private val activity: EditChallengeActivity) {
     @Provides
     fun provideViewModel(repository: ChallengeRepository): EditChallengeViewModel {
         return ViewModelProviders
-            .of(activity, EditChallengeViewModelFactory(repository))
+            .of(activity, EditChallengeViewModelFactory(repository, getCurrentDate(activity)))
             .get(EditChallengeViewModel::class.java)
     }
 
@@ -53,5 +55,16 @@ class EditChallengeActivityModule(private val activity: EditChallengeActivity) {
     ): EditChallengePresenter {
         val id = activity.intent.getLongExtra(Constants.CHALLENGE_ITEM_ID_KEY, -1)
         return EditChallengePresenterImpl(viewModel, view, id)
+    }
+
+    private fun getCurrentDate(activity: EditChallengeActivity): Date {
+        return activity.intent?.extras?.let { extras ->
+            val day = extras.getInt(Constants.CURRENT_DATE_DAY)
+            val month = extras.getInt(Constants.CURRENT_DATE_MONTH)
+            val year = extras.getInt(Constants.CURRENT_DATE_YEAR)
+            val calendar = Calendar.getInstance()
+            calendar.set(year, month, day)
+            calendar.time
+        } ?: Date()
     }
 }

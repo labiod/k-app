@@ -18,9 +18,7 @@ class BindingUtil {
          * @return index of give
          */
         @JvmStatic
-        fun getIndexForChallenge(challengeType: ChallengeType?): Int {
-            return challengeType?.ordinal ?: 0
-        }
+        fun getIndexForChallenge(challengeType: ChallengeType?) = challengeType?.ordinal ?: 0
 
         /**
          * Select given item in current spinner

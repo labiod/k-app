@@ -6,6 +6,7 @@ import android.arch.persistence.room.OnConflictStrategy
 import android.arch.persistence.room.Query
 import com.bitage.kapp.entity.TemplateEntity
 import com.bitage.kapp.db.entity.TemplateChallengesEntity
+import io.reactivex.Flowable
 
 /**
  * Dao class that retrieve and manipulate (update/insert/delete) template data from database
@@ -30,7 +31,7 @@ interface TemplateDao {
      * @return all templates
      */
     @Query("SELECT * FROM templates")
-    fun getAll(): List<TemplateEntity>
+    fun getAll(): Flowable<List<TemplateEntity>>
 
     /**
      * Query all challenges assigned to given template
