@@ -8,7 +8,7 @@ import com.bitage.kapp.presentation.KView
 /**
  * Base activity class for K-App
  */
-abstract class KActivity<T : KView> : AppCompatActivity() {
+abstract class KActivity<T : KView<*>> : AppCompatActivity() {
 
     /**
      * Get Presenter associated with extending Activity

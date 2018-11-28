@@ -13,7 +13,7 @@ class ChallengeListPresenterImpl(
      */
     override fun onCreate() {
         view.onCreate()
-        view.initView(viewModel)
+        view.attachViewModel(viewModel)
     }
 
     /**
@@ -35,12 +35,5 @@ class ChallengeListPresenterImpl(
      */
     override fun loadTemplateList() {
         view.loadTemplateData()
-    }
-
-    /**
-     * Show 'Create new template' view
-     */
-    override fun showCreateTemplateView() {
-        view.showCreateTemplateView()
     }
 }

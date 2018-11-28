@@ -10,6 +10,8 @@ import com.bitage.kapp.daychallenges.di.DayChallengesActivityComponent
 import com.bitage.kapp.editchallenge.di.EditChallengeActivityComponent
 import com.bitage.kapp.home.di.HomeActivityComponent
 import com.bitage.kapp.template.di.TemplateActivityComponent
+import com.bitage.kapp.templatelist.TemplateListActivity
+import com.bitage.kapp.templatelist.di.TemplateListActivityComponent
 import dagger.android.AndroidInjector
 import dagger.android.ActivityKey
 import dagger.multibindings.IntoMap
@@ -67,5 +69,17 @@ abstract class ActivityBuilder {
     @ActivityKey(HomeActivity::class)
     internal abstract fun bindHomeActivity(
         builder: HomeActivityComponent.Builder
+    ): AndroidInjector.Factory<out Activity>
+
+    /**
+     * Bind template list activity component to dagger
+     * @param builder - builder class used to build dagger component for activity
+     * @return dagger injector factory
+     */
+    @Binds
+    @IntoMap
+    @ActivityKey(TemplateListActivity::class)
+    internal abstract fun bindTemplateListActivity(
+        builder: TemplateListActivityComponent.Builder
     ): AndroidInjector.Factory<out Activity>
 }

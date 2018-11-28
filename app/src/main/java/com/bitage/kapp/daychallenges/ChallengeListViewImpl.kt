@@ -16,7 +16,6 @@ import com.bitage.kapp.ui.adapter.TemplatesDialogAdapter
 import com.bitage.kapp.ui.adapter.TodayChallengesAdapter
 import com.bitage.kapp.databinding.DayChallengesBinding
 import com.bitage.kapp.editchallenge.EditChallengeActivity
-import com.bitage.kapp.template.TemplateActivity
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
@@ -50,21 +49,9 @@ class ChallengeListViewImpl(private val activity: TodayChallengesActivity) : Cha
      */
     override fun androidView(): View = binding.root
 
-    /**
-     * Init view with viewModel
-     * @param viewModel - view model for this view
-     */
-    override fun initView(viewModel: DayChallengeViewModel) {
+    override fun attachViewModel(viewModel: DayChallengeViewModel) {
         this.viewModel = viewModel
         initBinder()
-    }
-
-    /**
-     * Show 'Create new template' view
-     */
-    override fun showCreateTemplateView() {
-        val intent = Intent(activity, TemplateActivity::class.java)
-        activity.startActivity(intent)
     }
 
     /**

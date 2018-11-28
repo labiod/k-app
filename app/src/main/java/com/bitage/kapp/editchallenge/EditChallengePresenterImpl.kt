@@ -17,7 +17,6 @@ class EditChallengePresenterImpl(
     override fun onCreate() {
         view.onCreate()
         initViewModel()
-        view.initView(viewModel)
     }
 
     /**
@@ -28,6 +27,7 @@ class EditChallengePresenterImpl(
     }
 
     private fun initViewModel() {
+        view.attachViewModel(viewModel)
         if (id != -1L) {
             viewModel.loadChallenge(id)
         } else {

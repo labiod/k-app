@@ -30,6 +30,9 @@ class TemplateDBRepository(private val db: ChallengeDB) : TemplateRepository {
     override fun insertTemplate(template: Template): Completable {
         return Completable.create { c ->
             try {
+                template.id?.let {
+                    db.templateDao().deleteAllChallengesForTemplate(it)
+                }
                 val id = db.templateDao().insertTemplate(EntityMapper.mapToTemplateEntity(template))
                 template.challenges.forEach {
                     db.templateDao().insertChallengeForTemplate(TemplateChallengesEntity(null, id, it))
@@ -64,7 +67,7 @@ class TemplateDBRepository(private val db: ChallengeDB) : TemplateRepository {
     override fun loadDataFromTemplate(template: Template, date: Date) {
         template.id?.let {
             executor.execute {
-                val challengesType = db.templateDao().loadTemplateType(it)
+                val challengesType = db.templateDao().loadTemplateChallenges(it)
                 val challengesList = ArrayList<ChallengeEntity>()
                 for (type in challengesType) {
                     val challengeProgress = db.userDao().getChallengeProgress(type.challengeType)
@@ -72,6 +75,30 @@ class TemplateDBRepository(private val db: ChallengeDB) : TemplateRepository {
                     challengesList.add(ChallengeEntity(challengeProgress, date))
                 }
                 db.noteDao().insertAll(challengesList)
+            }
+        }
+    }
+
+    override fun getTemplateById(id: Long): Flowable<Template> {
+        return Flowable.create({ e ->
+            db.templateDao().getTemplateById(id)
+                .subscribeOn(Schedulers.io())
+                .subscribe {
+                    val next = EntityMapper.mapToTemplate(it)
+                    val challenges = db.templateDao().loadTemplateChallenges(id)
+                    challenges.forEach { ch ->
+                        next.challenges.add(ch.challengeType)
+                    }
+                    e.onNext(next)
+                }
+        }, BackpressureStrategy.LATEST)
+    }
+
+    override fun deleteTemplate(template: Template): Completable {
+        return Completable.create { c ->
+            template.id?.let { id ->
+                db.templateDao().deleteAllChallengesForTemplate(id)
+                db.templateDao().deleteTemplate(id)
             }
         }
     }

@@ -1,7 +1,7 @@
 package com.bitage.kapp.template
 
 import com.bitage.kapp.KActivity
-import com.bitage.kapp.KApplication
+import dagger.android.AndroidInjection
 import javax.inject.Inject
 
 /**
@@ -22,6 +22,10 @@ class TemplateActivity : KActivity<TemplateView>() {
     override lateinit var view: TemplateView
 
     override fun setupDependencyInjection() {
-        KApplication.instance.activityInjector.inject(this)
+        AndroidInjection.inject(this)
+    }
+
+    companion object {
+        const val TEMPLATE_ID_KEY = "template_id_tag"
     }
 }

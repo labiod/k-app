@@ -34,11 +34,7 @@ class HomeViewImpl(private val activity: HomeActivity) : HomeView {
         binding.unbind()
     }
 
-    /**
-     * Init view with view model
-     * @param viewModel - view model for home screen
-     */
-    override fun initModel(viewModel: HomeViewModel) {
+    override fun attachViewModel(viewModel: HomeViewModel) {
         this.viewModel = viewModel
         binding.viewmodel = viewModel
         viewModel.dateData.observe(activity, Observer {

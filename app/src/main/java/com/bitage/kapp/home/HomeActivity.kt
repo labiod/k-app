@@ -6,7 +6,7 @@ import android.view.MenuItem
 import com.bitage.kapp.KActivity
 import com.bitage.kapp.KApplication
 import com.bitage.kapp.R
-import com.bitage.kapp.template.TemplateListActivity
+import com.bitage.kapp.templatelist.TemplateListActivity
 import javax.inject.Inject
 
 /**

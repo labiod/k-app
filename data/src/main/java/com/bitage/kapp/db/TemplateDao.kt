@@ -34,9 +34,30 @@ interface TemplateDao {
     fun getAll(): Flowable<List<TemplateEntity>>
 
     /**
+     * Query templates for given id from database
+     * @return template
+     */
+    @Query("SELECT * FROM templates WHERE id = :id")
+    fun getTemplateById(id: Long): Flowable<TemplateEntity>
+
+    /**
      * Query all challenges assigned to given template
      * @return list of challenges type
      */
     @Query("SELECT * FROM template_challenges WHERE templateId = :templateId")
-    fun loadTemplateType(templateId: Long): List<TemplateChallengesEntity>
+    fun loadTemplateChallenges(templateId: Long): List<TemplateChallengesEntity>
+
+    /**
+     * Delate all challenges for give tempplate
+     * @param templateId - given template id
+     */
+    @Query("DELETE FROM template_challenges WHERE templateId = :templateId")
+    fun deleteAllChallengesForTemplate(templateId: Long)
+
+    /**
+     * Delete template for give template id
+     * @param templateId - give template id
+     */
+    @Query("DELETE FROM templates WHERE id = :templateId")
+    fun deleteTemplate(templateId: Long)
 }

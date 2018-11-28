@@ -61,6 +61,10 @@ class ChallengesForTemplateAdapter : RecyclerView.Adapter<ChallengesForTemplateA
                 challenges[holder.adapterPosition] = ChallengeType.values()[pos]
             }
         }
+        holder.binder.templateChallengeDeleteItem.setOnClickListener {
+            challenges.removeAt(position)
+            notifyDataSetChanged()
+        }
     }
 
     /**
@@ -74,6 +78,16 @@ class ChallengesForTemplateAdapter : RecyclerView.Adapter<ChallengesForTemplateA
                 break
             }
         }
+        notifyDataSetChanged()
+    }
+
+    /**
+     * Add all challenges to adapter
+     * @param challenges - challenges to add
+     */
+    fun addAll(challenges: List<ChallengeType>) {
+        this.challenges.clear()
+        this.challenges.addAll(challenges)
         notifyDataSetChanged()
     }
 }
