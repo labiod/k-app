@@ -8,6 +8,9 @@ import com.bitage.kapp.repository.TemplateRepository
 import io.reactivex.functions.Action
 import io.reactivex.schedulers.Schedulers
 
+/**
+ * View model class used in template list screen
+ */
 class TemplateListViewModel(private val repository: TemplateRepository) : KViewModel() {
     private val _templates = MutableLiveData<List<Template>>()
     /**
