@@ -33,9 +33,7 @@ class TemplateActivityModule(private val activity: TemplateActivity) {
      * @return implementation of [TemplateView]
      */
     @Provides
-    fun provideTemplateView(): TemplateView {
-        return TemplateViewImpl(activity)
-    }
+    fun provideTemplateView(): TemplateView = TemplateViewImpl(activity)
 
     /**
      * Provide template presenter

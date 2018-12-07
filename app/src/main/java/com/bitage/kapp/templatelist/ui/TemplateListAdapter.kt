@@ -27,8 +27,7 @@ class TemplateListAdapter(private val viewModel: TemplateListViewModel)
      */
     override fun onCreateViewHolder(parent: ViewGroup, position: Int): Holder {
         val inflater = LayoutInflater.from(parent.context)
-        val binder = DataBindingUtil.inflate<TemplateListItemBinding>(inflater, R.layout.template_list_item, parent, false)
-        return Holder(binder)
+        return Holder(DataBindingUtil.inflate(inflater, R.layout.template_list_item, parent, false))
     }
 
     /**
@@ -53,7 +52,11 @@ class TemplateListAdapter(private val viewModel: TemplateListViewModel)
             }
             holder.binder.templateListDeleteItem.setOnClickListener {
                 viewModel.deleteTemplate(item, Action {
-                    Toast.makeText(holder.binder.root.context, "Item was delete", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        holder.binder.root.context,
+                        "Item was delete",
+                        Toast.LENGTH_SHORT)
+                        .show()
                 })
             }
         }
