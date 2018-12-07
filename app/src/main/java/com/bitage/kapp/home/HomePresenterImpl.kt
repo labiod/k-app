@@ -12,7 +12,7 @@ class HomePresenterImpl(
      */
     override fun onCreate() {
         view.onCreate()
-        view.initModel(viewModel)
+        view.attachViewModel(viewModel)
     }
 
     /**

@@ -22,7 +22,6 @@
     <!-- TodayChallenges screen -->
     <string name="your_challenges">Your Challenges!</string>
     <string name="your_challenges_menu_template_data">Load data from template</string>
-    <string name="your_challenges_menu_create_template">Create template</string>
     <string name="your_challenges_menu_delete_all">Delete all</string>
 
     <!-- ChalllengeEdit screen -->
@@ -42,11 +41,16 @@
     <string name="template_name_label_text">Template name:</string>
     <string name="challenges_for_template_label_text">Add challenge:</string>
     <string name="template_add_new_button_label">Add new…</string>
-    <string name="activity_template_item_text">Template list</string>
+    <string name="template_challenge_delete_button_desc">template challenge delete button</string>
 
     <!-- RoundCalendarView -->
     <string name="show_progress_templ_text">%1$d/%2$d</string>
     <string name="round_calendar_left_buttont_desc">left</string>
     <string name="round_calendar_right_button_desc">right</string>
     <string name="round_calendar_expand_button_desc">expand calendar button</string>
+
+    <!-- Template list screen -->
+    <string name="template_edit_button_desc">template edit button</string>
+    <string name="template_delete_button_desc">template delete button</string>
+    <string name="template_list_header">Your templates:</string>
 </resources>

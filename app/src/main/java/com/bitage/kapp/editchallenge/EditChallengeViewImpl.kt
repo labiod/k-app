@@ -40,11 +40,7 @@ class EditChallengeViewImpl(private val activity: EditChallengeActivity, private
      */
     override fun androidView(): View = binding.root
 
-    /**
-     * Init view with view model
-     * @param viewModel - view model for screen
-     */
-    override fun initView(viewModel: EditChallengeViewModel) {
+    override fun attachViewModel(viewModel: EditChallengeViewModel) {
         this.viewModel = viewModel
         binding.viewmodel = viewModel
         initDataBinder()
@@ -84,7 +80,7 @@ class EditChallengeViewImpl(private val activity: EditChallengeActivity, private
             Toast.makeText(activity, "Challenge changed", Toast.LENGTH_SHORT).show()
             activity.finish()
         }
-        if (editMode.not()) {
+        if (!editMode) {
             viewModel.challengeProgress.observe(activity, Observer { ch ->
                 ch?.let {
                     binding.challengeGoal.setText(it.goal.toString())

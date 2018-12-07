@@ -31,7 +31,7 @@
             android:name=".template.TemplateActivity"
             android:theme="@style/AppTheme" />
         <activity android:name=".editchallenge.EditChallengeActivity" />
-        <activity android:name=".template.TemplateListActivity"></activity>
+        <activity android:name=".templatelist.TemplateListActivity"></activity>
     </application>
 
 </manifest>

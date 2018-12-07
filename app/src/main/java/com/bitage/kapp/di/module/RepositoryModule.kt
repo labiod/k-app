@@ -41,9 +41,7 @@ open class RepositoryModule(private val application: Application) {
      */
     @Provides
     @Singleton
-    open fun provideChallengesRepository(db: ChallengeDB): ChallengeRepository {
-        return DBChallengesRepository(db)
-    }
+    open fun provideChallengesRepository(db: ChallengeDB): ChallengeRepository = DBChallengesRepository(db)
 
     /**
      * Provide template repository instance
@@ -52,7 +50,5 @@ open class RepositoryModule(private val application: Application) {
      */
     @Provides
     @Singleton
-    open fun provideTemplateRepository(db: ChallengeDB): TemplateRepository {
-        return TemplateDBRepository(db)
-    }
+    open fun provideTemplateRepository(db: ChallengeDB): TemplateRepository = TemplateDBRepository(db)
 }

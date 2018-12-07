@@ -49,10 +49,6 @@ class TodayChallengesActivity : KActivity<ChallengeListView>() {
                 presenter.loadTemplateList()
                 true
             }
-            R.id.action_create_template -> {
-                presenter.showCreateTemplateView()
-                true
-            }
             R.id.action_delete_all -> {
                 presenter.deleteAll()
                 true

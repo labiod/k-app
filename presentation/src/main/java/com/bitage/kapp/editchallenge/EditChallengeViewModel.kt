@@ -15,7 +15,6 @@ import java.util.concurrent.Executors
  * Contains challenge that will be edit
  */
 class EditChallengeViewModel(private val repository: ChallengeRepository, private val date: Date) : KViewModel() {
-    private val executor = Executors.newSingleThreadExecutor()
     private val _challengeProgress = MutableLiveData<Challenge>()
     /**
      * Getter for _challengeProgress field

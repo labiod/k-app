@@ -27,4 +27,16 @@ interface TemplateRepository {
      * @param date - date for challenges
      */
     fun loadDataFromTemplate(template: Template, date: Date)
+
+    /**
+     * Get template for given id
+     * @param id - given id
+     */
+    fun getTemplateById(id: Long): Flowable<Template>
+
+    /**
+     * Delete template
+     * @param - template to remove
+     */
+    fun deleteTemplate(template: Template): Completable
 }

@@ -33,9 +33,7 @@ class TemplateActivityModule(private val activity: TemplateActivity) {
      * @return implementation of [TemplateView]
      */
     @Provides
-    fun provideTemplateView(): TemplateView {
-        return TemplateViewImpl(activity)
-    }
+    fun provideTemplateView(): TemplateView = TemplateViewImpl(activity)
 
     /**
      * Provide template presenter
@@ -45,6 +43,7 @@ class TemplateActivityModule(private val activity: TemplateActivity) {
      */
     @Provides
     fun providePresenter(model: TemplateViewModel, view: TemplateView): TemplatePresenter {
-        return TemplatePresenterImpl(model, view)
+        val id = activity.intent.getLongExtra(TemplateActivity.TEMPLATE_ID_KEY, -1)
+        return TemplatePresenterImpl(model, view, id)
     }
 }

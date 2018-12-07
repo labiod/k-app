@@ -15,9 +15,4 @@ interface ChallengeListPresenter : KPresenter {
      * Load list of templates
      */
     fun loadTemplateList()
-
-    /**
-     * Show the view to create new template
-     */
-    fun showCreateTemplateView()
 }
