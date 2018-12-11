@@ -55,7 +55,7 @@ class DayChallengeViewModel(private val date: Date,
      * Update challenge by given entity in repository
      * @param - item to update
      */
-    fun updateChallenge(item: Challenge) {
+     internal fun updateChallenge(item: Challenge) {
         repository.update(item)
     }
 
@@ -63,7 +63,7 @@ class DayChallengeViewModel(private val date: Date,
      * Delete given challenge from repository
      * @param item - item to delete
      */
-    fun deleteChallenge(item: Challenge) {
+    internal fun deleteChallenge(item: Challenge) {
         addDisposable(repository.deleteChallenge(item)
             .subscribe {
                 repository.getDayChallenges(date)
@@ -82,7 +82,7 @@ class DayChallengeViewModel(private val date: Date,
      * Update progress for given challenge
      * @param item - given challenge
      */
-    fun updateProgress(item: Challenge) {
+    internal fun updateProgress(item: Challenge) {
         addDisposable(repository.updateUserProgress(item).subscribe {
             repository.getDayChallenges(date)
         })

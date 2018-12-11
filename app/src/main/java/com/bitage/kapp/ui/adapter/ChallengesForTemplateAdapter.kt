@@ -71,11 +71,10 @@ class ChallengesForTemplateAdapter : RecyclerView.Adapter<ChallengesForTemplateA
      * Add next challenge to template
      */
     fun addNext() {
-        val nextChallenges = ChallengeType.values()
-        for (ch in nextChallenges) {
+        ChallengeType.values().forEach { ch ->
             if (!challenges.contains(ch)) {
                 challenges.add(ch)
-                break
+                return
             }
         }
         notifyDataSetChanged()

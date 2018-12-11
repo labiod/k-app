@@ -1,7 +1,7 @@
 package com.bitage.kapp.editchallenge
 
 import com.bitage.kapp.KActivity
-import com.bitage.kapp.KApplication
+import dagger.android.AndroidInjection
 import javax.inject.Inject
 
 /**
@@ -26,6 +26,6 @@ class EditChallengeActivity : KActivity<EditChallengeView>() {
      * Setup dependency injection for this activity
      */
     override fun setupDependencyInjection() {
-        KApplication.instance.activityInjector.inject(this)
+        AndroidInjection.inject(this)
     }
 }

@@ -15,6 +15,7 @@ import com.bitage.kapp.R
 import com.bitage.kapp.databinding.ComponentListItemBinding
 import com.bitage.kapp.challenge.ChallengeTypeResMapper
 import com.bitage.kapp.daychallenges.DayChallengeViewModel
+import com.bitage.kapp.daychallenges.OnChallengeActionListener
 
 /**
  * Adapter for list of challenges for given date
@@ -33,6 +34,7 @@ class TodayChallengesAdapter(private val challengesModel: DayChallengeViewModel)
         val binding: ComponentListItemBinding
     ) : RecyclerView.ViewHolder(binding.root)
 
+    private var listener: OnChallengeActionListener? = null
     /**
      * Create holder for recycler view item
      * @param parent - parent for all views
@@ -50,6 +52,10 @@ class TodayChallengesAdapter(private val challengesModel: DayChallengeViewModel)
      */
     override fun getItemCount() = challengesModel.challenges.value?.size ?: 0
 
+    fun setOnChallengeActionListener(listener: OnChallengeActionListener) {
+        this.listener = listener
+    }
+
     /**
      * Bind holder for given adapter position
      * @param holder - holder created by [onCreateViewHolder] method
@@ -65,9 +71,7 @@ class TodayChallengesAdapter(private val challengesModel: DayChallengeViewModel)
                 holder.itemView.setBackgroundColor(Color.LTGRAY)
             }
             holder.binding.challengeFinishedButton.setOnClickListener {
-                val challenge = item.setFinishChallenge(item.finished.not())
-                challengesModel.updateChallenge(challenge)
-                challengesModel.updateProgress(challenge)
+                listener?.onChallengeFinish(item.setFinishChallenge(item.finished.not()))
             }
 
             holder.binding.challengeEditButton.setOnClickListener {
@@ -77,7 +81,7 @@ class TodayChallengesAdapter(private val challengesModel: DayChallengeViewModel)
             }
 
             holder.binding.challengeDeleteButton.setOnClickListener {
-                challengesModel.deleteChallenge(item)
+                listener?.onChallengeDelete(item)
             }
 
             holder.binding.challengeName.setText(ChallengeTypeResMapper.valueOf(item.challengeName.name).resId)

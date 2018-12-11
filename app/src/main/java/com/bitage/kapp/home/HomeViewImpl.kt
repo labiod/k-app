@@ -16,14 +16,15 @@ import io.reactivex.functions.Consumer
  */
 class HomeViewImpl(private val activity: HomeActivity) : HomeView {
 
-    private lateinit var binding: ChallengesMainBinding
+    private val binding: ChallengesMainBinding by lazy {
+        DataBindingUtil.setContentView<ChallengesMainBinding>(activity, R.layout.challenges_main)
+    }
     private lateinit var viewModel: HomeViewModel
 
     /**
      * Controls lifecycle of this view. It should be called in presenter onCreate method
      */
     override fun onCreate() {
-        binding = DataBindingUtil.setContentView(activity, R.layout.challenges_main)
         initCalendar()
     }
 
@@ -38,8 +39,8 @@ class HomeViewImpl(private val activity: HomeActivity) : HomeView {
         this.viewModel = viewModel
         binding.viewmodel = viewModel
         viewModel.dateData.observe(activity, Observer {
-            viewModel.getDayChallengesState(Consumer {
-                binding.roundCalendar.setProgress(it.first, it.second)
+            viewModel.getDayChallengesState(Consumer { p ->
+                binding.roundCalendar.setProgress(p.first, p.second)
             })
         })
         viewModel.dateData.postValue(binding.roundCalendar.getSelectedDate())

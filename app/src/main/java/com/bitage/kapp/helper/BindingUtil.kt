@@ -29,7 +29,7 @@ class BindingUtil {
         @BindingAdapter("selectItem")
         fun setSelectItem(spinner: Spinner, item: Any?) {
             spinner.adapter?.let {
-                for (i in 0 until spinner.adapter.count) {
+                (0 until it.count).forEach { i ->
                     if (spinner.adapter.getItem(i) == item) {
                         spinner.setSelection(i)
                     }
@@ -45,7 +45,7 @@ class BindingUtil {
         @JvmStatic
         @BindingAdapter("bindData")
         fun bindData(spinner: Spinner, data: Array<Any>) {
-            val adapter = ArrayAdapter(spinner.context, android.R.layout.simple_spinner_dropdown_item, data)
+            val adapter = ArrayAdapter<Any>(spinner.context, android.R.layout.simple_spinner_dropdown_item, data)
             spinner.adapter = adapter
         }
 
@@ -56,12 +56,10 @@ class BindingUtil {
          * @return list of challenges name
          */
         @JvmStatic
-        fun convertChallengesArrayToStrings(challenges: Array<ChallengeType>, context: Context): ArrayList<String> {
-            val result = ArrayList<String>()
-            challenges.forEach {
-                result.add(context.getString(ChallengeTypeResMapper.valueOf(it.name).resId))
+        fun convertChallengesArrayToStrings(challenges: Array<ChallengeType>, context: Context): List<String> {
+            return challenges.map {
+                context.getString(ChallengeTypeResMapper.valueOf(it.name).resId)
             }
-            return result
         }
     }
 }

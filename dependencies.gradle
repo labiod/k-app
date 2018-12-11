@@ -6,6 +6,15 @@ allprojects {
 }
 
 ext {
+    versions = [
+        minSdkVersion: 21,
+        compileSdkVersion: 28,
+        targetSdkVersion: 28,
+        versionCode: 1,
+        versionName: "1.0",
+        buildToolsVersion: '28.0.3'
+    ]
+
     espressoVersion = '2.2.2'
     daggerVersion = "2.16"
     supportLibVersion = '28.0.0'

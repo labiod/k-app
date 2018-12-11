@@ -26,7 +26,7 @@ interface TemplateRepository {
      * @param template - template for challenges
      * @param date - date for challenges
      */
-    fun loadDataFromTemplate(template: Template, date: Date)
+    fun loadDataFromTemplate(template: Template, date: Date): Completable
 
     /**
      * Get template for given id

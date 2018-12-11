@@ -13,12 +13,12 @@ abstract class KActivity<T : KView<*>> : AppCompatActivity() {
     /**
      * Get Presenter associated with extending Activity
      */
-    protected abstract val presenter: KPresenter?
+    protected abstract val presenter: KPresenter
 
     /**
      * Get view associated with extending Activity
      */
-    protected abstract val view: T?
+    protected abstract val view: T
 
     /**
      * Method call by android when create activity
@@ -26,7 +26,7 @@ abstract class KActivity<T : KView<*>> : AppCompatActivity() {
     final override fun onCreate(savedInstanceState: Bundle?) {
         setupDependencyInjection()
         super.onCreate(savedInstanceState)
-        presenter?.onCreate()
+        presenter.onCreate()
     }
 
     /**
@@ -34,7 +34,7 @@ abstract class KActivity<T : KView<*>> : AppCompatActivity() {
      */
     override fun onDestroy() {
         super.onDestroy()
-        presenter?.onDestroy()
+        presenter.onDestroy()
     }
 
     /**

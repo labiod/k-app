@@ -1,7 +1,7 @@
 package com.bitage.kapp.templatelist
 
 import com.bitage.kapp.KActivity
-import com.bitage.kapp.KApplication
+import dagger.android.AndroidInjection
 import javax.inject.Inject
 
 /**
@@ -22,6 +22,6 @@ class TemplateListActivity : KActivity<TemplateListView>() {
     override lateinit var view: TemplateListView
 
     override fun setupDependencyInjection() {
-        KApplication.instance.activityInjector.inject(this)
+        AndroidInjection.inject(this)
     }
 }

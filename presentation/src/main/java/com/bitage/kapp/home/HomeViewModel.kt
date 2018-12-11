@@ -28,9 +28,9 @@ class HomeViewModel(private val repository: ChallengeRepository, date: Date) : K
         }
     }
 
-    private fun countIfFinish(chalenges: List<Challenge>): Int {
+    private fun countIfFinish(challenges: List<Challenge>): Int {
         var counter = 0
-        chalenges.forEach {
+        challenges.forEach {
             if (it.finished) {
                 ++counter
             }

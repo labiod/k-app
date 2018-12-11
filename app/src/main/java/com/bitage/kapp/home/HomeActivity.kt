@@ -7,6 +7,7 @@ import com.bitage.kapp.KActivity
 import com.bitage.kapp.KApplication
 import com.bitage.kapp.R
 import com.bitage.kapp.templatelist.TemplateListActivity
+import dagger.android.AndroidInjection
 import javax.inject.Inject
 
 /**
@@ -30,7 +31,7 @@ class HomeActivity : KActivity<HomeView>() {
      * Setup dependency injection for this activity
      */
     override fun setupDependencyInjection() {
-        KApplication.instance.activityInjector.inject(this)
+        AndroidInjection.inject(this)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

@@ -11,4 +11,6 @@ interface ChallengeListView : KView<DayChallengeViewModel> {
      * Load list of template
      */
     fun loadTemplateData()
+
+    fun setChallengeActionListener(listener: OnChallengeActionListener)
 }

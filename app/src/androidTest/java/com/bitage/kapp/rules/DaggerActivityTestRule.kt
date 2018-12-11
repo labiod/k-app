@@ -15,7 +15,7 @@ class DaggerActivityTestRule<T : Activity>(activityClass: Class<T>?) :
     /**
      * Module that can be replace in test
      */
-    var repoModule = RepositoryModule(KApplication.instance)
+    var repoModule = RepositoryModule(KApplicationTest.instance)
 
     override fun beforeActivityLaunched() {
         val application: KApplicationTest = KApplicationTest.instance

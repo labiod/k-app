@@ -3,8 +3,8 @@ package com.bitage.kapp.daychallenges
 import android.view.Menu
 import android.view.MenuItem
 import com.bitage.kapp.KActivity
-import com.bitage.kapp.KApplication
 import com.bitage.kapp.R
+import dagger.android.AndroidInjection
 import javax.inject.Inject
 
 /**
@@ -28,7 +28,7 @@ class TodayChallengesActivity : KActivity<ChallengeListView>() {
      * Setup dependency injection for this activity
      */
     override fun setupDependencyInjection() {
-        KApplication.instance.activityInjector.inject(this)
+        AndroidInjection.inject(this)
     }
 
     /**

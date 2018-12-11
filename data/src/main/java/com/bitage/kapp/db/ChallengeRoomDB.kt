@@ -1,8 +1,11 @@
 package com.bitage.kapp.db
 
 import android.arch.persistence.room.Database
+import android.arch.persistence.room.Room
 import android.arch.persistence.room.RoomDatabase
 import android.arch.persistence.room.TypeConverters
+import android.content.Context
+import com.bitage.kapp.SingletonHolder
 import com.bitage.kapp.converter.DateConverter
 import com.bitage.kapp.converter.StepProgressConverter
 import com.bitage.kapp.entity.ChallengeEntity
@@ -28,7 +31,15 @@ import com.bitage.kapp.db.entity.TemplateChallengesEntity
     StepProgressConverter::class
 )
 abstract class ChallengeRoomDB : RoomDatabase(), ChallengeDB {
-    companion object {
-        const val DATABASE_NAME = "AppDatabase.db"
+    companion object : SingletonHolder<ChallengeRoomDB, Context>({
+        Room.databaseBuilder(
+            it.applicationContext,
+            ChallengeRoomDB::class.java,
+            ChallengeRoomDB.DATABASE_NAME
+        )
+            .fallbackToDestructiveMigration()
+            .build()
+    }) {
+        private const val DATABASE_NAME = "AppDatabase.db"
     }
 }

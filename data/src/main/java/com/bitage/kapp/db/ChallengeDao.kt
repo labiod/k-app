@@ -6,6 +6,7 @@ import android.arch.persistence.room.Insert
 import android.arch.persistence.room.OnConflictStrategy
 import android.arch.persistence.room.Query
 import com.bitage.kapp.entity.ChallengeEntity
+import io.reactivex.Completable
 import io.reactivex.Flowable
 
 /**

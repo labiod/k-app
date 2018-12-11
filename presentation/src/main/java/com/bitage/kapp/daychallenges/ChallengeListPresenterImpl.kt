@@ -1,7 +1,9 @@
 package com.bitage.kapp.daychallenges
 
+import com.bitage.kapp.model.Challenge
+
 /**
- * Implementation of presenter used to lised challenges for given date
+ * Implementation of presenter used to listed challenges for given date
  */
 class ChallengeListPresenterImpl(
     private val viewModel: DayChallengeViewModel,
@@ -14,6 +16,7 @@ class ChallengeListPresenterImpl(
     override fun onCreate() {
         view.onCreate()
         view.attachViewModel(viewModel)
+        view.setChallengeActionListener(this)
     }
 
     /**
@@ -35,5 +38,14 @@ class ChallengeListPresenterImpl(
      */
     override fun loadTemplateList() {
         view.loadTemplateData()
+    }
+
+    override fun onChallengeFinish(challenge: Challenge) {
+        viewModel.updateChallenge(challenge)
+        viewModel.updateProgress(challenge)
+    }
+
+    override fun onChallengeDelete(challenge: Challenge) {
+        viewModel.deleteChallenge(challenge)
     }
 }

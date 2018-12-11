@@ -12,6 +12,8 @@ import io.reactivex.Completable
 import io.reactivex.Flowable
 import io.reactivex.schedulers.Schedulers
 import java.io.IOException
+import java.lang.IllegalStateException
+import java.lang.NullPointerException
 import java.util.Date
 import java.util.concurrent.Executors
 
@@ -20,7 +22,6 @@ import java.util.concurrent.Executors
  * This class have private constructor and will be create only by [getInstance] method
  */
 class TemplateDBRepository(private val db: ChallengeDB) : TemplateRepository {
-    private val executor = Executors.newSingleThreadExecutor()
 
     /**
      * Insert template to database
@@ -61,21 +62,22 @@ class TemplateDBRepository(private val db: ChallengeDB) : TemplateRepository {
 
     /**
      * Load data from given template and save them to challenges with given date
-     * @param templateEntity - load template
+     * @param template - load template
      * @param date - given date
      */
-    override fun loadDataFromTemplate(template: Template, date: Date) {
-        template.id?.let {
-            executor.execute {
+    override fun loadDataFromTemplate(template: Template, date: Date): Completable {
+        return Completable.create { e ->
+            template.id?.let {
                 val challengesType = db.templateDao().loadTemplateChallenges(it)
                 val challengesList = ArrayList<ChallengeEntity>()
-                for (type in challengesType) {
+                challengesType.forEach { type ->
                     val challengeProgress = db.userDao().getChallengeProgress(type.challengeType)
                         ?: createUserProgress(type.challengeType)
                     challengesList.add(ChallengeEntity(challengeProgress, date))
                 }
                 db.noteDao().insertAll(challengesList)
-            }
+                e.onComplete()
+            } ?: e.onError(NullPointerException("Null template id"))
         }
     }
 
@@ -86,9 +88,9 @@ class TemplateDBRepository(private val db: ChallengeDB) : TemplateRepository {
                 .subscribe {
                     val next = EntityMapper.mapToTemplate(it)
                     val challenges = db.templateDao().loadTemplateChallenges(id)
-                    challenges.forEach { ch ->
-                        next.challenges.add(ch.challengeType)
-                    }
+                    next.challenges.addAll(challenges.map { ch ->
+                        ch.challengeType
+                    })
                     e.onNext(next)
                 }
         }, BackpressureStrategy.LATEST)

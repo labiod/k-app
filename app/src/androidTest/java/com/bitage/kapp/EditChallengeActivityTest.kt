@@ -48,7 +48,7 @@ class EditChallengeActivityTest {
      */
     @Before
     fun setupTest() {
-        activityRule.repoModule = object : RepositoryModule(KApplication.instance) {
+        activityRule.repoModule = object : RepositoryModule(KApplicationTest.instance) {
             override fun provideChallengesRepository(db: ChallengeDB): ChallengeRepository {
                 return MockChallengeRepository()
             }

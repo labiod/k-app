@@ -65,14 +65,18 @@ class ChallengeListViewImpl(private val activity: TodayChallengesActivity) : Cha
             }
         }
         val dialog = AlertDialog.Builder(activity)
-            .setTitle("Templates list")
+            .setTitle(activity.getString(R.string.template_list_dialog_title))
             .setAdapter(templateAdapter, onChooseListener)
             .create()
         dialog.show()
     }
 
+    override fun setChallengeActionListener(listener: OnChallengeActionListener) {
+        adapter?.setOnChallengeActionListener(listener)
+    }
+
     private fun initBinder() {
-        val dateFormat = SimpleDateFormat("EEE MMM d, ''yy", Locale.getDefault())
+        val dateFormat = SimpleDateFormat(Constants.APP_DATE_FORMAT, Locale.getDefault())
         binding.todayDate = viewModel.getDate(dateFormat)
         initRecyclerView()
         initViewModel()

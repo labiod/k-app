@@ -6,6 +6,8 @@ import com.bitage.kapp.di.DaggerApplicationComponent
 import com.bitage.kapp.di.module.RepositoryModule
 import com.bitage.kapp.repository.ChallengeRepository
 import com.bitage.kapp.repository.TemplateRepository
+import dagger.android.AndroidInjector
+import dagger.android.support.DaggerApplication
 
 /**
  * Test application class
@@ -22,14 +24,12 @@ class KApplicationTest : KApplication() {
         }
     }
 
-    var testComponent: ApplicationComponent? = null
-
     override fun onCreate() {
         super.onCreate()
         instance = this
     }
 
-    override fun getComponent(): ApplicationComponent {
+    override fun applicationInjector(): AndroidInjector<out DaggerApplication> {
         return DaggerApplicationComponent.builder()
                 .application(this)
                 .plus(wrapperRepositoryModule)

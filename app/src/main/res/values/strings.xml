@@ -53,4 +53,5 @@
     <string name="template_edit_button_desc">template edit button</string>
     <string name="template_delete_button_desc">template delete button</string>
     <string name="template_list_header">Your templates:</string>
+    <string name="template_list_dialog_title">Templates list</string>
 </resources>

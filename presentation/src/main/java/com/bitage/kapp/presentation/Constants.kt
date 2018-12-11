@@ -29,5 +29,10 @@ interface Constants {
          * tag used to transfer year value between activity
          */
         const val CURRENT_DATE_YEAR = "current_date_year"
+
+        /**
+         * Application default format for date
+         */
+        const val APP_DATE_FORMAT = "EEE MMM d, ''yy"
     }
 }
