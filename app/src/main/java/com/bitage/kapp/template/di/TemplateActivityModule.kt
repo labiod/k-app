@@ -17,15 +17,21 @@ import dagger.Provides
  * Provide presenter, view model and view for activity
  */
 @Module
-class TemplateActivityModule(private val activity: TemplateActivity) {
+class TemplateActivityModule {
     /**
      * Provide template view model
      * @param repository - repository with template data
      * @return instance of [TemplateViewModel]
      */
     @Provides
-    fun provideTemplateViewModel(repository: TemplateRepository): TemplateViewModel {
-        return ViewModelProviders.of(activity, TemplateViewModelFactory(repository)).get(TemplateViewModel::class.java)
+    fun provideTemplateViewModel(
+        activity: TemplateActivity,
+        repository: TemplateRepository
+    ): TemplateViewModel {
+        return ViewModelProviders.of(
+            activity,
+            TemplateViewModelFactory(repository)
+        ).get(TemplateViewModel::class.java)
     }
 
     /**
@@ -33,7 +39,7 @@ class TemplateActivityModule(private val activity: TemplateActivity) {
      * @return implementation of [TemplateView]
      */
     @Provides
-    fun provideTemplateView(): TemplateView = TemplateViewImpl(activity)
+    fun provideTemplateView(activity: TemplateActivity): TemplateView = TemplateViewImpl(activity)
 
     /**
      * Provide template presenter
@@ -42,7 +48,11 @@ class TemplateActivityModule(private val activity: TemplateActivity) {
      * @return implementation of [TemplatePresenter]
      */
     @Provides
-    fun providePresenter(model: TemplateViewModel, view: TemplateView): TemplatePresenter {
+    fun providePresenter(
+        activity: TemplateActivity,
+        model: TemplateViewModel,
+        view: TemplateView
+    ): TemplatePresenter {
         val id = activity.intent.getLongExtra(TemplateActivity.TEMPLATE_ID_KEY, -1)
         return TemplatePresenterImpl(model, view, id)
     }

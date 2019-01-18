@@ -20,7 +20,7 @@ import java.util.Calendar
  * Module for [TodayChallengesActivity] used to inject presenter and view for activity
  */
 @Module
-class DayChallengesActivityModule(private val activity: TodayChallengesActivity) {
+class DayChallengesActivityModule {
     /**
      * Provide view model
      * @param repository - repository with challenges data
@@ -29,6 +29,7 @@ class DayChallengesActivityModule(private val activity: TodayChallengesActivity)
      */
     @Provides
     fun provideViewModel(
+        activity: TodayChallengesActivity,
         repository: ChallengeRepository,
         templateRepository: TemplateRepository
     ): DayChallengeViewModel {
@@ -42,7 +43,7 @@ class DayChallengesActivityModule(private val activity: TodayChallengesActivity)
      * @return [ChallengeListView] instance
      */
     @Provides
-    fun provideChallengeListView(): ChallengeListView {
+    fun provideChallengeListView(activity: TodayChallengesActivity): ChallengeListView {
         return ChallengeListViewImpl(activity)
     }
 

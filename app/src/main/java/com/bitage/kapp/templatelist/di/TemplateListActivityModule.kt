@@ -16,13 +16,16 @@ import dagger.Provides
  * Dagger module for template list screen
  */
 @Module
-class TemplateListActivityModule(private val activity: TemplateListActivity) {
+class TemplateListActivityModule {
     /**
      * Provide view model for template list screen
      * @return view model for screen
      */
     @Provides
-    fun provideTemplateListViewModel(repository: TemplateRepository): TemplateListViewModel {
+    fun provideTemplateListViewModel(
+        activity: TemplateListActivity,
+        repository: TemplateRepository
+    ): TemplateListViewModel {
         return ViewModelProviders.of(
             activity,
             TemplateListViewModelFactory(repository)
@@ -34,7 +37,7 @@ class TemplateListActivityModule(private val activity: TemplateListActivity) {
      * @return implementation of TemplateListView
      */
     @Provides
-    fun provideTemplateListView(): TemplateListView = KAppTemplateListView(activity)
+    fun provideTemplateListView(activity: TemplateListActivity): TemplateListView = KAppTemplateListView(activity)
 
     /**
      * Provide presenter for template list screen

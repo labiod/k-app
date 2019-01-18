@@ -19,14 +19,17 @@ import java.util.Date
  * Module for [EditChallengeActivity]. Provide presenter, view model and view for this activity
  */
 @Module
-class EditChallengeActivityModule(private val activity: EditChallengeActivity) {
+class EditChallengeActivityModule {
     /**
      * Provide view model for edit challenge activity
      * @param repository - challenges repository
      * @return [EditChallengeViewModel] object
      */
     @Provides
-    fun provideViewModel(repository: ChallengeRepository): EditChallengeViewModel {
+    fun provideViewModel(
+        activity: EditChallengeActivity,
+        repository: ChallengeRepository
+    ): EditChallengeViewModel {
         return ViewModelProviders
             .of(activity, EditChallengeViewModelFactory(repository, getCurrentDate(activity)))
             .get(EditChallengeViewModel::class.java)
@@ -37,7 +40,7 @@ class EditChallengeActivityModule(private val activity: EditChallengeActivity) {
      * @return [EditChallengeView] instance
      */
     @Provides
-    fun provideEditChallengeView(): EditChallengeView {
+    fun provideEditChallengeView(activity: EditChallengeActivity): EditChallengeView {
         val editMode = activity.intent.extras?.containsKey(Constants.CHALLENGE_ITEM_ID_KEY) ?: false
         return EditChallengeViewImpl(activity, editMode)
     }
@@ -50,6 +53,7 @@ class EditChallengeActivityModule(private val activity: EditChallengeActivity) {
      */
     @Provides
     fun providerEditChallengePresenter(
+        activity: EditChallengeActivity,
         viewModel: EditChallengeViewModel,
         view: EditChallengeView
     ): EditChallengePresenter {

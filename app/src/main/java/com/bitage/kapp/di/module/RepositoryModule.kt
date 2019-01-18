@@ -9,6 +9,7 @@ import com.bitage.kapp.repository.TemplateRepository
 import com.bitage.kapp.db.ChallengeRoomDB
 import dagger.Module
 import dagger.Provides
+import javax.inject.Named
 import javax.inject.Singleton
 
 /**
@@ -28,6 +29,17 @@ open class RepositoryModule(private val application: Application) {
     }
 
     /**
+     * Provide test channel database
+     * @return implementation of [ChallengeDB]
+     */
+    @Provides
+    @Singleton
+    @Named("TestChallengeDB")
+    open fun provideTestChallengeDB(): ChallengeDB {
+        return ChallengeRoomDB.getInstance(application)
+    }
+
+    /**
      * Provide challenge repository instance
      * @param db - challenge data base
      * @return implementation of [ChallengeRepository]
@@ -43,5 +55,5 @@ open class RepositoryModule(private val application: Application) {
      */
     @Provides
     @Singleton
-    open fun provideTemplateRepository(db: ChallengeDB): TemplateRepository = TemplateDBRepository(db)
+    open fun provideTemplateRepository(@Named("TestChallengeDB") db: ChallengeDB): TemplateRepository = TemplateDBRepository(db)
 }
