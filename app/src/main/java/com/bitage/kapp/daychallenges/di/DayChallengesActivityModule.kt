@@ -1,6 +1,6 @@
 package com.bitage.kapp.daychallenges.di
 
-import android.arch.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProviders
 import com.bitage.kapp.repository.ChallengeRepository
 import com.bitage.kapp.repository.TemplateRepository
 import com.bitage.kapp.daychallenges.TodayChallengesActivity

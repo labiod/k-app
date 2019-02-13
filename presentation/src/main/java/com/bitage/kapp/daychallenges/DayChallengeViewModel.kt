@@ -1,7 +1,7 @@
 package com.bitage.kapp.daychallenges
 
-import android.arch.lifecycle.LiveData
-import android.arch.lifecycle.MutableLiveData
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.bitage.kapp.presentation.KViewModel
 import com.bitage.kapp.model.Challenge
 import com.bitage.kapp.model.Template

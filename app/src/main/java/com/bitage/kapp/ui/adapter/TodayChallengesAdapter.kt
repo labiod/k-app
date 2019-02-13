@@ -1,9 +1,9 @@
 package com.bitage.kapp.ui.adapter
 
 import android.content.Intent
-import android.databinding.DataBindingUtil
+import androidx.databinding.DataBindingUtil
 import android.graphics.Color
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -23,7 +23,7 @@ import com.bitage.kapp.daychallenges.OnChallengeActionListener
  * and show them into RecyclerView
  */
 class TodayChallengesAdapter(private val challengesModel: DayChallengeViewModel)
-    : RecyclerView.Adapter<TodayChallengesAdapter.Holder>() {
+    : androidx.recyclerview.widget.RecyclerView.Adapter<TodayChallengesAdapter.Holder>() {
     /**
      * Holder class that keep all references to views from given layout.
      */
@@ -32,7 +32,7 @@ class TodayChallengesAdapter(private val challengesModel: DayChallengeViewModel)
          * binding object
          */
         val binding: ComponentListItemBinding
-    ) : RecyclerView.ViewHolder(binding.root)
+    ) : androidx.recyclerview.widget.RecyclerView.ViewHolder(binding.root)
 
     private var listener: OnChallengeActionListener? = null
     /**

@@ -1,13 +1,13 @@
 package com.bitage.kapp.daychallenges
 
-import android.arch.lifecycle.Observer
+import androidx.lifecycle.Observer
 import android.content.DialogInterface
 import android.content.Intent
-import android.databinding.DataBindingUtil
-import android.support.v7.app.AlertDialog
-import android.support.v7.widget.DividerItemDecoration
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
+import androidx.databinding.DataBindingUtil
+import androidx.appcompat.app.AlertDialog
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import android.util.Log
 import android.view.View
 import com.bitage.kapp.presentation.Constants
@@ -95,7 +95,7 @@ class ChallengeListViewImpl(private val activity: TodayChallengesActivity) : Cha
         binding.challengesList.setHasFixedSize(true)
         val layoutManager = LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
         binding.challengesList.layoutManager = layoutManager
-        binding.challengesList.addItemDecoration(DividerItemDecoration(activity, layoutManager.orientation))
+        binding.challengesList.addItemDecoration(androidx.recyclerview.widget.DividerItemDecoration(activity, layoutManager.orientation))
     }
 
     private fun initViewModel() {
@@ -105,10 +105,10 @@ class ChallengeListViewImpl(private val activity: TodayChallengesActivity) : Cha
             templateAdapter?.notifyDataSetChanged()
         })
         binding.challengesList.adapter = adapter
-        viewModel.challenges.observe(activity, android.arch.lifecycle.Observer {
+        viewModel.challenges.observe(activity, androidx.lifecycle.Observer {
             adapter?.notifyDataSetChanged()
         })
-        viewModel.templates.observe(activity, android.arch.lifecycle.Observer {
+        viewModel.templates.observe(activity, androidx.lifecycle.Observer {
             templateAdapter?.notifyDataSetChanged()
         })
     }

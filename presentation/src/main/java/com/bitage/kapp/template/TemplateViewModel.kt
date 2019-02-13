@@ -1,7 +1,7 @@
 package com.bitage.kapp.template
 
-import android.arch.lifecycle.LiveData
-import android.arch.lifecycle.MutableLiveData
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.bitage.kapp.presentation.KViewModel
 import com.bitage.kapp.model.Template
 import com.bitage.kapp.repository.TemplateRepository

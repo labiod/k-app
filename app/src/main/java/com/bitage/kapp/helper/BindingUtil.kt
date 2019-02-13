@@ -1,7 +1,7 @@
 package com.bitage.kapp.helper
 
 import android.content.Context
-import android.databinding.BindingAdapter
+import androidx.databinding.BindingAdapter
 import android.widget.ArrayAdapter
 import android.widget.Spinner
 import com.bitage.kapp.model.ChallengeType

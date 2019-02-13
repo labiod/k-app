@@ -1,6 +1,6 @@
 package com.bitage.kapp.editchallenge.di
 
-import android.arch.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProviders
 import com.bitage.kapp.presentation.Constants
 import com.bitage.kapp.repository.ChallengeRepository
 import com.bitage.kapp.editchallenge.EditChallengeActivity

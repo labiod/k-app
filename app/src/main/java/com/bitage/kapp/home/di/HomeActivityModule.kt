@@ -1,6 +1,6 @@
 package com.bitage.kapp.home.di
 
-import android.arch.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProviders
 import com.bitage.kapp.di.ActivityScope
 import com.bitage.kapp.home.HomePresenter
 import com.bitage.kapp.home.HomeActivity

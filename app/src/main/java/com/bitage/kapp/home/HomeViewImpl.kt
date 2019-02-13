@@ -1,8 +1,8 @@
 package com.bitage.kapp.home
 
-import android.arch.lifecycle.Observer
+import androidx.lifecycle.Observer
 import android.content.Intent
-import android.databinding.DataBindingUtil
+import androidx.databinding.DataBindingUtil
 import android.view.View
 import com.bitage.kapp.presentation.Constants
 import com.bitage.kapp.R

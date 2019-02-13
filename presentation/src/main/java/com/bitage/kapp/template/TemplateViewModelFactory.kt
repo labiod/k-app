@@ -1,7 +1,7 @@
 package com.bitage.kapp.template
 
-import android.arch.lifecycle.ViewModel
-import android.arch.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import android.util.Log
 import com.bitage.kapp.presentation.Constants
 import com.bitage.kapp.repository.TemplateRepository

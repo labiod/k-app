@@ -15,7 +15,7 @@ android {
         versionCode versions.versionCode
         versionName versions.versionName
 
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
     }
     buildTypes {
@@ -51,14 +51,13 @@ dependencies {
     implementation supportDependencies.design
     implementation supportDependencies.constraintLayout
     implementation kotlinDependencies.kotlin
-    implementation androidComponentDependencies.archRuntime
     implementation androidComponentDependencies.archExtensions
     implementation androidComponentDependencies.roomRuntime
     implementation daggerDependencies.core
     implementation daggerDependencies.android
     implementation daggerDependencies.androidSupport
 
-    implementation 'com.android.support.constraint:constraint-layout:1.1.3'
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.2'
     kapt androidComponentDependencies.roomCompiler
     kapt daggerDependencies.compiler
     kapt daggerDependencies.processor

@@ -1,10 +1,10 @@
 package com.bitage.kapp.templatelist
 
-import android.arch.lifecycle.Observer
+import androidx.lifecycle.Observer
 import android.content.Intent
-import android.databinding.DataBindingUtil
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
+import androidx.databinding.DataBindingUtil
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import android.view.View
 import com.bitage.kapp.R
 import com.bitage.kapp.databinding.ActivityTemplateListBinding
@@ -36,7 +36,7 @@ class KAppTemplateListView(private val activity: TemplateListActivity) : Templat
 
     private fun initView() {
         adapter = TemplateListAdapter(viewModel)
-        val lm = LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
+        val lm = androidx.recyclerview.widget.LinearLayoutManager(activity, androidx.recyclerview.widget.RecyclerView.VERTICAL, false)
         binding.template.layoutManager = lm
         binding.template.adapter = adapter
         viewModel.templates.observe(activity, Observer {

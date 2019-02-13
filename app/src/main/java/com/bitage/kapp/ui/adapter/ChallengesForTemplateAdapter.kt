@@ -1,7 +1,7 @@
 package com.bitage.kapp.ui.adapter
 
-import android.databinding.DataBindingUtil
-import android.support.v7.widget.RecyclerView
+import androidx.databinding.DataBindingUtil
+import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,7 +13,7 @@ import com.bitage.kapp.databinding.ChallengesForTemplateItemBinding
 /**
  * Adapter class for challenges that will be added to template
  */
-class ChallengesForTemplateAdapter : RecyclerView.Adapter<ChallengesForTemplateAdapter.Holder>() {
+class ChallengesForTemplateAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<ChallengesForTemplateAdapter.Holder>() {
     /**
      * Holder class that keep all reference for given binder instance
      */
@@ -22,7 +22,7 @@ class ChallengesForTemplateAdapter : RecyclerView.Adapter<ChallengesForTemplateA
          * view binder instance
          */
         val binder: ChallengesForTemplateItemBinding
-    ) : RecyclerView.ViewHolder(binder.root)
+    ) : androidx.recyclerview.widget.RecyclerView.ViewHolder(binder.root)
 
     /**
      * List of challenges added to template

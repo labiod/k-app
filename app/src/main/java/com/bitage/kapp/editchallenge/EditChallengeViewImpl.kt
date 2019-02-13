@@ -1,7 +1,7 @@
 package com.bitage.kapp.editchallenge
 
-import android.arch.lifecycle.Observer
-import android.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
+import androidx.databinding.DataBindingUtil
 import android.view.View
 import android.widget.AdapterView
 import android.widget.Toast

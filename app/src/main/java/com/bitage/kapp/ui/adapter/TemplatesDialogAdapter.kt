@@ -1,6 +1,6 @@
 package com.bitage.kapp.ui.adapter
 
-import android.arch.lifecycle.LiveData
+import androidx.lifecycle.LiveData
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup

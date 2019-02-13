@@ -1,6 +1,6 @@
 package com.bitage.kapp.templatelist.di
 
-import android.arch.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProviders
 import com.bitage.kapp.repository.TemplateRepository
 import com.bitage.kapp.templatelist.KAppTemplateListPresenter
 import com.bitage.kapp.templatelist.KAppTemplateListView
