@@ -5,6 +5,7 @@ import androidx.databinding.DataBindingUtil
 import android.view.View
 import android.widget.AdapterView
 import android.widget.Toast
+import androidx.appcompat.app.ActionBar
 import com.bitage.kapp.R
 import com.bitage.kapp.databinding.EditChallengeBinding
 import com.bitage.kapp.model.ChallengeType
@@ -45,6 +46,8 @@ class EditChallengeViewImpl(private val activity: EditChallengeActivity, private
         binding.viewmodel = viewModel
         initDataBinder()
     }
+
+    override fun customizeActionBar(actionBar: ActionBar?) {}
 
     private fun initDataBinder() {
         val title = if (editMode) R.string.edit_challenge_title else R.string.new_challenge_title

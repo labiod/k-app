@@ -18,13 +18,13 @@ interface TemplateDao {
      * @return id for inserted row
      */
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertTemplate(templateEntity: TemplateEntity): Long
+    suspend fun insertTemplate(templateEntity: TemplateEntity): Long
 
     /**
      * Insert challenges added to current template
      */
     @Insert
-    fun insertChallengeForTemplate(challengesForTemplate: TemplateChallengesEntity)
+    suspend fun insertChallengeForTemplate(challengesForTemplate: TemplateChallengesEntity)
 
     /**
      * Query all templates from database

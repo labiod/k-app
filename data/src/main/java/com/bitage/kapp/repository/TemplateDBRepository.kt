@@ -1,5 +1,6 @@
 package com.bitage.kapp.repository
 
+import androidx.room.CoroutinesRoom
 import com.bitage.kapp.mapper.EntityMapper
 import com.bitage.kapp.db.ChallengeDB
 import com.bitage.kapp.db.entity.TemplateChallengesEntity
@@ -11,6 +12,8 @@ import io.reactivex.BackpressureStrategy
 import io.reactivex.Completable
 import io.reactivex.Flowable
 import io.reactivex.schedulers.Schedulers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import java.io.IOException
 import java.lang.IllegalStateException
 import java.lang.NullPointerException
@@ -34,11 +37,14 @@ class TemplateDBRepository(private val db: ChallengeDB) : TemplateRepository {
                 template.id?.let {
                     db.templateDao().deleteAllChallengesForTemplate(it)
                 }
-                val id = db.templateDao().insertTemplate(EntityMapper.mapToTemplateEntity(template))
-                template.challenges.forEach {
-                    db.templateDao().insertChallengeForTemplate(TemplateChallengesEntity(null, id, it))
+                GlobalScope.launch {
+                    val id = db.templateDao().insertTemplate(EntityMapper.mapToTemplateEntity(template))
+                    template.challenges.forEach {
+                        db.templateDao().insertChallengeForTemplate(TemplateChallengesEntity(null, id, it))
+                    }
+                    c.onComplete()
                 }
-                c.onComplete()
+
             } catch (ex: IOException) {
                 c.onError(ex)
             }

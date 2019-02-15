@@ -2,10 +2,11 @@ package com.bitage.kapp.template
 
 import androidx.lifecycle.Observer
 import androidx.databinding.DataBindingUtil
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import android.view.View
 import android.widget.Toast
+import androidx.appcompat.app.ActionBar
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.bitage.kapp.R
 import com.bitage.kapp.ui.adapter.ChallengesForTemplateAdapter
 import com.bitage.kapp.databinding.ActivityTemplateBinding
@@ -53,7 +54,7 @@ class TemplateViewImpl(private val activity: TemplateActivity) : TemplateView {
         binding.viewmodel = model
         binding.setLifecycleOwner(activity)
         adapter = ChallengesForTemplateAdapter()
-        binding.challengesList.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(activity, androidx.recyclerview.widget.RecyclerView.VERTICAL, false)
+        binding.challengesList.layoutManager = LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
         binding.challengesList.adapter = adapter
         model.template.observe(activity, templateObserver)
         binding.addNextChallenge.setOnClickListener {
@@ -65,6 +66,8 @@ class TemplateViewImpl(private val activity: TemplateActivity) : TemplateView {
             } ?: createTemplate()
         }
     }
+
+    override fun customizeActionBar(actionBar: ActionBar?) {}
 
     private fun addNewChallenge() {
         adapter.addNext()

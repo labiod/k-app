@@ -2,27 +2,18 @@
 <layer-list
     xmlns:android="http://schemas.android.com/apk/res/android">
     <item>
-        <shape
-
-            android:shape="oval">
-
-            <stroke android:dashGap="5dp" android:color="#aaffdd88" android:width="6dp"/>
+        <shape android:shape="oval">
+            <stroke android:dashGap="5dp" android:color="@color/colorAccent" android:width="6dp"/>
         </shape>
     </item>
     <item>
-        <shape
-
-            android:shape="oval">
-
-            <stroke android:dashGap="5dp" android:color="#99005506" android:width="4dp"/>
+        <shape android:shape="oval">
+            <stroke android:dashGap="5dp" android:color="@color/colorPrimary" android:width="4dp"/>
         </shape>
     </item>
     <item>
-        <shape
-
-            android:shape="oval">
-
-            <stroke android:dashGap="5dp" android:color="#77ff5506" android:width="2dp"/>
+        <shape android:shape="oval">
+            <stroke android:dashGap="5dp" android:color="@color/colorPrimaryDark" android:width="2dp"/>
         </shape>
     </item>
 

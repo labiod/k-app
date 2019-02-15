@@ -18,27 +18,22 @@
             android:id="@+id/content_challenges_activity"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/colorAccent"
+            android:orientation="vertical"
             android:paddingTop="12dp"
             android:paddingBottom="12dp"
-            android:background="#3999"
-            android:orientation="vertical">
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
             <TextView
                 android:id="@+id/todayDateView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@{todayDate}"
                 android:layout_marginStart="16dp"
+                android:text="@{todayDate}"
                 android:textSize="18sp"
                 tools:text="Today date:" />
-            <TextView
-                android:id="@+id/yourChallengeView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/your_challenges"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                android:layout_gravity="center_horizontal"
-                    />
         </LinearLayout>
 
 
@@ -46,8 +41,6 @@
             android:id="@+id/challenges_list"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
             android:divider="@null"
             android:dividerHeight="0dp"
@@ -67,6 +60,6 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:srcCompat="@drawable/ic_input_add"
-            android:backgroundTint="@color/colorPrimary"/>
+            android:backgroundTint="@color/colorAccent"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

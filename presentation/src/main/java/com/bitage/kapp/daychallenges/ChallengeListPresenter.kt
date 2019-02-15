@@ -5,7 +5,7 @@ import com.bitage.kapp.presentation.KPresenter
 /**
  * Presenter used to listed challenges for given date
  */
-interface ChallengeListPresenter : KPresenter, OnChallengeActionListener {
+interface ChallengeListPresenter : KPresenter<ChallengeListView>, OnChallengeActionListener {
     /**
      * Delete all challenges
      */

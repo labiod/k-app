@@ -1,6 +1,7 @@
 package com.bitage.kapp.presentation
 
 import android.view.View
+import androidx.appcompat.app.ActionBar
 
 /**
  * Base view for all non android views.
@@ -27,4 +28,10 @@ interface KView<Model : KViewModel> {
      * @param viewModel - instance of view model class extends from [KViewModel]
      */
     fun attachViewModel(viewModel: Model)
+
+    /**
+     * Customize activity ActionBar
+     * @param actionBar - activity action bar
+     */
+    fun customizeActionBar(actionBar: ActionBar?)
 }

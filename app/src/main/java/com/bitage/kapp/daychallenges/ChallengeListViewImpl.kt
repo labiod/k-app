@@ -5,11 +5,12 @@ import android.content.DialogInterface
 import android.content.Intent
 import androidx.databinding.DataBindingUtil
 import androidx.appcompat.app.AlertDialog
-import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import android.util.Log
 import android.view.View
+import android.widget.TextView
+import androidx.appcompat.app.ActionBar
 import com.bitage.kapp.presentation.Constants
 import com.bitage.kapp.R
 import com.bitage.kapp.ui.adapter.TemplatesDialogAdapter
@@ -73,6 +74,19 @@ class ChallengeListViewImpl(private val activity: TodayChallengesActivity) : Cha
 
     override fun setChallengeActionListener(listener: OnChallengeActionListener) {
         adapter?.setOnChallengeActionListener(listener)
+    }
+
+    override fun customizeActionBar(actionBar: ActionBar?) {
+        actionBar?.let {
+            it.setDisplayShowCustomEnabled(true)
+            it.setCustomView(R.layout.challenges_action_bar)
+            val actionBarView = it.customView
+            val title: TextView = actionBarView.findViewById(R.id.action_bar_title)
+            val subTitle: TextView = actionBarView.findViewById(R.id.action_bar_subtitle)
+            val dateFormat = SimpleDateFormat(Constants.APP_DATE_FORMAT, Locale.getDefault())
+            subTitle.text = viewModel.getDate(dateFormat)
+            title.setText(R.string.your_challenges_title)
+        }
     }
 
     private fun initBinder() {

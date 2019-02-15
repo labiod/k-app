@@ -64,11 +64,13 @@ class TodayChallengesAdapter(private val challengesModel: DayChallengeViewModel)
     override fun onBindViewHolder(holder: Holder, position: Int) {
         val context = holder.itemView.context
         getItem(position)?.let { item ->
+            holder.binding.challengeFinishedButton.isChecked = item.finished
             if (item.finished) {
                 holder.binding.challengeEditButton.visibility = View.GONE
                 holder.binding.challengeDeleteButton.visibility = View.GONE
-                holder.binding.challengeFinishedButton.setImageResource(R.drawable.ic_challenge_revert)
-                holder.itemView.setBackgroundColor(Color.LTGRAY)
+                holder.itemView.setBackgroundColor(Color.parseColor("#E8F5E9"))
+            } else {
+                holder.itemView.setBackgroundColor(Color.parseColor("#FFEBEE"))
             }
             holder.binding.challengeFinishedButton.setOnClickListener {
                 listener?.onChallengeFinish(item.setFinishChallenge(item.finished.not()))

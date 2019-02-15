@@ -20,7 +20,7 @@
     <string name="home_hello_user_text">Hello $User</string>
 
     <!-- TodayChallenges screen -->
-    <string name="your_challenges">Your Challenges!</string>
+    <string name="your_challenges_title">Your Challenges!</string>
     <string name="your_challenges_menu_template_data">Load data from template</string>
     <string name="your_challenges_menu_delete_all">Delete all</string>
 

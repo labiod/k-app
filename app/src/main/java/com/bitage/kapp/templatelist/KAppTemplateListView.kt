@@ -6,6 +6,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import android.view.View
+import androidx.appcompat.app.ActionBar
 import com.bitage.kapp.R
 import com.bitage.kapp.databinding.ActivityTemplateListBinding
 import com.bitage.kapp.template.TemplateActivity
@@ -34,9 +35,11 @@ class KAppTemplateListView(private val activity: TemplateListActivity) : Templat
         initView()
     }
 
+    override fun customizeActionBar(actionBar: ActionBar?) {}
+
     private fun initView() {
         adapter = TemplateListAdapter(viewModel)
-        val lm = androidx.recyclerview.widget.LinearLayoutManager(activity, androidx.recyclerview.widget.RecyclerView.VERTICAL, false)
+        val lm = LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
         binding.template.layoutManager = lm
         binding.template.adapter = adapter
         viewModel.templates.observe(activity, Observer {

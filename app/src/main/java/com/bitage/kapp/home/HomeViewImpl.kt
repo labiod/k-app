@@ -4,6 +4,7 @@ import androidx.lifecycle.Observer
 import android.content.Intent
 import androidx.databinding.DataBindingUtil
 import android.view.View
+import androidx.appcompat.app.ActionBar
 import com.bitage.kapp.presentation.Constants
 import com.bitage.kapp.R
 import com.bitage.kapp.daychallenges.TodayChallengesActivity
@@ -50,6 +51,8 @@ class HomeViewImpl(private val activity: HomeActivity) : HomeView {
      * get the real android view
      */
     override fun androidView(): View = binding.root
+
+    override fun customizeActionBar(actionBar: ActionBar?) {}
 
     private fun initCalendar() {
         binding.roundCalendar.setOnDateListener(object : RoundCalendarView.OnDateListener {

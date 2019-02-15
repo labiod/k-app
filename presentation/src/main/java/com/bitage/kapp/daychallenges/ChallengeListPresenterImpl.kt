@@ -6,24 +6,25 @@ import com.bitage.kapp.model.Challenge
  * Implementation of presenter used to listed challenges for given date
  */
 class ChallengeListPresenterImpl(
-    private val viewModel: DayChallengeViewModel,
-    private val view: ChallengeListView
+    private val viewModel: DayChallengeViewModel
 ) : ChallengeListPresenter {
+    private var view: ChallengeListView? = null
 
     /**
      * Control presenter lifecycle. It should be called in Activity or fragment in onCreate method
      */
-    override fun onCreate() {
+    override fun onCreate(view: ChallengeListView) {
         view.onCreate()
         view.attachViewModel(viewModel)
         view.setChallengeActionListener(this)
+        this.view = view
     }
 
     /**
      * Control presenter lifecycle. It should be called in Activity or fragment in onDestroy method
      */
     override fun onDestroy() {
-        view.onDestroy()
+        view?.onDestroy()
     }
 
     /**
@@ -37,7 +38,7 @@ class ChallengeListPresenterImpl(
      * Load list of templates
      */
     override fun loadTemplateList() {
-        view.loadTemplateData()
+        view?.loadTemplateData()
     }
 
     override fun onChallengeFinish(challenge: Challenge) {

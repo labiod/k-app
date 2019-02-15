@@ -13,7 +13,7 @@ abstract class KActivity<T : KView<*>> : AppCompatActivity() {
     /**
      * Get Presenter associated with extending Activity
      */
-    protected abstract val presenter: KPresenter
+    protected abstract val presenter: KPresenter<T>
 
     /**
      * Get view associated with extending Activity
@@ -26,7 +26,8 @@ abstract class KActivity<T : KView<*>> : AppCompatActivity() {
     final override fun onCreate(savedInstanceState: Bundle?) {
         setupDependencyInjection()
         super.onCreate(savedInstanceState)
-        presenter.onCreate()
+        presenter.onCreate(view)
+        view.customizeActionBar(this.supportActionBar)
     }
 
     /**

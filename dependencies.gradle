@@ -24,8 +24,8 @@ ext {
     rxKotlinVersion = '2.1.0'
     rxAndroidVersion = '2.0.1'
     dokkaVersion = "0.9.17"
-    lifecycle_version = "2.0.0"
-    roomVersion = '2.0.0-rc01'
+    lifecycle_version = "2.1.0-alpha02"
+    roomVersion = '2.1.0-alpha04'
     javaxAnnotationVersion = '1.0'
     javaxInjectVersion = '1'
     androidAnnotationsVersion = '21.0.3'
@@ -40,7 +40,8 @@ ext {
             androidAnnotations: "com.android.support:support-annotations:${androidAnnotationsVersion}",
             rxKotlin:           "io.reactivex.rxjava2:rxkotlin:${rxKotlinVersion}",
             kotlin:             "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${kotlinVersion}",
-            ktlint:             "com.github.shyiko:ktlint:0.29.0"
+            ktlint:             "com.github.shyiko:ktlint:0.29.0",
+            coroutines:         "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.0.1"
     ]
 
     testDependencies = [
@@ -56,7 +57,8 @@ ext {
             archCompiler:       "androidx.lifecycle:lifecycle-compiler:${lifecycle_version}",
             roomRuntime:        "androidx.room:room-runtime:${roomVersion}",
             roomCompiler:       "androidx.room:room-compiler:${roomVersion}",
-            roomRxJava:         "androidx.room:room-rxjava2:${roomVersion}"
+            roomRxJava:         "androidx.room:room-rxjava2:${roomVersion}",
+            roomCoroutines:     "androidx.room:room-coroutines:${roomVersion}"
     ]
 
     rxDependencies = [
