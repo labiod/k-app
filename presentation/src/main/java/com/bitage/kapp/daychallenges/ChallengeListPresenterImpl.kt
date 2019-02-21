@@ -13,7 +13,10 @@ class ChallengeListPresenterImpl(
     /**
      * Control presenter lifecycle. It should be called in Activity or fragment in onCreate method
      */
-    override fun onCreate(view: ChallengeListView) {
+    override fun onCreate() {
+    }
+
+    override fun attachView(view: ChallengeListView) {
         view.onCreate()
         view.attachViewModel(viewModel)
         view.setChallengeActionListener(this)

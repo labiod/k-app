@@ -38,11 +38,10 @@ class DBChallengesRepository(private val db: ChallengeDB) : ChallengeRepository 
         cal.set(Calendar.SECOND, 59)
         cal.set(Calendar.MILLISECOND, 99)
         val endDate = cal.time
-        val result: Flowable<List<Challenge>> = Flowable.create({ e ->
-            db.noteDao().getChallengeAtDate(startDate.time, endDate.time).
-                subscribe { next ->
-                    e.onNext(EntityMapper.mapToChallengeList(next))
-                }
+        val result: Flowable<List<Challenge>> = Flowable.create( { e ->
+            db.noteDao().getChallengeAtDate(startDate.time, endDate.time).subscribe { next ->
+                e.onNext(EntityMapper.mapToChallengeList(next))
+            }
 
         }, BackpressureStrategy.LATEST)
         return result.subscribeOn(Schedulers.io())

@@ -5,15 +5,18 @@ package com.bitage.kapp.template
  */
 class TemplatePresenterImpl(
     private val model: TemplateViewModel,
-    private val view: TemplateView,
     private val id: Long
 ) : TemplatePresenter {
+    private lateinit var view: TemplateView
 
     /**
      * Control presenter lifecycle. It should be called in Activity or fragment in onCreate method
      */
     override fun onCreate() {
-        view.onCreate()
+    }
+
+    override fun attachView(view: TemplateView) {
+        this.view = view
         initViewModel()
     }
 

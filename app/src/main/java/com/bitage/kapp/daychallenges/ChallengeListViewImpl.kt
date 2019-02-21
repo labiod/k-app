@@ -13,6 +13,7 @@ import android.widget.TextView
 import androidx.appcompat.app.ActionBar
 import com.bitage.kapp.presentation.Constants
 import com.bitage.kapp.R
+import com.bitage.kapp.Screen
 import com.bitage.kapp.ui.adapter.TemplatesDialogAdapter
 import com.bitage.kapp.ui.adapter.TodayChallengesAdapter
 import com.bitage.kapp.databinding.DayChallengesBinding
@@ -24,9 +25,10 @@ import java.util.Locale
 /**
  * List of challenges view implementation class
  */
-class ChallengeListViewImpl(private val activity: TodayChallengesActivity) : ChallengeListView {
+class ChallengeListViewImpl : ChallengeListView {
     private lateinit var binding: DayChallengesBinding
     private lateinit var viewModel: DayChallengeViewModel
+    private lateinit var screenHandler: Screen
 
     private var adapter: TodayChallengesAdapter? = null
     private var templateAdapter: TemplatesDialogAdapter? = null
@@ -35,7 +37,11 @@ class ChallengeListViewImpl(private val activity: TodayChallengesActivity) : Cha
      * Controls lifecycle of this view. It should be called in presenter onCreate method
      */
     override fun onCreate() {
-        binding = DataBindingUtil.setContentView(activity, R.layout.day_challenges)
+    }
+
+    override fun onAttached(screen: Screen) {
+        binding = DataBindingUtil.setContentView(screen.getActivity(), R.layout.day_challenges)
+        this.screenHandler = screen
     }
 
     /**
@@ -65,6 +71,7 @@ class ChallengeListViewImpl(private val activity: TodayChallengesActivity) : Cha
                 viewModel.loadDataFromTemplate(it)
             }
         }
+        val activity = screenHandler.getActivity()
         val dialog = AlertDialog.Builder(activity)
             .setTitle(activity.getString(R.string.template_list_dialog_title))
             .setAdapter(templateAdapter, onChooseListener)
@@ -101,28 +108,28 @@ class ChallengeListViewImpl(private val activity: TodayChallengesActivity) : Cha
             intent.putExtra(Constants.CURRENT_DATE_DAY, calendar.get(Calendar.DAY_OF_MONTH))
             intent.putExtra(Constants.CURRENT_DATE_MONTH, calendar.get(Calendar.MONTH))
             intent.putExtra(Constants.CURRENT_DATE_YEAR, calendar.get(Calendar.YEAR))
-            activity.startActivity(intent)
+            screenHandler.startActivity(intent)
         }
     }
 
     private fun initRecyclerView() {
         binding.challengesList.setHasFixedSize(true)
-        val layoutManager = LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
+        val layoutManager = LinearLayoutManager(screenHandler.getActivity(), RecyclerView.VERTICAL, false)
         binding.challengesList.layoutManager = layoutManager
-        binding.challengesList.addItemDecoration(androidx.recyclerview.widget.DividerItemDecoration(activity, layoutManager.orientation))
+        binding.challengesList.addItemDecoration(androidx.recyclerview.widget.DividerItemDecoration(screenHandler.getActivity(), layoutManager.orientation))
     }
 
     private fun initViewModel() {
         adapter = TodayChallengesAdapter(viewModel)
         templateAdapter = TemplatesDialogAdapter(viewModel.templates)
-        viewModel.templates.observe(activity, Observer {
+        viewModel.templates.observe(screenHandler, Observer {
             templateAdapter?.notifyDataSetChanged()
         })
         binding.challengesList.adapter = adapter
-        viewModel.challenges.observe(activity, androidx.lifecycle.Observer {
+        viewModel.challenges.observe(screenHandler, androidx.lifecycle.Observer {
             adapter?.notifyDataSetChanged()
         })
-        viewModel.templates.observe(activity, androidx.lifecycle.Observer {
+        viewModel.templates.observe(screenHandler, androidx.lifecycle.Observer {
             templateAdapter?.notifyDataSetChanged()
         })
     }

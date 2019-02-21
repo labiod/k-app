@@ -8,6 +8,7 @@ import androidx.appcompat.app.ActionBar
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bitage.kapp.R
+import com.bitage.kapp.Screen
 import com.bitage.kapp.ui.adapter.ChallengesForTemplateAdapter
 import com.bitage.kapp.databinding.ActivityTemplateBinding
 import com.bitage.kapp.model.ChallengeType
@@ -18,12 +19,13 @@ import io.reactivex.functions.Consumer
 /**
  * Implementation of view for template screen
  */
-class TemplateViewImpl(private val activity: TemplateActivity) : TemplateView {
+class TemplateViewImpl : TemplateView {
 
     private lateinit var binding: ActivityTemplateBinding
 
     private lateinit var adapter: ChallengesForTemplateAdapter
     private lateinit var model: TemplateViewModel
+    private lateinit var screen: Screen
     private val templateObserver = Observer<Template> {
         it?.let { t ->
             adapter.addAll(t.challenges)
@@ -34,7 +36,11 @@ class TemplateViewImpl(private val activity: TemplateActivity) : TemplateView {
      * Controls lifecycle of this view. It should be called in presenter onCreate method
      */
     override fun onCreate() {
-        binding = DataBindingUtil.setContentView(activity, R.layout.activity_template)
+    }
+
+    override fun onAttached(screen: Screen) {
+        this.screen = screen
+        binding = DataBindingUtil.setContentView(screen.getActivity(), R.layout.activity_template)
     }
 
     /**
@@ -52,11 +58,11 @@ class TemplateViewImpl(private val activity: TemplateActivity) : TemplateView {
     override fun attachViewModel(viewModel: TemplateViewModel) {
         model = viewModel
         binding.viewmodel = model
-        binding.setLifecycleOwner(activity)
+        binding.setLifecycleOwner(screen)
         adapter = ChallengesForTemplateAdapter()
-        binding.challengesList.layoutManager = LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
+        binding.challengesList.layoutManager = LinearLayoutManager(screen.getActivity(), RecyclerView.VERTICAL, false)
         binding.challengesList.adapter = adapter
-        model.template.observe(activity, templateObserver)
+        model.template.observe(screen, templateObserver)
         binding.addNextChallenge.setOnClickListener {
             addNewChallenge()
         }
@@ -74,19 +80,20 @@ class TemplateViewImpl(private val activity: TemplateActivity) : TemplateView {
         if (adapter.challenges.size == ChallengeType.values().size) {
             binding.addNextChallenge.isEnabled = false
         }
+        adapter.notifyDataSetChanged()
     }
 
     private fun createTemplate() {
         val template = Template(null, binding.templateName.text.toString())
         template.challenges.addAll(adapter.challenges)
         model.createOrUpdateTemplate(template, Action {
-            activity.runOnUiThread {
-                Toast.makeText(activity, "New item added", Toast.LENGTH_SHORT).show()
-                activity.finish()
+            screen.runOnUi {
+                Toast.makeText(screen.getActivity(), "New item added", Toast.LENGTH_SHORT).show()
+                screen.finish()
             }
         }, Consumer {
-            activity.runOnUiThread {
-                Toast.makeText(activity, "Problem with adding template to Database. Check logs form more details", Toast.LENGTH_SHORT).show()
+            screen.runOnUi {
+                Toast.makeText(screen.getActivity(), "Problem with adding template to Database. Check logs form more details", Toast.LENGTH_SHORT).show()
             }
         })
     }
@@ -96,13 +103,13 @@ class TemplateViewImpl(private val activity: TemplateActivity) : TemplateView {
         newTemplate.challenges.addAll(adapter.challenges)
         model.template.removeObserver(templateObserver)
         model.createOrUpdateTemplate(newTemplate, Action {
-            activity.runOnUiThread {
-                Toast.makeText(activity, "Item edited", Toast.LENGTH_SHORT).show()
-                activity.finish()
+            screen.runOnUi {
+                Toast.makeText(screen.getActivity(), "Item edited", Toast.LENGTH_SHORT).show()
+                screen.finish()
             }
         }, Consumer {
-            activity.runOnUiThread {
-                Toast.makeText(activity, "Problem with edit template. Check logs form more details", Toast.LENGTH_SHORT).show()
+            screen.runOnUi {
+                Toast.makeText(screen.getActivity(), "Problem with edit template. Check logs form more details", Toast.LENGTH_SHORT).show()
             }
         })
     }

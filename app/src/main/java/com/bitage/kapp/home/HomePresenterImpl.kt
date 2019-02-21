@@ -4,14 +4,17 @@ package com.bitage.kapp.home
  * Implementation of presenter for home screen
  */
 class HomePresenterImpl(
-    private val viewModel: HomeViewModel,
-    private val view: HomeView
+    private val viewModel: HomeViewModel
 ) : HomePresenter {
+    private lateinit var view: HomeView
     /**
      * Control presenter lifecycle. It should be called in Activity or fragment in onCreate method
      */
     override fun onCreate() {
-        view.onCreate()
+    }
+
+    override fun attachView(view: HomeView) {
+        this.view = view
         view.attachViewModel(viewModel)
     }
 

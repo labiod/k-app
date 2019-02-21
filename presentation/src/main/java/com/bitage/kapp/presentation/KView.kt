@@ -2,6 +2,7 @@ package com.bitage.kapp.presentation
 
 import android.view.View
 import androidx.appcompat.app.ActionBar
+import com.bitage.kapp.Screen
 
 /**
  * Base view for all non android views.
@@ -17,6 +18,8 @@ interface KView<Model : KViewModel> {
      * Controls lifecycle of this view. It should be called in presenter onDestroy method
      */
     fun onDestroy()
+
+    fun onAttached(screen: Screen)
 
     /**
      * get the real android view

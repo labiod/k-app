@@ -5,4 +5,4 @@ import com.bitage.kapp.presentation.KPresenter
 /**
  * Interface for template list presenter used in template list screen
  */
-interface TemplateListPresenter : KPresenter
+interface TemplateListPresenter : KPresenter<TemplateListView>

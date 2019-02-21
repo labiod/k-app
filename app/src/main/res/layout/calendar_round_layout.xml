@@ -4,14 +4,27 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:id="@+id/rootLayout"
     android:animateLayoutChanges="true">
+
+    <TextView
+        android:id="@+id/selectedDay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="23 Nov, 18" />
 
     <ImageButton
         android:id="@+id/leftButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
@@ -21,6 +34,7 @@
         android:src="@drawable/calendar_prev_day_drawable"
         app:layout_constraintBottom_toBottomOf="@+id/selectedDayLayout"
         app:layout_constraintEnd_toStartOf="@+id/selectedDayLayout"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageButton
@@ -29,84 +43,38 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
         android:background="@android:color/transparent"
         android:contentDescription="@string/round_calendar_right_button_desc"
         android:src="@drawable/calendar_next_day_drawable"
         app:layout_constraintBottom_toBottomOf="@+id/selectedDayLayout"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/selectedDayLayout"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <com.bitage.kapp.ui.view.RoundProgressView
         android:id="@+id/selectedDayLayout"
         android:layout_width="200dp"
         android:layout_height="0dp"
-        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
+        android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
-        android:background="@drawable/round_drawable"
-        android:orientation="horizontal"
-        android:padding="8dp"
         app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@+id/selectedDay" />
 
-        <TextView
-            android:id="@+id/selectedDay"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="8dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="23 Nov, 18" />
-
-        <TextView
-            android:id="@+id/progressView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="8dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/selectedDay"
-            tools:text="3/5" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <ImageButton
-        android:id="@+id/expandCalendar"
+    <com.bitage.naw_views.CalendarButton
+        android:id="@+id/calendar_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:background="@android:color/transparent"
-        android:contentDescription="@string/round_calendar_expand_button_desc"
-        android:src="@drawable/calendar_icon_drawable"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/selectedDayLayout" />
 
-    <CalendarView
-        android:id="@+id/challengesCalendar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:background="@drawable/calendar_background"
-        android:scaleX="0.9"
-        android:scaleY="0.9"
-        android:visibility="visible"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

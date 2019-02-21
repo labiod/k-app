@@ -24,7 +24,7 @@ class HomeActivityModule {
      * @return [HomeView] implementation
      */
     @Provides
-    fun provideHomeView(activity: HomeActivity): HomeView = HomeViewImpl(activity)
+    fun provideHomeView(): HomeView = HomeViewImpl()
 
     /**
      * Provide viewModel for activity
@@ -50,5 +50,5 @@ class HomeActivityModule {
     fun provideHomePresenter(
         viewModel: HomeViewModel,
         view: HomeView
-    ): HomePresenter = HomePresenterImpl(viewModel, view)
+    ): HomePresenter = HomePresenterImpl(viewModel)
 }

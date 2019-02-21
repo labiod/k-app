@@ -24,6 +24,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             app:layout_constraintGuide_percent="0.25"/>
+
         <TextView
             android:id="@+id/userInfoText"
             android:layout_width="wrap_content"
@@ -35,15 +36,78 @@
             android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/top_guideline" />
+            app:layout_constraintTop_toTopOf="parent" />
 
-        <com.bitage.kapp.ui.view.RoundCalendarView
-            android:id="@+id/round_calendar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/top_guideline" />
+            <TextView
+                android:id="@+id/selectedDay"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/userInfoText"
+                tools:text="23 Nov, 18" />
+
+            <ImageButton
+                android:id="@+id/leftButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
+                android:background="@android:color/transparent"
+                android:contentDescription="@string/round_calendar_left_buttont_desc"
+                android:scaleType="fitCenter"
+                android:src="@drawable/calendar_prev_day_drawable"
+                app:layout_constraintBottom_toBottomOf="@+id/roundProgress"
+                app:layout_constraintEnd_toStartOf="@+id/roundProgress"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/selectedDay" />
+
+            <ImageButton
+                android:id="@+id/rightButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
+                android:background="@android:color/transparent"
+                android:contentDescription="@string/round_calendar_right_button_desc"
+                android:src="@drawable/calendar_next_day_drawable"
+                app:layout_constraintBottom_toBottomOf="@+id/roundProgress"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/roundProgress"
+                app:layout_constraintTop_toBottomOf="@+id/selectedDay" />
+
+            <com.bitage.kapp.ui.view.RoundProgressView
+                android:id="@+id/roundProgress"
+                android:layout_width="200dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/selectedDay"
+                app:progressColor="#00ffaa"
+                app:progressTextColor="#000000"/>
+
+            <com.bitage.naw_views.CalendarButton
+                android:id="@+id/calendar_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/roundProgress" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

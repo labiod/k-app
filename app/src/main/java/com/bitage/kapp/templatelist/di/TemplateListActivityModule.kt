@@ -37,17 +37,15 @@ class TemplateListActivityModule {
      * @return implementation of TemplateListView
      */
     @Provides
-    fun provideTemplateListView(activity: TemplateListActivity): TemplateListView = KAppTemplateListView(activity)
+    fun provideTemplateListView(): TemplateListView = KAppTemplateListView()
 
     /**
      * Provide presenter for template list screen
      * @param model - view model for screen
-     * @param view - view for screen
      * @return implementation of TemplateListPresenter for template list screen
      */
     @Provides
     fun provideTemplateListPresenter(
-        model: TemplateListViewModel,
-        view: TemplateListView
-    ): TemplateListPresenter = KAppTemplateListPresenter(model, view)
+        model: TemplateListViewModel
+    ): TemplateListPresenter = KAppTemplateListPresenter(model)
 }

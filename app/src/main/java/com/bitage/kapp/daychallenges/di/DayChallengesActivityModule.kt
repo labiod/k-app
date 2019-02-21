@@ -43,9 +43,7 @@ class DayChallengesActivityModule {
      * @return [ChallengeListView] instance
      */
     @Provides
-    fun provideChallengeListView(activity: TodayChallengesActivity): ChallengeListView {
-        return ChallengeListViewImpl(activity)
-    }
+    fun provideChallengeListView(): ChallengeListView = ChallengeListViewImpl()
 
     /**
      * Provide presenter for challenges list activity
@@ -58,7 +56,7 @@ class DayChallengesActivityModule {
         viewModel: DayChallengeViewModel,
         view: ChallengeListView
     ): ChallengeListPresenter {
-        return ChallengeListPresenterImpl(viewModel, view)
+        return ChallengeListPresenterImpl(viewModel)
     }
 
     private fun getCurrentDate(activity: TodayChallengesActivity): Date {

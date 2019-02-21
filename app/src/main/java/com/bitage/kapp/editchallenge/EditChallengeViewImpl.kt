@@ -7,6 +7,7 @@ import android.widget.AdapterView
 import android.widget.Toast
 import androidx.appcompat.app.ActionBar
 import com.bitage.kapp.R
+import com.bitage.kapp.Screen
 import com.bitage.kapp.databinding.EditChallengeBinding
 import com.bitage.kapp.model.ChallengeType
 import com.bitage.kapp.model.StepProgress
@@ -14,19 +15,19 @@ import com.bitage.kapp.model.StepProgress
 /**
  * Implementation of view for edit challenge screen
  */
-class EditChallengeViewImpl(private val activity: EditChallengeActivity, private val editMode: Boolean)
+class EditChallengeViewImpl(private val editMode: Boolean)
     : EditChallengeView {
     private lateinit var binding: EditChallengeBinding
 
     private lateinit var progressArray: Array<StepProgress>
     private lateinit var stepArray: Array<Int>
     private lateinit var viewModel: EditChallengeViewModel
+    private lateinit var screen: Screen
 
     /**
      * Controls lifecycle of this view. It should be called in presenter onCreate method
      */
     override fun onCreate() {
-        binding = DataBindingUtil.setContentView(activity, R.layout.edit_challenge)
     }
 
     /**
@@ -34,6 +35,11 @@ class EditChallengeViewImpl(private val activity: EditChallengeActivity, private
      */
     override fun onDestroy() {
         binding.unbind()
+    }
+
+    override fun onAttached(screen: Screen) {
+        this.screen = screen
+        binding = DataBindingUtil.setContentView(screen.getActivity(), R.layout.edit_challenge)
     }
 
     /**
@@ -51,8 +57,8 @@ class EditChallengeViewImpl(private val activity: EditChallengeActivity, private
 
     private fun initDataBinder() {
         val title = if (editMode) R.string.edit_challenge_title else R.string.new_challenge_title
-        activity.setTitle(title)
-        binding.setLifecycleOwner(activity)
+        screen.getActivity().setTitle(title)
+        binding.setLifecycleOwner(screen)
 
         binding.editMode = editMode
         binding.challengeName.isEnabled = editMode.not()
@@ -80,11 +86,11 @@ class EditChallengeViewImpl(private val activity: EditChallengeActivity, private
             val goal = binding.challengeGoal.text.toString().toInt()
             val series = binding.challengeSeries.text.toString().toInt()
             viewModel.applyChanges(challengeType, step, progress, goal, series)
-            Toast.makeText(activity, "Challenge changed", Toast.LENGTH_SHORT).show()
-            activity.finish()
+            Toast.makeText(screen.getActivity(), "Challenge changed", Toast.LENGTH_SHORT).show()
+            screen.finish()
         }
         if (!editMode) {
-            viewModel.challengeProgress.observe(activity, Observer { ch ->
+            viewModel.challengeProgress.observe(screen, Observer { ch ->
                 ch?.let {
                     binding.challengeGoal.setText(it.goal.toString())
                     binding.challengeSeries.setText(it.series.toString())

@@ -12,7 +12,7 @@ import java.util.Date
  * View model for home screen
  */
 class HomeViewModel(private val repository: ChallengeRepository, date: Date) : KViewModel() {
-    val dateData: MutableLiveData<Date> = MutableLiveData<Date>()
+    val dateData: MutableLiveData<Date> = MutableLiveData()
     init {
         dateData.postValue(date)
     }

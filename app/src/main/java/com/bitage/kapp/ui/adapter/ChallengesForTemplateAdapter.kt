@@ -13,7 +13,7 @@ import com.bitage.kapp.databinding.ChallengesForTemplateItemBinding
 /**
  * Adapter class for challenges that will be added to template
  */
-class ChallengesForTemplateAdapter : androidx.recyclerview.widget.RecyclerView.Adapter<ChallengesForTemplateAdapter.Holder>() {
+class ChallengesForTemplateAdapter : RecyclerView.Adapter<ChallengesForTemplateAdapter.Holder>() {
     /**
      * Holder class that keep all reference for given binder instance
      */
@@ -22,7 +22,7 @@ class ChallengesForTemplateAdapter : androidx.recyclerview.widget.RecyclerView.A
          * view binder instance
          */
         val binder: ChallengesForTemplateItemBinding
-    ) : androidx.recyclerview.widget.RecyclerView.ViewHolder(binder.root)
+    ) : RecyclerView.ViewHolder(binder.root)
 
     /**
      * List of challenges added to template
@@ -77,7 +77,6 @@ class ChallengesForTemplateAdapter : androidx.recyclerview.widget.RecyclerView.A
                 return
             }
         }
-        notifyDataSetChanged()
     }
 
     /**

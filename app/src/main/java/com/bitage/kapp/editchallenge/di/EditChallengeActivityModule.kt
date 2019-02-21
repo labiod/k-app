@@ -42,7 +42,7 @@ class EditChallengeActivityModule {
     @Provides
     fun provideEditChallengeView(activity: EditChallengeActivity): EditChallengeView {
         val editMode = activity.intent.extras?.containsKey(Constants.CHALLENGE_ITEM_ID_KEY) ?: false
-        return EditChallengeViewImpl(activity, editMode)
+        return EditChallengeViewImpl(editMode)
     }
 
     /**
@@ -58,7 +58,7 @@ class EditChallengeActivityModule {
         view: EditChallengeView
     ): EditChallengePresenter {
         val id = activity.intent.getLongExtra(Constants.CHALLENGE_ITEM_ID_KEY, -1)
-        return EditChallengePresenterImpl(viewModel, view, id)
+        return EditChallengePresenterImpl(viewModel, id)
     }
 
     private fun getCurrentDate(activity: EditChallengeActivity): Date {
