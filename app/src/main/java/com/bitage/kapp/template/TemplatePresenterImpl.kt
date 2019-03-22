@@ -15,6 +15,11 @@ class TemplatePresenterImpl(
     override fun onCreate() {
     }
 
+    override fun onResume() {}
+
+    override fun onPause() {}
+
+
     override fun attachView(view: TemplateView) {
         this.view = view
         initViewModel()

@@ -1,5 +1,6 @@
 package com.bitage.kapp.editchallenge
 
+import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.bitage.kapp.presentation.KViewModel
@@ -16,6 +17,7 @@ import java.util.concurrent.Executors
  */
 class EditChallengeViewModel(private val repository: ChallengeRepository, private val date: Date) : KViewModel() {
     private val _challengeProgress = MutableLiveData<Challenge>()
+    private val _challengeUpdate = MutableLiveData<Boolean>()
     /**
      * Getter for _challengeProgress field
      */
@@ -28,6 +30,9 @@ class EditChallengeViewModel(private val repository: ChallengeRepository, privat
      */
     val challenge: LiveData<Challenge>
         get() = _challenge
+
+    val challengeUpdate: LiveData<Boolean>
+        get() = _challengeUpdate
 
     /**
      * Load challenge for given id and put result to _challenge field
@@ -52,9 +57,12 @@ class EditChallengeViewModel(private val repository: ChallengeRepository, privat
      * @param series - challenge series
      */
     fun applyChanges(challengeType: ChallengeType, step: Int, progress: StepProgress, goal: Int, series: Int) {
-
-        repository.update(_challenge.value?.applyChanges(step, progress, goal, series)
+        addDisposable(repository.update(_challenge.value?.applyChanges(step, progress, goal, series)
             ?: Challenge(null, challengeType, step, progress, date, series, goal))
+            .subscribe {
+                _challengeUpdate.postValue(true)
+            }
+        )
     }
 
     /**

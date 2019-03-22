@@ -7,8 +7,12 @@ class KAppTemplateListPresenter(
     private val model: TemplateListViewModel
 ) : TemplateListPresenter {
     private lateinit var view: TemplateListView
-    override fun onCreate() {
-    }
+
+    override fun onCreate() {}
+
+    override fun onResume() {}
+
+    override fun onPause() {}
 
     override fun onDestroy() {
         view.onDestroy()

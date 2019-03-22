@@ -80,14 +80,18 @@ class EditChallengeViewImpl(private val editMode: Boolean)
         }
 
         binding.confirmChanges.setOnClickListener {
+            viewModel.challengeUpdate.observe(screen, Observer {
+                if (it == true) {
+                    Toast.makeText(screen.getActivity(), "Challenge changed", Toast.LENGTH_SHORT).show()
+                    screen.finish()
+                }
+            })
             val challengeType = ChallengeType.values()[binding.challengeName.selectedItemPosition]
             val step = stepArray[binding.challengeStep.selectedItemPosition]
             val progress = StepProgress.values()[binding.challengeStepProgress.selectedItemPosition]
             val goal = binding.challengeGoal.text.toString().toInt()
             val series = binding.challengeSeries.text.toString().toInt()
             viewModel.applyChanges(challengeType, step, progress, goal, series)
-            Toast.makeText(screen.getActivity(), "Challenge changed", Toast.LENGTH_SHORT).show()
-            screen.finish()
         }
         if (!editMode) {
             viewModel.challengeProgress.observe(screen, Observer { ch ->

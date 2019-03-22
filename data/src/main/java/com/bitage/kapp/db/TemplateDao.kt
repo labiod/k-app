@@ -4,9 +4,9 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import androidx.room.Transaction
 import com.bitage.kapp.entity.TemplateEntity
 import com.bitage.kapp.db.entity.TemplateChallengesEntity
-import io.reactivex.Flowable
 
 /**
  * Dao class that retrieve and manipulate (update/insert/delete) template data from database
@@ -31,33 +31,33 @@ interface TemplateDao {
      * @return all templates
      */
     @Query("SELECT * FROM templates")
-    fun getAll(): Flowable<List<TemplateEntity>>
+    suspend fun getAll(): List<TemplateEntity>
 
     /**
      * Query templates for given id from database
      * @return template
      */
     @Query("SELECT * FROM templates WHERE id = :id")
-    fun getTemplateById(id: Long): Flowable<TemplateEntity>
+    suspend fun getTemplateById(id: Long): TemplateEntity
 
     /**
      * Query all challenges assigned to given template
      * @return list of challenges type
      */
     @Query("SELECT * FROM template_challenges WHERE templateId = :templateId")
-    fun loadTemplateChallenges(templateId: Long): List<TemplateChallengesEntity>
+    suspend fun loadTemplateChallenges(templateId: Long): List<TemplateChallengesEntity>
 
     /**
      * Delate all challenges for give tempplate
      * @param templateId - given template id
      */
     @Query("DELETE FROM template_challenges WHERE templateId = :templateId")
-    fun deleteAllChallengesForTemplate(templateId: Long)
+    suspend fun deleteAllChallengesForTemplate(templateId: Long)
 
     /**
      * Delete template for give template id
      * @param templateId - give template id
      */
     @Query("DELETE FROM templates WHERE id = :templateId")
-    fun deleteTemplate(templateId: Long)
+    suspend fun deleteTemplate(templateId: Long)
 }

@@ -11,6 +11,16 @@ interface KPresenter<T : KView<*>> {
     fun onCreate()
 
     /**
+     * Control presenter lifecycle. It should be called in Activity or fragment in onResume method
+     */
+    fun onResume()
+
+    /**
+     * Control presenter lifecycle. It should be called in Activity or fragment in onPause method
+     */
+    fun onPause()
+
+    /**
      * Control presenter lifecycle. It should be called in Activity or fragment in onDestroy method
      */
     fun onDestroy()

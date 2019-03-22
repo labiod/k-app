@@ -13,6 +13,10 @@ class HomePresenterImpl(
     override fun onCreate() {
     }
 
+    override fun onResume() {}
+
+    override fun onPause() {}
+
     override fun attachView(view: HomeView) {
         this.view = view
         view.attachViewModel(viewModel)

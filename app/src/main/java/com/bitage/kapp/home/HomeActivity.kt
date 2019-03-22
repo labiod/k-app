@@ -7,6 +7,7 @@ import com.bitage.kapp.KActivity
 import com.bitage.kapp.KApplication
 import com.bitage.kapp.R
 import com.bitage.kapp.templatelist.TemplateListActivity
+import com.bitage.kapp.user.UserActivity
 import dagger.android.AndroidInjection
 import javax.inject.Inject
 
@@ -46,6 +47,10 @@ class HomeActivity : KActivity<HomeView>() {
                 showTemplateScreen()
                 true
             }
+            R.id.menage_user -> {
+                showUserScreen()
+                true
+            }
             else -> {
                 super.onOptionsItemSelected(item)
             }
@@ -54,6 +59,11 @@ class HomeActivity : KActivity<HomeView>() {
 
     private fun showTemplateScreen() {
         val intent = Intent(this, TemplateListActivity::class.java)
+        startActivity(intent)
+    }
+
+    private fun showUserScreen() {
+        val intent = Intent(this, UserActivity::class.java)
         startActivity(intent)
     }
 }

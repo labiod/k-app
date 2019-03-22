@@ -17,6 +17,7 @@
 
     <!-- Home screen -->
     <string name="home_screen_manage_template_menu">Menage template</string>
+    <string name="home_screen_manage_user_menu">Menage user</string>
     <string name="home_hello_user_text">Hello $User</string>
 
     <!-- TodayChallenges screen -->

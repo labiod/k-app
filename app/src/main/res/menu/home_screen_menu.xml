@@ -5,4 +5,9 @@
         android:title="@string/home_screen_manage_template_menu"
         android:orderInCategory="100"
         />
+    <item
+        android:id="@+id/menage_user"
+        android:title="@string/home_screen_manage_user_menu"
+        android:orderInCategory="101"
+        />
 </menu>

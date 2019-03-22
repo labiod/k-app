@@ -42,6 +42,16 @@ abstract class KActivity<T : KView<*>> : AppCompatActivity(), Screen {
         presenter.onDestroy()
     }
 
+    override fun onResume() {
+        super.onResume()
+        presenter.onResume()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        presenter.onPause()
+    }
+
     override fun getActivity(): Activity {
         return this
     }

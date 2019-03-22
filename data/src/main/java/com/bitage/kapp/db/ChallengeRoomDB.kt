@@ -13,6 +13,7 @@ import com.bitage.kapp.entity.TemplateEntity
 import com.bitage.kapp.entity.UserProgressEntity
 import com.bitage.kapp.db.converter.ChallengeTypeConverter
 import com.bitage.kapp.db.entity.TemplateChallengesEntity
+import com.bitage.kapp.entity.UserInfoEntity
 
 /**
  * Room database class that contains table for all project entities
@@ -22,9 +23,10 @@ import com.bitage.kapp.db.entity.TemplateChallengesEntity
         ChallengeEntity::class,
         TemplateEntity::class,
         TemplateChallengesEntity::class,
-        UserProgressEntity::class
+        UserProgressEntity::class,
+        UserInfoEntity::class
     ],
-    version = 3, exportSchema = false)
+    version = 4, exportSchema = false)
 @TypeConverters(
     DateConverter::class,
     ChallengeTypeConverter::class,

@@ -1,6 +1,5 @@
 package com.bitage.kapp.repository
 
-import androidx.room.CoroutinesRoom
 import com.bitage.kapp.mapper.EntityMapper
 import com.bitage.kapp.db.ChallengeDB
 import com.bitage.kapp.db.entity.TemplateChallengesEntity
@@ -15,10 +14,8 @@ import io.reactivex.schedulers.Schedulers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import java.io.IOException
-import java.lang.IllegalStateException
 import java.lang.NullPointerException
 import java.util.Date
-import java.util.concurrent.Executors
 
 /**
  * Repository that used [ChallengeDB] to retrieve and manipulate template data
@@ -33,20 +30,22 @@ class TemplateDBRepository(private val db: ChallengeDB) : TemplateRepository {
      */
     override fun insertTemplate(template: Template): Completable {
         return Completable.create { c ->
-            try {
-                template.id?.let {
-                    db.templateDao().deleteAllChallengesForTemplate(it)
-                }
-                GlobalScope.launch {
-                    val id = db.templateDao().insertTemplate(EntityMapper.mapToTemplateEntity(template))
-                    template.challenges.forEach {
-                        db.templateDao().insertChallengeForTemplate(TemplateChallengesEntity(null, id, it))
+            GlobalScope.launch {
+                try {
+                    template.id?.let {
+                        db.templateDao().deleteAllChallengesForTemplate(it)
                     }
-                    c.onComplete()
-                }
+                    GlobalScope.launch {
+                        val id = db.templateDao().insertTemplate(EntityMapper.mapToTemplateEntity(template))
+                        template.challenges.forEach {
+                            db.templateDao().insertChallengeForTemplate(TemplateChallengesEntity(null, id, it))
+                        }
+                        c.onComplete()
+                    }
 
-            } catch (ex: IOException) {
-                c.onError(ex)
+                } catch (ex: IOException) {
+                    c.onError(ex)
+                }
             }
         }.subscribeOn(Schedulers.io())
     }
@@ -57,11 +56,10 @@ class TemplateDBRepository(private val db: ChallengeDB) : TemplateRepository {
      */
     override fun getTemplates(): Flowable<List<Template>> {
         val result: Flowable<List<Template>> = Flowable.create({ e ->
-            db.templateDao().getAll()
-                .subscribe { next ->
-                    e.onNext(EntityMapper.mapToTemplateList(next))
-                }
-
+            GlobalScope.launch {
+                val next = db.templateDao().getAll()
+                e.onNext(EntityMapper.mapToTemplateList(next))
+            }
         }, BackpressureStrategy.LATEST)
         return result.subscribeOn(Schedulers.io())
     }
@@ -73,47 +71,53 @@ class TemplateDBRepository(private val db: ChallengeDB) : TemplateRepository {
      */
     override fun loadDataFromTemplate(template: Template, date: Date): Completable {
         return Completable.create { e ->
-            template.id?.let {
-                val challengesType = db.templateDao().loadTemplateChallenges(it)
-                val challengesList = ArrayList<ChallengeEntity>()
-                challengesType.forEach { type ->
-                    val challengeProgress = db.userDao().getChallengeProgress(type.challengeType)
-                        ?: createUserProgress(type.challengeType)
-                    challengesList.add(ChallengeEntity(challengeProgress, date))
-                }
-                db.noteDao().insertAll(challengesList)
-                e.onComplete()
-            } ?: e.onError(NullPointerException("Null template id"))
-        }
+            GlobalScope.launch {
+                template.id?.let {
+                    val challengesType = db.templateDao().loadTemplateChallenges(it)
+                    val challengesList = ArrayList<ChallengeEntity>()
+                    challengesType.forEach { type ->
+                        val challengeProgress = db.userDao().getChallengeProgress(type.challengeType)
+                            ?: createUserProgress(type.challengeType)
+                        challengesList.add(ChallengeEntity(challengeProgress, date))
+                    }
+                    db.noteDao().insertAll(challengesList)
+                    e.onComplete()
+                } ?: e.onError(NullPointerException("Null template id"))
+            }
+        }.subscribeOn(Schedulers.io())
     }
 
     override fun getTemplateById(id: Long): Flowable<Template> {
-        return Flowable.create({ e ->
-            db.templateDao().getTemplateById(id)
-                .subscribeOn(Schedulers.io())
-                .subscribe {
-                    val next = EntityMapper.mapToTemplate(it)
-                    val challenges = db.templateDao().loadTemplateChallenges(id)
-                    next.challenges.addAll(challenges.map { ch ->
-                        ch.challengeType
-                    })
-                    e.onNext(next)
-                }
+        val result: Flowable<Template> = Flowable.create({ e ->
+            GlobalScope.launch {
+                val template = db.templateDao().getTemplateById(id)
+                val next = EntityMapper.mapToTemplate(template)
+                val challenges = db.templateDao().loadTemplateChallenges(id)
+                next.challenges.addAll(challenges.map { ch ->
+                    ch.challengeType
+                })
+                e.onNext(next)
+            }
         }, BackpressureStrategy.LATEST)
+        return result.subscribeOn(Schedulers.io())
     }
 
     override fun deleteTemplate(template: Template): Completable {
-        return Completable.create { c ->
-            template.id?.let { id ->
-                db.templateDao().deleteAllChallengesForTemplate(id)
-                db.templateDao().deleteTemplate(id)
+        return Completable.create {
+            GlobalScope.launch {
+                template.id?.let { id ->
+                    db.templateDao().deleteTemplate(id)
+                    db.templateDao().deleteAllChallengesForTemplate(id)
+                }
             }
-        }
+        }.subscribeOn(Schedulers.io())
     }
 
     private fun createUserProgress(challengeType: ChallengeType): UserProgressEntity {
         val result = UserProgressEntity.createNew(challengeType)
-        db.userDao().update(result)
+        GlobalScope.launch {
+            db.userDao().update(result)
+        }
         return result
     }
 }

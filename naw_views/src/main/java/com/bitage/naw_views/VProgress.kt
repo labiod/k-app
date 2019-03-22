@@ -77,9 +77,6 @@ class VProgress(context: Context, attributeSet: AttributeSet?, defStyle: Int)
     }
 
     override fun onDraw(canvas: Canvas?) {
-        Log.d("[KGB]", "width $width")
-        Log.d("[KGB]", "height $height")
-
         val rect = RectF(0f, 0f, width.toFloat(), height.toFloat())
         canvas?.drawArc(rect, diffAngle, angle, false, paint)
         bubbles.forEach { bubble ->

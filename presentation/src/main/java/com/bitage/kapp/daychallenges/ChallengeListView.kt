@@ -14,4 +14,8 @@ interface ChallengeListView : KView<DayChallengeViewModel> {
     fun loadTemplateData()
 
     fun setChallengeActionListener(listener: OnChallengeActionListener)
+
+    fun onResume()
+
+    fun onPause()
 }

@@ -18,6 +18,8 @@ import com.bitage.kapp.ui.adapter.TemplatesDialogAdapter
 import com.bitage.kapp.ui.adapter.TodayChallengesAdapter
 import com.bitage.kapp.databinding.DayChallengesBinding
 import com.bitage.kapp.editchallenge.EditChallengeActivity
+import com.bitage.kapp.model.Challenge
+import com.bitage.kapp.model.Template
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
@@ -32,6 +34,14 @@ class ChallengeListViewImpl : ChallengeListView {
 
     private var adapter: TodayChallengesAdapter? = null
     private var templateAdapter: TemplatesDialogAdapter? = null
+
+    private val templateObserver = Observer<List<Template>> {
+        templateAdapter?.notifyDataSetChanged()
+    }
+
+    private val challengesObserver = Observer<List<Challenge>> {
+        adapter?.notifyDataSetChanged()
+    }
 
     /**
      * Controls lifecycle of this view. It should be called in presenter onCreate method
@@ -51,6 +61,14 @@ class ChallengeListViewImpl : ChallengeListView {
         binding.unbind()
     }
 
+    override fun onResume() {
+        initBinder()
+    }
+
+    override fun onPause() {
+        deinitBinder()
+    }
+
     /**
      * get the real android view
      */
@@ -58,7 +76,6 @@ class ChallengeListViewImpl : ChallengeListView {
 
     override fun attachViewModel(viewModel: DayChallengeViewModel) {
         this.viewModel = viewModel
-        initBinder()
     }
 
     /**
@@ -112,6 +129,11 @@ class ChallengeListViewImpl : ChallengeListView {
         }
     }
 
+    private fun deinitBinder() {
+        viewModel.templates.removeObserver(templateObserver)
+        viewModel.challenges.removeObserver(challengesObserver)
+    }
+
     private fun initRecyclerView() {
         binding.challengesList.setHasFixedSize(true)
         val layoutManager = LinearLayoutManager(screenHandler.getActivity(), RecyclerView.VERTICAL, false)
@@ -122,15 +144,8 @@ class ChallengeListViewImpl : ChallengeListView {
     private fun initViewModel() {
         adapter = TodayChallengesAdapter(viewModel)
         templateAdapter = TemplatesDialogAdapter(viewModel.templates)
-        viewModel.templates.observe(screenHandler, Observer {
-            templateAdapter?.notifyDataSetChanged()
-        })
+        viewModel.templates.observe(screenHandler, templateObserver)
         binding.challengesList.adapter = adapter
-        viewModel.challenges.observe(screenHandler, androidx.lifecycle.Observer {
-            adapter?.notifyDataSetChanged()
-        })
-        viewModel.templates.observe(screenHandler, androidx.lifecycle.Observer {
-            templateAdapter?.notifyDataSetChanged()
-        })
+        viewModel.challenges.observe(screenHandler, challengesObserver)
     }
 }

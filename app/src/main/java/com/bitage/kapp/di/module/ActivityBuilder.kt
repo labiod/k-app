@@ -7,10 +7,15 @@ import com.bitage.kapp.editchallenge.EditChallengeActivity
 import com.bitage.kapp.editchallenge.di.EditChallengeActivityModule
 import com.bitage.kapp.home.HomeActivity
 import com.bitage.kapp.home.di.HomeActivityModule
+import com.bitage.kapp.launcher.LauncherActivity
+import com.bitage.kapp.launcher.LauncherViewModel
+import com.bitage.kapp.launcher.di.LauncherActivityModule
 import com.bitage.kapp.template.TemplateActivity
 import com.bitage.kapp.template.di.TemplateActivityModule
 import com.bitage.kapp.templatelist.TemplateListActivity
 import com.bitage.kapp.templatelist.di.TemplateListActivityModule
+import com.bitage.kapp.user.UserActivity
+import com.bitage.kapp.user.di.UserActivityModule
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
@@ -63,4 +68,22 @@ abstract class ActivityBuilder {
     @ActivityScope
     @ContributesAndroidInjector(modules = [TemplateListActivityModule::class])
     abstract fun bindTemplateListActivity(): TemplateListActivity
+
+    /**
+     * Bind user activity component to dagger
+     * @param builder - builder class used to build dagger component for activity
+     * @return dagger injector factory
+     */
+    @ActivityScope
+    @ContributesAndroidInjector(modules = [UserActivityModule::class])
+    abstract fun bindUserActivity(): UserActivity
+
+    /**
+     * Bind template list activity component to dagger
+     * @param builder - builder class used to build dagger component for activity
+     * @return dagger injector factory
+     */
+    @ActivityScope
+    @ContributesAndroidInjector(modules = [LauncherActivityModule::class])
+    abstract fun bindLauncherActivity(): LauncherActivity
 }

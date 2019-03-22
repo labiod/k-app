@@ -2,9 +2,11 @@ package com.bitage.kapp.mapper
 
 import com.bitage.kapp.entity.ChallengeEntity
 import com.bitage.kapp.entity.TemplateEntity
+import com.bitage.kapp.entity.UserInfoEntity
 import com.bitage.kapp.entity.UserProgressEntity
 import com.bitage.kapp.model.Challenge
 import com.bitage.kapp.model.Template
+import com.bitage.kapp.model.UserInfo
 import java.util.Date
 
 /**
@@ -98,6 +100,10 @@ class EntityMapper {
                 Date(),
                 challengeProgress.series,
                 challengeProgress.goal)
+        }
+
+        fun mapListToUserInfoEntities(userInfo: List<UserInfo>): List<UserInfoEntity> {
+            return userInfo.map  { UserInfoEntity(it.type, it.value) }
         }
     }
 }

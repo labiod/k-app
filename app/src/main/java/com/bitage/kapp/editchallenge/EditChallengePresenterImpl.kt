@@ -18,6 +18,10 @@ class EditChallengePresenterImpl(
     override fun onCreate() {
     }
 
+    override fun onResume() {}
+
+    override fun onPause() {}
+
     override fun attachView(view: EditChallengeView) {
         this.view = view
         initViewModel()

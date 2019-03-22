@@ -16,6 +16,14 @@ class ChallengeListPresenterImpl(
     override fun onCreate() {
     }
 
+    override fun onResume() {
+        view?.onResume()
+    }
+
+    override fun onPause() {
+        view?.onPause()
+    }
+
     override fun attachView(view: ChallengeListView) {
         view.onCreate()
         view.attachViewModel(viewModel)

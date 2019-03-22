@@ -7,6 +7,8 @@ import com.bitage.kapp.db.ChallengeDB
 import com.bitage.kapp.repository.ChallengeRepository
 import com.bitage.kapp.repository.TemplateRepository
 import com.bitage.kapp.db.ChallengeRoomDB
+import com.bitage.kapp.repository.UserDBRepository
+import com.bitage.kapp.repository.UserRepository
 import dagger.Module
 import dagger.Provides
 import javax.inject.Named
@@ -56,4 +58,12 @@ open class RepositoryModule(private val application: Application) {
     @Provides
     @Singleton
     open fun provideTemplateRepository(@Named("TestChallengeDB") db: ChallengeDB): TemplateRepository = TemplateDBRepository(db)
+
+    /**
+     * Provide user repository instance
+     * @return implementation of [TemplateRepository]
+     */
+    @Provides
+    @Singleton
+    open fun provideUserRepository(@Named("TestChallengeDB") db: ChallengeDB): UserRepository = UserDBRepository(db)
 }

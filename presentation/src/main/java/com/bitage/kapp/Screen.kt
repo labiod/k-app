@@ -3,6 +3,7 @@ package com.bitage.kapp
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.LifecycleOwner
 
 interface Screen: LifecycleOwner {
@@ -14,4 +15,6 @@ interface Screen: LifecycleOwner {
     fun finish()
 
     fun runOnUi(action: () -> Unit)
+
+    fun getSupportFragmentManager(): FragmentManager
 }

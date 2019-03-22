@@ -46,7 +46,6 @@ dependencies {
     implementation kotlinDependencies.kotlin
     implementation kotlinDependencies.coroutines
     implementation androidComponentDependencies.roomRuntime
-    implementation androidComponentDependencies.roomRxJava
     implementation androidComponentDependencies.roomCoroutines
 
     kapt androidComponentDependencies.roomCompiler
