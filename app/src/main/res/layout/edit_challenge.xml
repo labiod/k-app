@@ -17,9 +17,6 @@
         <variable
             name="viewmodel"
             type="com.bitage.kapp.editchallenge.EditChallengeViewModel" />
-        <variable
-            name="editMode"
-            type="Boolean" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

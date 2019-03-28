@@ -31,6 +31,7 @@ class RoundProgressView(context: Context, attributeSet: AttributeSet?, defStyle:
             val progressTextColor = args.getColor(R.styleable.VProgress_progressTextColor, Color.BLACK)
             progressView.setColor(progressColor)
             progressText.setTextColor(progressTextColor)
+            args.recycle()
         }
     }
 

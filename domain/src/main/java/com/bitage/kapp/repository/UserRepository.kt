@@ -7,9 +7,9 @@ import io.reactivex.Single
 
 interface UserRepository {
 
-    fun setupUser(userInfo: List<UserInfo>) : Completable
+    fun setupUser(userInfo: UserInfo) : Completable
 
     fun isUserSetup() : Single<Boolean>
 
-    fun getUserInfo() : Flowable<List<UserInfo>>
+    fun getUserInfo() : Flowable<UserInfo>
 }

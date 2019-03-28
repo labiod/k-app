@@ -1,6 +1,7 @@
 package com.bitage.kapp.editchallenge.di
 
-import androidx.lifecycle.ViewModelProviders
+import com.bitage.dsl.createDate
+import com.bitage.kapp.dsl.createViewModel
 import com.bitage.kapp.presentation.Constants
 import com.bitage.kapp.repository.ChallengeRepository
 import com.bitage.kapp.editchallenge.EditChallengeActivity
@@ -12,7 +13,6 @@ import com.bitage.kapp.editchallenge.EditChallengeViewModel
 import com.bitage.kapp.editchallenge.EditChallengeViewModelFactory
 import dagger.Module
 import dagger.Provides
-import java.util.Calendar
 import java.util.Date
 
 /**
@@ -30,9 +30,10 @@ class EditChallengeActivityModule {
         activity: EditChallengeActivity,
         repository: ChallengeRepository
     ): EditChallengeViewModel {
-        return ViewModelProviders
-            .of(activity, EditChallengeViewModelFactory(repository, getCurrentDate(activity)))
-            .get(EditChallengeViewModel::class.java)
+        return createViewModel(activity) {
+            factory = EditChallengeViewModelFactory(repository, getCurrentDate(activity))
+            modelClass = EditChallengeViewModel::class.java
+        }
     }
 
     /**
@@ -63,12 +64,11 @@ class EditChallengeActivityModule {
 
     private fun getCurrentDate(activity: EditChallengeActivity): Date {
         return activity.intent?.extras?.let { extras ->
-            val day = extras.getInt(Constants.CURRENT_DATE_DAY)
-            val month = extras.getInt(Constants.CURRENT_DATE_MONTH)
-            val year = extras.getInt(Constants.CURRENT_DATE_YEAR)
-            val calendar = Calendar.getInstance()
-            calendar.set(year, month, day)
-            calendar.time
+            createDate {
+                day = extras.getInt(Constants.CURRENT_DATE_DAY)
+                month = extras.getInt(Constants.CURRENT_DATE_MONTH)
+                year = extras.getInt(Constants.CURRENT_DATE_YEAR)
+            }
         } ?: Date()
     }
 }

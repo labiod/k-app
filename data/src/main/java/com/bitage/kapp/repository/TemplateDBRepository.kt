@@ -1,6 +1,6 @@
 package com.bitage.kapp.repository
 
-import com.bitage.kapp.mapper.EntityMapper
+import com.bitage.kapp.mapper.EntityMapperDsl
 import com.bitage.kapp.db.ChallengeDB
 import com.bitage.kapp.db.entity.TemplateChallengesEntity
 import com.bitage.kapp.entity.ChallengeEntity
@@ -36,7 +36,7 @@ class TemplateDBRepository(private val db: ChallengeDB) : TemplateRepository {
                         db.templateDao().deleteAllChallengesForTemplate(it)
                     }
                     GlobalScope.launch {
-                        val id = db.templateDao().insertTemplate(EntityMapper.mapToTemplateEntity(template))
+                        val id = db.templateDao().insertTemplate(EntityMapperDsl.mapToTemplateEntity(template))
                         template.challenges.forEach {
                             db.templateDao().insertChallengeForTemplate(TemplateChallengesEntity(null, id, it))
                         }
@@ -58,7 +58,7 @@ class TemplateDBRepository(private val db: ChallengeDB) : TemplateRepository {
         val result: Flowable<List<Template>> = Flowable.create({ e ->
             GlobalScope.launch {
                 val next = db.templateDao().getAll()
-                e.onNext(EntityMapper.mapToTemplateList(next))
+                e.onNext(EntityMapperDsl.mapToTemplateList(next))
             }
         }, BackpressureStrategy.LATEST)
         return result.subscribeOn(Schedulers.io())
@@ -91,7 +91,7 @@ class TemplateDBRepository(private val db: ChallengeDB) : TemplateRepository {
         val result: Flowable<Template> = Flowable.create({ e ->
             GlobalScope.launch {
                 val template = db.templateDao().getTemplateById(id)
-                val next = EntityMapper.mapToTemplate(template)
+                val next = EntityMapperDsl.mapToTemplate(template)
                 val challenges = db.templateDao().loadTemplateChallenges(id)
                 next.challenges.addAll(challenges.map { ch ->
                     ch.challengeType

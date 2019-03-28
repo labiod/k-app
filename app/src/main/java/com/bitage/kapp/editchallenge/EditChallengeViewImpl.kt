@@ -58,50 +58,50 @@ class EditChallengeViewImpl(private val editMode: Boolean)
     private fun initDataBinder() {
         val title = if (editMode) R.string.edit_challenge_title else R.string.new_challenge_title
         screen.getActivity().setTitle(title)
-        binding.setLifecycleOwner(screen)
+        with(binding) {
+            setLifecycleOwner(screen)
 
-        binding.editMode = editMode
-        binding.challengeName.isEnabled = editMode.not()
-        progressArray = StepProgress.values()
-        val challenges = ChallengeType.values()
-        stepArray = androidView().resources.getIntArray(R.array.challenge_step).toTypedArray()
-        binding.progress = progressArray
-        binding.steps = stepArray
-        binding.challenges = challenges
+            challengeName.isEnabled = editMode.not()
+            progressArray = StepProgress.values()
+            stepArray = androidView().resources.getIntArray(R.array.challenge_step).toTypedArray()
+            progress = progressArray
+            steps = stepArray
+            challenges = ChallengeType.values()
 
-        binding.challengeName.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onNothingSelected(parent: AdapterView<*>?) {
+            challengeName.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+                override fun onNothingSelected(parent: AdapterView<*>?) {
+                }
+
+                override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                    val item = ChallengeType.values()[position]
+                    viewModel.loadChallengeProgress(item)
+                }
             }
 
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                val item = ChallengeType.values()[position]
-                viewModel.loadChallengeProgress(item)
+            confirmChanges.setOnClickListener {
+                viewModel.challengeUpdate.observe(screen, Observer {
+                    if (it == true) {
+                        Toast.makeText(screen.getActivity(), "Challenge changed", Toast.LENGTH_SHORT).show()
+                        screen.finish()
+                    }
+                })
+                val challengeType = ChallengeType.values()[challengeName.selectedItemPosition]
+                val step = stepArray[challengeStep.selectedItemPosition]
+                val progress = StepProgress.values()[challengeStepProgress.selectedItemPosition]
+                val goal = challengeGoal.text.toString().toInt()
+                val series = challengeSeries.text.toString().toInt()
+                viewModel.applyChanges(challengeType, step, progress, goal, series)
             }
-        }
-
-        binding.confirmChanges.setOnClickListener {
-            viewModel.challengeUpdate.observe(screen, Observer {
-                if (it == true) {
-                    Toast.makeText(screen.getActivity(), "Challenge changed", Toast.LENGTH_SHORT).show()
-                    screen.finish()
-                }
-            })
-            val challengeType = ChallengeType.values()[binding.challengeName.selectedItemPosition]
-            val step = stepArray[binding.challengeStep.selectedItemPosition]
-            val progress = StepProgress.values()[binding.challengeStepProgress.selectedItemPosition]
-            val goal = binding.challengeGoal.text.toString().toInt()
-            val series = binding.challengeSeries.text.toString().toInt()
-            viewModel.applyChanges(challengeType, step, progress, goal, series)
-        }
-        if (!editMode) {
-            viewModel.challengeProgress.observe(screen, Observer { ch ->
-                ch?.let {
-                    binding.challengeGoal.setText(it.goal.toString())
-                    binding.challengeSeries.setText(it.series.toString())
-                    binding.challengeStep.setSelection(it.step - 1)
-                    binding.challengeStepProgress.setSelection(it.progress.ordinal)
-                }
-            })
+            if (!editMode) {
+                viewModel.challengeProgress.observe(screen, Observer { ch ->
+                    ch?.let {
+                        challengeGoal.setText(it.goal.toString())
+                        challengeSeries.setText(it.series.toString())
+                        challengeStep.setSelection(it.step - 1)
+                        challengeStepProgress.setSelection(it.progress.ordinal)
+                    }
+                })
+            }
         }
     }
 }

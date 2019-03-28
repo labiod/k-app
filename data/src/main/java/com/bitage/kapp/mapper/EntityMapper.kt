@@ -12,7 +12,7 @@ import java.util.Date
 /**
  * Class that provider some method to map pure model to room db entity model
  */
-class EntityMapper {
+class EntityMapperDsl {
     companion object {
         /**
          * Map [Challenge] object to [ChallengeEntity] object
@@ -20,14 +20,16 @@ class EntityMapper {
          * @return instance of [ChallengeEntity]
          */
         fun mapToChallengeEntity(challenge: Challenge): ChallengeEntity {
-            return ChallengeEntity(challenge.id,
-                challenge.challengeName,
-                challenge.step,
-                challenge.progress,
-                challenge.date,
-                challenge.series,
-                challenge.goal,
-                challenge.finished)
+            return mapToChallengeEntity {
+                id = challenge.id
+                challengeName = challenge.challengeName
+                step = challenge.step
+                stepProgress = challenge.progress
+                date = challenge.date
+                series = challenge.series
+                goal = challenge.goal
+                finished = challenge.finished
+            }
         }
 
         /**
@@ -35,15 +37,17 @@ class EntityMapper {
          * @param challenge - challenge entity to convert
          * @return instance of [Challenge]
          */
-        fun mapProgressToChallenge(challenge: ChallengeEntity): Challenge {
-            return Challenge(challenge.id,
-                challenge.challengeName,
-                challenge.step,
-                challenge.progress,
-                challenge.date,
-                challenge.series,
-                challenge.goal,
-                challenge.finished)
+        fun mapEntityToChallenge(challenge: ChallengeEntity): Challenge {
+            return mapToChallenge {
+                id = challenge.id
+                challengeName = challenge.challengeName
+                step = challenge.step
+                stepProgress = challenge.progress
+                date = challenge.date
+                series = challenge.series
+                goal = challenge.goal
+                finished = challenge.finished
+            }
         }
 
         /**
@@ -51,18 +55,15 @@ class EntityMapper {
          * @param challenges - list of challenge to convert
          * @return list of [Challenge]
          */
-        fun mapToChallengeList(challenges: List<ChallengeEntity>): List<Challenge> {
-            return challenges.map { challenge ->
-                mapProgressToChallenge(challenge)
-            }
-        }
+        fun mapToChallengeList(challenges: List<ChallengeEntity>)
+            = challenges.map { challenge -> mapEntityToChallenge(challenge) }
 
         /**
          * Map list of [TemplateEntity] to [Template]
          * @param templates - list of templates to convert
          * @return list of [Template]
          */
-        fun mapToTemplateList(templates: List<TemplateEntity>): List<Template>
+        fun mapToTemplateList(templates: List<TemplateEntity>)
             = templates.map { template -> mapToTemplate(template) }
 
         /**
@@ -93,17 +94,32 @@ class EntityMapper {
          * @return instance of [Challenge]
          */
         fun mapProgressToChallenge(challengeProgress: UserProgressEntity): Challenge {
-            return Challenge(null,
-                challengeProgress.challengeType,
-                challengeProgress.step,
-                challengeProgress.stepProgress,
-                Date(),
-                challengeProgress.series,
-                challengeProgress.goal)
+            return mapToChallenge {
+                challengeName = challengeProgress.challengeType
+                step = challengeProgress.step
+                stepProgress = challengeProgress.stepProgress
+                date = Date()
+                series = challengeProgress.series
+                goal = challengeProgress.goal
+            }
         }
 
-        fun mapListToUserInfoEntities(userInfo: List<UserInfo>): List<UserInfoEntity> {
-            return userInfo.map  { UserInfoEntity(it.type, it.value) }
+        fun mapListToUserInfoEntities(userInfo: UserInfo): List<UserInfoEntity> {
+            return userInfo.map { UserInfoEntity(it.key, it.value) }
         }
+
+        fun mapListOfUserInfoEntityToUserInfo(userInfoEntity: List<UserInfoEntity>): UserInfo {
+            return UserInfo(
+                userInfoEntity.map { it.fieldName to it.fieldValue }.toMap()
+            )
+        }
+
+        @ChallengeDsl
+        private fun mapToChallenge(cb: ChallengeBuilder.() -> Unit)
+            = ChallengeBuilder().apply(cb).challenge()
+
+        @ChallengeDsl
+        private fun mapToChallengeEntity(cb: ChallengeBuilder.() -> Unit)
+            = ChallengeBuilder().apply(cb).challengeEntity()
     }
 }

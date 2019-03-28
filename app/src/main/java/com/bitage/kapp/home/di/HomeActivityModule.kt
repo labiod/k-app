@@ -2,6 +2,7 @@ package com.bitage.kapp.home.di
 
 import androidx.lifecycle.ViewModelProviders
 import com.bitage.kapp.di.ActivityScope
+import com.bitage.kapp.dsl.createViewModel
 import com.bitage.kapp.home.HomePresenter
 import com.bitage.kapp.home.HomeActivity
 import com.bitage.kapp.home.HomePresenterImpl
@@ -10,6 +11,7 @@ import com.bitage.kapp.home.HomeViewImpl
 import com.bitage.kapp.home.HomeViewModel
 import com.bitage.kapp.home.HomeViewModelFactory
 import com.bitage.kapp.repository.ChallengeRepository
+import com.bitage.kapp.repository.UserRepository
 import dagger.Module
 import dagger.Provides
 import java.util.Date
@@ -35,10 +37,13 @@ class HomeActivityModule {
     @ActivityScope
     fun provideHomeViewModel(
         activity: HomeActivity,
-        repository: ChallengeRepository
+        repository: ChallengeRepository,
+        userRepository: UserRepository
     ): HomeViewModel {
-        return ViewModelProviders.of(activity, HomeViewModelFactory(repository, Date()))
-            .get(HomeViewModel::class.java)
+        return createViewModel(activity) {
+            factory = HomeViewModelFactory(repository, userRepository, Date())
+            modelClass = HomeViewModel::class.java
+        }
     }
 
     /**

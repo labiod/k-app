@@ -1,7 +1,7 @@
 package com.bitage.kapp.repository
 
 import com.bitage.kapp.db.ChallengeDB
-import com.bitage.kapp.mapper.EntityMapper
+import com.bitage.kapp.mapper.EntityMapperDsl
 import com.bitage.kapp.model.UserInfo
 import io.reactivex.BackpressureStrategy
 import io.reactivex.Completable
@@ -13,15 +13,14 @@ import kotlinx.coroutines.launch
 class UserDBRepository(private val challengeDB: ChallengeDB) : UserRepository {
     private var isUserSetup = false
 
-    override fun setupUser(userInfo: List<UserInfo>): Completable {
+    override fun setupUser(userInfo: UserInfo): Completable {
         return Completable.create {
             isUserSetup = true
             GlobalScope.launch {
-                challengeDB.userDao().insertUserInfo(EntityMapper.mapListToUserInfoEntities(userInfo))
+                challengeDB.userDao().insertUserInfo(EntityMapperDsl.mapListToUserInfoEntities(userInfo))
                 it.onComplete()
             }
         }
-
     }
 
     override fun isUserSetup(): Single<Boolean> {
@@ -30,9 +29,12 @@ class UserDBRepository(private val challengeDB: ChallengeDB) : UserRepository {
         }
     }
 
-    override fun getUserInfo(): Flowable<List<UserInfo>> {
+    override fun getUserInfo(): Flowable<UserInfo> {
         return Flowable.create( { e ->
-            e.onNext(listOf())
+            GlobalScope.launch {
+                val userInfo = challengeDB.userDao().getUserInfo()
+                e.onNext(EntityMapperDsl.mapListOfUserInfoEntityToUserInfo(userInfo))
+            }
         }, BackpressureStrategy.LATEST)
     }
 }

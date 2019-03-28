@@ -6,12 +6,16 @@ import android.util.Log
 import com.bitage.kapp.annotation.PureFunction
 import com.bitage.kapp.presentation.Constants
 import com.bitage.kapp.repository.ChallengeRepository
+import com.bitage.kapp.repository.UserRepository
 import java.util.Date
 
 /**
  * Factory class for [HomeViewModel] to create view model with challenge repository
  */
-class HomeViewModelFactory(private val repository: ChallengeRepository, private val date: Date)
+class HomeViewModelFactory(
+    private val repository: ChallengeRepository,
+    private val userRepository: UserRepository,
+    private val date: Date)
     : ViewModelProvider.NewInstanceFactory() {
     /**
      * Create [HomeViewModel] for given repository
@@ -22,7 +26,7 @@ class HomeViewModelFactory(private val repository: ChallengeRepository, private 
     @PureFunction
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         try {
-            return HomeViewModel(repository, date) as T
+            return HomeViewModel(repository, userRepository, date) as T
         } catch (ex: InstantiationException) {
             Log.e(Constants.GLOBAL_TAG, "error:", ex)
             return super.create(modelClass)

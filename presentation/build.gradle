@@ -33,6 +33,7 @@ android {
 }
 
 dependencies {
+    implementation project(':dsl')
     implementation project(':domain')
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
@@ -42,6 +43,7 @@ dependencies {
 
     implementation supportDependencies.appCompatV7
     implementation rxDependencies.rxAndroid
+    implementation androidComponentDependencies.archExtensions
 
     testImplementation testDependencies.junit
     androidTestImplementation(testDependencies.espressoCore, {

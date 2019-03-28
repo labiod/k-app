@@ -12,11 +12,11 @@ class LauncherViewModel(private val repository: UserRepository) : KViewModel() {
         addDisposable(repository.isUserSetup().subscribe(subscriber))
     }
 
-    fun loadUserInfo(onNext: Consumer<List<UserInfo>>) {
+    fun loadUserInfo(onNext: Consumer<UserInfo>) {
         addDisposable(repository.getUserInfo().subscribe(onNext))
     }
 
-    fun setupUser(userInfo: List<UserInfo>, onComplete: Action) {
+    fun setupUser(userInfo: UserInfo, onComplete: Action) {
         addDisposable(repository.setupUser(userInfo).subscribe(onComplete))
     }
 }

@@ -10,13 +10,16 @@ import com.bitage.kapp.R
 import com.bitage.kapp.Screen
 import com.bitage.kapp.databinding.ChallengesMainBinding
 import com.bitage.kapp.daychallenges.TodayChallengesActivity
+import com.bitage.dsl.dayDiff
+import com.bitage.dsl.format
+import com.bitage.dsl.get
+import com.bitage.kapp.model.UserInfo
+import com.bitage.kapp.model.UserInfoType
 import com.bitage.kapp.presentation.Constants
 import com.bitage.naw_views.CalendarButton
 import io.reactivex.functions.Consumer
-import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
-import java.util.Locale
 
 /**
  * Implementation of home screen
@@ -28,11 +31,27 @@ class HomeViewImpl : HomeView {
     }
     private lateinit var viewModel: HomeViewModel
     private lateinit var screen: Screen
+    private val dateChangeObserver = Observer<Date> {
+        binding.selectedDay.text = it format "dd MMM, ''yy"
+        viewModel.getDayChallengesState(Consumer { p ->
+            binding.roundProgress.setProgress(p.first, p.second)
+        })
+    }
 
     /**
      * Controls lifecycle of this view. It should be called in presenter onCreate method
      */
     override fun onCreate() {
+    }
+
+    override fun onResume() {
+        binding.setLifecycleOwner(screen)
+
+        viewModel.dateData.observe(screen, dateChangeObserver)
+    }
+
+    override fun onPause() {
+        viewModel.dateData.removeObserver(dateChangeObserver)
     }
 
     override fun onAttached(screen: Screen) {
@@ -51,25 +70,16 @@ class HomeViewImpl : HomeView {
         this.viewModel = viewModel
         binding.viewmodel = viewModel
         with(binding) {
-            val dateFormat = SimpleDateFormat("dd MMM, ''yy", Locale.getDefault())
-            viewModel.dateData.observe(screen, Observer {
-                selectedDay.text = dateFormat.format(it)
-                viewModel.getDayChallengesState(Consumer { p ->
-                    roundProgress.setProgress(p.first, p.second)
-                })
-            })
-            val calendar = Calendar.getInstance()
+
 
             leftButton.setOnClickListener {
-                calendar.timeInMillis = calendarButton.getSelectedDate().time
-                calendar.add(Calendar.DAY_OF_MONTH, -1)
-                calendarButton.setDate(calendar.timeInMillis, true, false)
+                val timeInMillis = calendarButton.getSelectedDate().time dayDiff -1
+                calendarButton.setDate(timeInMillis, true)
 
             }
             rightButton.setOnClickListener {
-                calendar.timeInMillis = calendarButton.getSelectedDate().time
-                calendar.add(Calendar.DAY_OF_MONTH, 1)
-                calendarButton.setDate(calendar.timeInMillis, true, false)
+                val timeInMillis = calendarButton.getSelectedDate().time dayDiff 1
+                calendarButton.setDate(timeInMillis, true)
             }
             viewModel.dateData.postValue(calendarButton.getSelectedDate())
         }
@@ -81,6 +91,10 @@ class HomeViewImpl : HomeView {
     override fun androidView(): View = binding.root
 
     override fun customizeActionBar(actionBar: ActionBar?) {}
+
+    override fun setUserInfo(userInfo: UserInfo) {
+        binding.userInfoText.text = userInfo.get(UserInfoType.USERNAME)
+    }
 
     private fun initView() {
         binding.calendarButton.setOnDateListener(object : CalendarButton.OnDateListener {
@@ -94,28 +108,24 @@ class HomeViewImpl : HomeView {
             if (isDateExpire(date)) {
                 Toast.makeText(binding.root.context, "You can not change challenges this day", Toast.LENGTH_SHORT).show()
             } else {
-                val calendar = Calendar.getInstance()
-                calendar.time = date
                 val intent = Intent(screen.getActivity(), TodayChallengesActivity::class.java)
-                intent.putExtra(Constants.CURRENT_DATE_DAY, calendar.get(Calendar.DAY_OF_MONTH))
-                intent.putExtra(Constants.CURRENT_DATE_MONTH, calendar.get(Calendar.MONTH))
-                intent.putExtra(Constants.CURRENT_DATE_YEAR, calendar.get(Calendar.YEAR))
+                intent.putExtra(Constants.CURRENT_DATE_DAY, date get Calendar.DAY_OF_MONTH)
+                intent.putExtra(Constants.CURRENT_DATE_MONTH, date get Calendar.MONTH)
+                intent.putExtra(Constants.CURRENT_DATE_YEAR, date get Calendar.YEAR)
                 screen.startActivity(intent)
             }
         }
     }
 
     private fun isDateExpire(date: Date) : Boolean {
-        val calendar = Calendar.getInstance()
-        val actualDay = calendar.get(Calendar.DAY_OF_MONTH)
-        val actualMonth = calendar.get(Calendar.MONTH)
-        val actualYear = calendar.get(Calendar.YEAR)
+        val actualDay = date get Calendar.DAY_OF_MONTH
+        val actualMonth = date get Calendar.MONTH
+        val actualYear = date get Calendar.YEAR
 
-        calendar.time = date
-        val givenDay = calendar.get(Calendar.DAY_OF_MONTH)
-        val givenMonth = calendar.get(Calendar.MONTH)
-        val givenYear = calendar.get(Calendar.YEAR)
-        return givenYear < givenYear
+        val givenDay = date get Calendar.DAY_OF_MONTH
+        val givenMonth = date get Calendar.MONTH
+        val givenYear = date get Calendar.YEAR
+        return givenYear < actualYear
             || (givenYear == actualYear && givenMonth < actualMonth)
             || (givenYear == actualYear && givenMonth == actualMonth && givenDay < actualDay)
     }

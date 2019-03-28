@@ -1,5 +1,7 @@
 package com.bitage.kapp.home
 
+import io.reactivex.functions.Consumer
+
 /**
  * Implementation of presenter for home screen
  */
@@ -13,13 +15,16 @@ class HomePresenterImpl(
     override fun onCreate() {
     }
 
-    override fun onResume() {}
+    override fun onResume() {
+        view.onResume()
+    }
 
     override fun onPause() {}
 
     override fun attachView(view: HomeView) {
         this.view = view
         view.attachViewModel(viewModel)
+        viewModel.getUserInfo(Consumer { userInfo -> view.setUserInfo(userInfo) })
     }
 
     /**

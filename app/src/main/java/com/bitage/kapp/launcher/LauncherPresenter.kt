@@ -29,8 +29,8 @@ class LauncherPresenter(private val viewModel: LauncherViewModel) : KPresenter<L
         initViewModel()
     }
 
-    override fun onWizardNext(userInfo: List<UserInfo>) {
-        viewModel.setupUser(userInfo, Action {
+    override fun onWizardNext(fields: UserInfo) {
+        viewModel.setupUser(fields, Action {
             checkUserSetup()
         })
     }

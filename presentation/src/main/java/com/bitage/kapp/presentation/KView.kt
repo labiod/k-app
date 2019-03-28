@@ -19,6 +19,10 @@ interface KView<Model : KViewModel> {
      */
     fun onDestroy()
 
+    fun onPause() {}
+
+    fun onResume() {}
+
     fun onAttached(screen: Screen)
 
     /**

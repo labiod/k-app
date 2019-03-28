@@ -13,6 +13,7 @@ import androidx.test.runner.AndroidJUnit4
 import androidx.appcompat.widget.Toolbar
 import android.view.View
 import com.bitage.kapp.daychallenges.TodayChallengesActivity
+import com.bitage.dsl.format
 import com.bitage.kapp.presentation.Constants
 import com.bitage.kapp.rules.DaggerActivityTestRule
 import org.hamcrest.Description
@@ -20,9 +21,7 @@ import org.hamcrest.Matcher
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import java.text.SimpleDateFormat
 import java.util.Calendar
-import java.util.Locale
 
 /**
  * Test for [TodayChallengesActivity] class
@@ -35,7 +34,6 @@ class TodayChallengesActivityTest {
     var activityRule = DaggerActivityTestRule(TodayChallengesActivity::class.java)
 
     private val calendar = Calendar.getInstance()
-    private val dateFormat = SimpleDateFormat("EEE MMM d, ''yy", Locale.getDefault())
 
     init {
         calendar.set(Calendar.DAY_OF_MONTH, 2)
@@ -80,7 +78,7 @@ class TodayChallengesActivityTest {
         intent.putExtra(Constants.CURRENT_DATE_YEAR, calendar.get(Calendar.YEAR))
         activityRule.launchActivity(intent)
 
-        val dateText = dateFormat.format(calendar.time)
+        val dateText = calendar.time format "EEE MMM d, ''yy"
 
         // check that date was init correctly
         onView(withId(R.id.todayDateView))

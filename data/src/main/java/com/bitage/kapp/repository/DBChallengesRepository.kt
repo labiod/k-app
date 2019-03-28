@@ -1,6 +1,6 @@
 package com.bitage.kapp.repository
 
-import com.bitage.kapp.mapper.EntityMapper
+import com.bitage.kapp.mapper.EntityMapperDsl
 import com.bitage.kapp.db.ChallengeDB
 import com.bitage.kapp.entity.UserProgressEntity
 import com.bitage.kapp.model.Challenge
@@ -40,7 +40,7 @@ class DBChallengesRepository(private val db: ChallengeDB) : ChallengeRepository 
         val result: Flowable<List<Challenge>> = Flowable.create( { e ->
             GlobalScope.launch {
                 val next = db.noteDao().getChallengeAtDate(startDate.time, endDate.time)
-                e.onNext(EntityMapper.mapToChallengeList(next))
+                e.onNext(EntityMapperDsl.mapToChallengeList(next))
             }
         }, BackpressureStrategy.LATEST)
         return result.subscribeOn(Schedulers.io())
@@ -67,7 +67,7 @@ class DBChallengesRepository(private val db: ChallengeDB) : ChallengeRepository 
         android.util.Log.d("[KGB]", "update")
         val result = Completable.create { c ->
             GlobalScope.launch {
-                db.noteDao().insertChallenge(EntityMapper.mapToChallengeEntity(challenge))
+                db.noteDao().insertChallenge(EntityMapperDsl.mapToChallengeEntity(challenge))
                 c.onComplete()
             }
         }
@@ -106,14 +106,13 @@ class DBChallengesRepository(private val db: ChallengeDB) : ChallengeRepository 
         val result: Completable = Completable.create { e ->
             GlobalScope.launch {
                 try {
-                    db.noteDao().deleteChallenge(EntityMapper.mapToChallengeEntity(challenge))
+                    db.noteDao().deleteChallenge(EntityMapperDsl.mapToChallengeEntity(challenge))
                     e.onComplete()
                 } catch (ex: Exception) {
                     e.onError(ex)
                 }
             }
         }
-
         return result.subscribeOn(Schedulers.io())
     }
 
@@ -125,7 +124,7 @@ class DBChallengesRepository(private val db: ChallengeDB) : ChallengeRepository 
     override fun getChallengeById(challengeId: Long): Flowable<Challenge?> {
         val result: Flowable<Challenge?> = Flowable.create({e ->
             GlobalScope.launch {
-                e.onNext(EntityMapper.mapProgressToChallenge(db.noteDao().getChallengeById(challengeId)))
+                e.onNext(EntityMapperDsl.mapEntityToChallenge(db.noteDao().getChallengeById(challengeId)))
             }
 
         }, BackpressureStrategy.LATEST)
@@ -135,7 +134,7 @@ class DBChallengesRepository(private val db: ChallengeDB) : ChallengeRepository 
     override fun getDefaultChallengeValues(challengeType: ChallengeType): Flowable<Challenge> {
         val result: Flowable<Challenge> = Flowable.create({e ->
             GlobalScope.launch {
-                e.onNext(EntityMapper.mapProgressToChallenge(
+                e.onNext(EntityMapperDsl.mapProgressToChallenge(
                     db.userDao().getChallengeProgress(challengeType)
                         ?: UserProgressEntity.createNew(challengeType)))
 

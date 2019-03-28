@@ -2,6 +2,7 @@ package com.bitage.kapp.launcher.di
 
 import androidx.lifecycle.ViewModelProviders
 import com.bitage.kapp.di.ActivityScope
+import com.bitage.kapp.dsl.createViewModel
 import com.bitage.kapp.home.HomePresenter
 import com.bitage.kapp.launcher.LauncherActivity
 import com.bitage.kapp.launcher.LauncherPresenter
@@ -32,8 +33,10 @@ class LauncherActivityModule {
         activity: LauncherActivity,
         repository: UserRepository
     ): LauncherViewModel {
-        return ViewModelProviders.of(activity, LauncherViewModelFactory(repository))
-            .get(LauncherViewModel::class.java)
+        return createViewModel(activity) {
+            factory = LauncherViewModelFactory(repository)
+            modelClass = LauncherViewModel::class.java
+        }
     }
 
     /**

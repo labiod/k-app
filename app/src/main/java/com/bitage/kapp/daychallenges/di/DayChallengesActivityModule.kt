@@ -1,6 +1,5 @@
 package com.bitage.kapp.daychallenges.di
 
-import androidx.lifecycle.ViewModelProviders
 import com.bitage.kapp.repository.ChallengeRepository
 import com.bitage.kapp.repository.TemplateRepository
 import com.bitage.kapp.daychallenges.TodayChallengesActivity
@@ -11,10 +10,11 @@ import com.bitage.kapp.daychallenges.ChallengeListView
 import com.bitage.kapp.daychallenges.ChallengeListViewImpl
 import com.bitage.kapp.daychallenges.DayChallengeViewModel
 import com.bitage.kapp.daychallenges.DayViewModelFactory
+import com.bitage.dsl.createDate
+import com.bitage.kapp.dsl.createViewModel
 import dagger.Module
 import dagger.Provides
 import java.util.Date
-import java.util.Calendar
 
 /**
  * Module for [TodayChallengesActivity] used to inject presenter and view for activity
@@ -33,9 +33,10 @@ class DayChallengesActivityModule {
         repository: ChallengeRepository,
         templateRepository: TemplateRepository
     ): DayChallengeViewModel {
-        val date = getCurrentDate(activity)
-        return ViewModelProviders.of(activity, DayViewModelFactory(date, repository, templateRepository))
-            .get(DayChallengeViewModel::class.java)
+        return createViewModel(activity) {
+            factory = DayViewModelFactory(getCurrentDate(activity), repository, templateRepository)
+            modelClass = DayChallengeViewModel::class.java
+        }
     }
 
     /**
@@ -48,25 +49,20 @@ class DayChallengesActivityModule {
     /**
      * Provide presenter for challenges list activity
      * @param viewModel - instance of view model
-     * @param view - view for challenges list
      * @return [ChallengeListPresenter] instance
      */
     @Provides
-    fun provideChallengeListPresenter(
-        viewModel: DayChallengeViewModel,
-        view: ChallengeListView
-    ): ChallengeListPresenter {
+    fun provideChallengeListPresenter(viewModel: DayChallengeViewModel): ChallengeListPresenter {
         return ChallengeListPresenterImpl(viewModel)
     }
 
     private fun getCurrentDate(activity: TodayChallengesActivity): Date {
-        return activity.intent?.extras?.let { extras ->
-            val day = extras.getInt(Constants.CURRENT_DATE_DAY)
-            val month = extras.getInt(Constants.CURRENT_DATE_MONTH)
-            val year = extras.getInt(Constants.CURRENT_DATE_YEAR)
-            val calendar = Calendar.getInstance()
-            calendar.set(year, month, day)
-            calendar.time
+        return activity.intent?.extras?.let {
+            createDate {
+                day = it.getInt(Constants.CURRENT_DATE_DAY)
+                month = it.getInt(Constants.CURRENT_DATE_MONTH)
+                year = it.getInt(Constants.CURRENT_DATE_YEAR)
+            }
         } ?: Date()
     }
 }

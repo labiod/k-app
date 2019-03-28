@@ -14,11 +14,12 @@ import com.bitage.kapp.home.HomeActivity
 import com.bitage.kapp.launcher.fragment.LoadingFragment
 import com.bitage.kapp.launcher.fragment.WizardFragment
 import com.bitage.kapp.model.UserInfo
+import com.bitage.kapp.model.UserInfoType
 import com.bitage.kapp.presentation.KView
 
 class LauncherView : KView<LauncherViewModel> {
     interface Listener {
-        fun onWizardNext(fields: List<UserInfo>)
+        fun onWizardNext(fields: UserInfo)
     }
     private var screen : Screen? = null
     private lateinit var binding: LauncherViewBinding
@@ -57,7 +58,8 @@ class LauncherView : KView<LauncherViewModel> {
                     val nextButton = binding.launcherContainer.findViewById<Button>(R.id.wizardNext)
                     nextButton.setOnClickListener {
                         val userName = binding.launcherContainer.findViewById<EditText>(R.id.username_field).text
-                        val fields = listOf(UserInfo("username", userName.toString()))
+                        val fields = UserInfo.EMPTY
+                        fields.put(UserInfoType.USERNAME, userName.toString())
                         listener?.onWizardNext(fields)
                     }
                 }

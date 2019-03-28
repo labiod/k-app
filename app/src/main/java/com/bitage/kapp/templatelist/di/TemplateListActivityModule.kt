@@ -1,6 +1,6 @@
 package com.bitage.kapp.templatelist.di
 
-import androidx.lifecycle.ViewModelProviders
+import com.bitage.kapp.dsl.createViewModel
 import com.bitage.kapp.repository.TemplateRepository
 import com.bitage.kapp.templatelist.KAppTemplateListPresenter
 import com.bitage.kapp.templatelist.KAppTemplateListView
@@ -26,10 +26,10 @@ class TemplateListActivityModule {
         activity: TemplateListActivity,
         repository: TemplateRepository
     ): TemplateListViewModel {
-        return ViewModelProviders.of(
-            activity,
-            TemplateListViewModelFactory(repository)
-        ).get(TemplateListViewModel::class.java)
+        return createViewModel(activity) {
+            factory = TemplateListViewModelFactory(repository)
+            modelClass = TemplateListViewModel::class.java
+        }
     }
 
     /**

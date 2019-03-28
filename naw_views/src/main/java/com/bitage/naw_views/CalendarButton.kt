@@ -8,10 +8,11 @@ import android.view.View
 import android.widget.CalendarView
 import android.widget.ImageButton
 import androidx.constraintlayout.widget.ConstraintLayout
-import java.util.Calendar
 import java.util.Date
 import android.view.ViewGroup
-
+import com.bitage.dsl.createDate
+import com.bitage.dsl.get
+import java.util.Calendar
 
 
 class CalendarButton(context: Context, attributeSet: AttributeSet?, defStyle: Int)
@@ -42,16 +43,16 @@ class CalendarButton(context: Context, attributeSet: AttributeSet?, defStyle: In
             .inflate(R.layout.calendar_layout, this.parent as ViewGroup?, false) as CalendarView
         expandCalendarButton = findViewById(R.id.expandCalendar)
         disableClipOnParents(calendarView)
-        val calendar = Calendar.getInstance()
-        calendar.timeInMillis = calendarView.date
         calendarView.visibility = View.GONE
         calendarView.setBackgroundColor(Color.TRANSPARENT)
         calendarView.setOnDateChangeListener {
             _, year, month, dayOfMonth ->
-            calendar.set(Calendar.YEAR, year)
-            calendar.set(Calendar.MONTH, month)
-            calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
-            calendarView.setDate(calendar.timeInMillis, true, false)
+            val date = createDate {
+                day = dayOfMonth
+                this.month = month
+                this.year = year
+            }
+            calendarView.setDate(date.time, true, false)
             expandCalendar(false)
             listener?.onDateChange(this@CalendarButton, year, month, dayOfMonth)
         }
@@ -87,15 +88,13 @@ class CalendarButton(context: Context, attributeSet: AttributeSet?, defStyle: In
         }
     }
 
-    fun setDate(timeInMillis: Long, animate: Boolean, center: Boolean) {
+    fun setDate(timeInMillis: Long, animate: Boolean, center: Boolean = false) {
         calendarView.date = timeInMillis
         calendarView.setDate(timeInMillis, animate, center)
-        val calendar = Calendar.getInstance()
-        calendar.timeInMillis = timeInMillis
         listener?.onDateChange(this,
-            calendar.get(Calendar.YEAR),
-            calendar.get(Calendar.MONTH),
-            calendar.get(Calendar.DAY_OF_MONTH)
+            timeInMillis get Calendar.YEAR,
+            timeInMillis get Calendar.MONTH,
+            timeInMillis get Calendar.DAY_OF_MONTH
         )
     }
 

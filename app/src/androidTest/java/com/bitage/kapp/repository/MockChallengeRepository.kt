@@ -1,7 +1,7 @@
 package com.bitage.kapp.repository
 
 import com.bitage.kapp.entity.UserProgressEntity
-import com.bitage.kapp.mapper.EntityMapper
+import com.bitage.kapp.mapper.EntityMapperDsl
 import com.bitage.kapp.model.Challenge
 import com.bitage.kapp.model.ChallengeType
 import com.bitage.kapp.model.StepProgress
@@ -31,7 +31,7 @@ class MockChallengeRepository : ChallengeRepository {
     override fun deleteChallenge(challenge: Challenge): Completable = Completable.complete()
 
     override fun getDefaultChallengeValues(challengeType: ChallengeType): Flowable<Challenge> {
-        return Flowable.just(EntityMapper.mapProgressToChallenge(UserProgressEntity.createNew(challengeType)))
+        return Flowable.just(EntityMapperDsl.mapProgressToChallenge(UserProgressEntity.createNew(challengeType)))
     }
 
     override fun updateUserProgress(challenge: Challenge): Completable = Completable.complete()

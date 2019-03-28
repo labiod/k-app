@@ -2,12 +2,12 @@ package com.bitage.kapp.daychallenges
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.bitage.dsl.format
 import com.bitage.kapp.presentation.KViewModel
 import com.bitage.kapp.model.Challenge
 import com.bitage.kapp.model.Template
 import com.bitage.kapp.repository.ChallengeRepository
 import com.bitage.kapp.repository.TemplateRepository
-import java.text.DateFormat
 import java.util.Date
 
 /**
@@ -93,7 +93,7 @@ class DayChallengeViewModel(private val date: Date,
      * @param dateformat - date format
      * @return string date
      */
-    fun getDate(dateformat: DateFormat) = dateformat.format(date)
+    fun getDate(dateFormat: String) = date format dateFormat
 
     /**
      * Get date in miliseconds

@@ -17,12 +17,11 @@ import com.bitage.kapp.Screen
 import com.bitage.kapp.ui.adapter.TemplatesDialogAdapter
 import com.bitage.kapp.ui.adapter.TodayChallengesAdapter
 import com.bitage.kapp.databinding.DayChallengesBinding
+import com.bitage.dsl.get
 import com.bitage.kapp.editchallenge.EditChallengeActivity
 import com.bitage.kapp.model.Challenge
 import com.bitage.kapp.model.Template
-import java.text.SimpleDateFormat
 import java.util.Calendar
-import java.util.Locale
 
 /**
  * List of challenges view implementation class
@@ -107,24 +106,20 @@ class ChallengeListViewImpl : ChallengeListView {
             val actionBarView = it.customView
             val title: TextView = actionBarView.findViewById(R.id.action_bar_title)
             val subTitle: TextView = actionBarView.findViewById(R.id.action_bar_subtitle)
-            val dateFormat = SimpleDateFormat(Constants.APP_DATE_FORMAT, Locale.getDefault())
-            subTitle.text = viewModel.getDate(dateFormat)
+            subTitle.text = viewModel.getDate(Constants.APP_DATE_FORMAT)
             title.setText(R.string.your_challenges_title)
         }
     }
 
     private fun initBinder() {
-        val dateFormat = SimpleDateFormat(Constants.APP_DATE_FORMAT, Locale.getDefault())
-        binding.todayDate = viewModel.getDate(dateFormat)
+        binding.todayDate = viewModel.getDate(Constants.APP_DATE_FORMAT)
         initRecyclerView()
         initViewModel()
         binding.fab.setOnClickListener {
-            val calendar = Calendar.getInstance()
-            calendar.timeInMillis = viewModel.getTime()
             val intent = Intent(it.context, EditChallengeActivity::class.java)
-            intent.putExtra(Constants.CURRENT_DATE_DAY, calendar.get(Calendar.DAY_OF_MONTH))
-            intent.putExtra(Constants.CURRENT_DATE_MONTH, calendar.get(Calendar.MONTH))
-            intent.putExtra(Constants.CURRENT_DATE_YEAR, calendar.get(Calendar.YEAR))
+            intent.putExtra(Constants.CURRENT_DATE_DAY, viewModel.getTime() get Calendar.DAY_OF_MONTH)
+            intent.putExtra(Constants.CURRENT_DATE_MONTH, viewModel.getTime() get Calendar.MONTH)
+            intent.putExtra(Constants.CURRENT_DATE_YEAR, viewModel.getTime() get Calendar.YEAR)
             screenHandler.startActivity(intent)
         }
     }
