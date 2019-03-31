@@ -28,6 +28,7 @@ abstract class KActivity<T : KView<*>> : AppCompatActivity(), Screen {
     final override fun onCreate(savedInstanceState: Bundle?) {
         setupDependencyInjection()
         super.onCreate(savedInstanceState)
+
         presenter.onCreate()
         view.onCreate()
         view.onAttached(this)

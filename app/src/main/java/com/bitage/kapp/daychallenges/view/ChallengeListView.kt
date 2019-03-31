@@ -1,8 +1,7 @@
-package com.bitage.kapp.daychallenges
+package com.bitage.kapp.daychallenges.view
 
 import androidx.lifecycle.Observer
 import android.content.DialogInterface
-import android.content.Intent
 import androidx.databinding.DataBindingUtil
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -17,28 +16,37 @@ import com.bitage.kapp.Screen
 import com.bitage.kapp.ui.adapter.TemplatesDialogAdapter
 import com.bitage.kapp.ui.adapter.TodayChallengesAdapter
 import com.bitage.kapp.databinding.DayChallengesBinding
-import com.bitage.dsl.get
-import com.bitage.kapp.editchallenge.EditChallengeActivity
+import com.bitage.kapp.daychallenges.ChallengeView
+import com.bitage.kapp.daychallenges.DayChallengeViewModel
+import com.bitage.kapp.daychallenges.OnChallengeActionListener
+import com.bitage.kapp.daychallenges.fragment.ChallengeListFragment
+import com.bitage.kapp.daychallenges.fragment.EditChallengeFragment
 import com.bitage.kapp.model.Challenge
 import com.bitage.kapp.model.Template
-import java.util.Calendar
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 /**
  * List of challenges view implementation class
  */
-class ChallengeListViewImpl : ChallengeListView {
+class ChallengeListView : ChallengeView {
+    interface Listener {
+        fun onAddChallengeButtonClicked()
+    }
     private lateinit var binding: DayChallengesBinding
     private lateinit var viewModel: DayChallengeViewModel
     private lateinit var screenHandler: Screen
 
     private var adapter: TodayChallengesAdapter? = null
     private var templateAdapter: TemplatesDialogAdapter? = null
+    private var challengesList: RecyclerView? = null
+    private var listener: Listener? = null
 
     private val templateObserver = Observer<List<Template>> {
         templateAdapter?.notifyDataSetChanged()
     }
 
     private val challengesObserver = Observer<List<Challenge>> {
+        Log.d("KGB", "test")
         adapter?.notifyDataSetChanged()
     }
 
@@ -113,15 +121,24 @@ class ChallengeListViewImpl : ChallengeListView {
 
     private fun initBinder() {
         binding.todayDate = viewModel.getDate(Constants.APP_DATE_FORMAT)
-        initRecyclerView()
         initViewModel()
-        binding.fab.setOnClickListener {
-            val intent = Intent(it.context, EditChallengeActivity::class.java)
-            intent.putExtra(Constants.CURRENT_DATE_DAY, viewModel.getTime() get Calendar.DAY_OF_MONTH)
-            intent.putExtra(Constants.CURRENT_DATE_MONTH, viewModel.getTime() get Calendar.MONTH)
-            intent.putExtra(Constants.CURRENT_DATE_YEAR, viewModel.getTime() get Calendar.YEAR)
-            screenHandler.startActivity(intent)
-        }
+
+        screenHandler.getSupportFragmentManager()
+            .beginTransaction()
+            .add(R.id.container, ChallengeListFragment(), "CHALLENGES_LIST_TAG")
+            .runOnCommit {
+                val fab = binding.container.findViewById<FloatingActionButton>(R.id.fab)
+                fab.setOnClickListener {
+                    screenHandler.getSupportFragmentManager()
+                        .beginTransaction()
+                        .add(R.id.container, EditChallengeFragment(), "EDIT_CHALLENGE_TAG")
+                        .addToBackStack("EDIT_CHALLENGE_TAG")
+                        .commit()
+                    listener?.onAddChallengeButtonClicked()
+                }
+                initRecyclerView()
+            }
+            .commit()
     }
 
     private fun deinitBinder() {
@@ -130,17 +147,20 @@ class ChallengeListViewImpl : ChallengeListView {
     }
 
     private fun initRecyclerView() {
-        binding.challengesList.setHasFixedSize(true)
-        val layoutManager = LinearLayoutManager(screenHandler.getActivity(), RecyclerView.VERTICAL, false)
-        binding.challengesList.layoutManager = layoutManager
-        binding.challengesList.addItemDecoration(androidx.recyclerview.widget.DividerItemDecoration(screenHandler.getActivity(), layoutManager.orientation))
+        challengesList = binding.container.findViewById<RecyclerView>(R.id.challenges_list)
+        challengesList?.let {
+            it.setHasFixedSize(true)
+            val layoutManager = LinearLayoutManager(screenHandler.getActivity(), RecyclerView.VERTICAL, false)
+            it.layoutManager = layoutManager
+            it.addItemDecoration(androidx.recyclerview.widget.DividerItemDecoration(screenHandler.getActivity(), layoutManager.orientation))
+        }
     }
 
     private fun initViewModel() {
         adapter = TodayChallengesAdapter(viewModel)
         templateAdapter = TemplatesDialogAdapter(viewModel.templates)
         viewModel.templates.observe(screenHandler, templateObserver)
-        binding.challengesList.adapter = adapter
+        challengesList?.adapter = adapter
         viewModel.challenges.observe(screenHandler, challengesObserver)
     }
 }

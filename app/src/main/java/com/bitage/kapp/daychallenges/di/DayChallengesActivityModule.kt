@@ -4,10 +4,8 @@ import com.bitage.kapp.repository.ChallengeRepository
 import com.bitage.kapp.repository.TemplateRepository
 import com.bitage.kapp.daychallenges.TodayChallengesActivity
 import com.bitage.kapp.presentation.Constants
-import com.bitage.kapp.daychallenges.ChallengeListPresenter
-import com.bitage.kapp.daychallenges.ChallengeListPresenterImpl
-import com.bitage.kapp.daychallenges.ChallengeListView
-import com.bitage.kapp.daychallenges.ChallengeListViewImpl
+import com.bitage.kapp.daychallenges.presenter.KAppChallengePresenter
+import com.bitage.kapp.daychallenges.view.ChallengeListView
 import com.bitage.kapp.daychallenges.DayChallengeViewModel
 import com.bitage.kapp.daychallenges.DayViewModelFactory
 import com.bitage.dsl.createDate
@@ -44,7 +42,7 @@ class DayChallengesActivityModule {
      * @return [ChallengeListView] instance
      */
     @Provides
-    fun provideChallengeListView(): ChallengeListView = ChallengeListViewImpl()
+    fun provideChallengeListView(): ChallengeView = ChallengeListView()
 
     /**
      * Provide presenter for challenges list activity
@@ -53,7 +51,7 @@ class DayChallengesActivityModule {
      */
     @Provides
     fun provideChallengeListPresenter(viewModel: DayChallengeViewModel): ChallengeListPresenter {
-        return ChallengeListPresenterImpl(viewModel)
+        return KAppChallengePresenter(viewModel)
     }
 
     private fun getCurrentDate(activity: TodayChallengesActivity): Date {
