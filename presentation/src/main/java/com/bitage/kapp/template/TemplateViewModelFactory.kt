@@ -9,7 +9,10 @@ import com.bitage.kapp.repository.TemplateRepository
 /**
  * Model factory class used to create [TemplateViewModel] with given date
  */
-class TemplateViewModelFactory(private val repository: TemplateRepository)
+class TemplateViewModelFactory(
+    private val getTemplateByIdUseCase: GetTemplateByIdUseCase,
+    private val setTemplateUseCase: SetTemplateUseCase
+)
     : ViewModelProvider.NewInstanceFactory() {
     /**
      * Create [DayChallengeViewModel] for given date
@@ -19,7 +22,7 @@ class TemplateViewModelFactory(private val repository: TemplateRepository)
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         try {
-            return TemplateViewModel(repository) as T
+            return TemplateViewModel(getTemplateByIdUseCase, setTemplateUseCase) as T
         } catch (ex: InstantiationException) {
             Log.e(Constants.GLOBAL_TAG, "error:", ex)
             return super.create(modelClass)

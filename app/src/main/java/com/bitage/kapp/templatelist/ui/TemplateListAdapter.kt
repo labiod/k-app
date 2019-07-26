@@ -16,7 +16,7 @@ import io.reactivex.functions.Action
  * Adapter class used in template screen provide view templates for recycler view
  */
 class TemplateListAdapter(private val viewModel: TemplateListViewModel)
-    : androidx.recyclerview.widget.RecyclerView.Adapter<TemplateListAdapter.Holder>() {
+    : RecyclerView.Adapter<TemplateListAdapter.Holder>() {
     private val templates = viewModel.templates
 
     /**
@@ -65,5 +65,5 @@ class TemplateListAdapter(private val viewModel: TemplateListViewModel)
     /**
      * Holder class for template adapter
      */
-    class Holder(val binder: TemplateListItemBinding) : androidx.recyclerview.widget.RecyclerView.ViewHolder(binder.root)
+    class Holder(val binder: TemplateListItemBinding) : RecyclerView.ViewHolder(binder.root)
 }

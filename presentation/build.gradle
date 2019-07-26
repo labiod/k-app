@@ -40,9 +40,11 @@ dependencies {
 
     implementation kotlinDependencies.kotlin
     implementation kotlinDependencies.rxKotlin
+    implementation kotlinDependencies.rxandroid
+    implementation kotlinDependencies.coroutines
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.1.0-alpha04"
 
     implementation supportDependencies.appCompatV7
-    implementation rxDependencies.rxAndroid
     implementation androidComponentDependencies.archExtensions
 
     testImplementation testDependencies.junit

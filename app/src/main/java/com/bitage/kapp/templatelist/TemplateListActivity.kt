@@ -7,7 +7,7 @@ import javax.inject.Inject
 /**
  * Activity with template list
  */
-class TemplateListActivity : KActivity<TemplateListView>() {
+class TemplateListActivity : KActivity<TemplateListView, TemplateListViewModel>() {
 
     /**
      * presenter for template activity
@@ -20,6 +20,12 @@ class TemplateListActivity : KActivity<TemplateListView>() {
      */
     @Inject
     override lateinit var view: TemplateListView
+
+    /**
+     * viewModel for template activity
+     */
+    @Inject
+    override lateinit var viewModel: TemplateListViewModel
 
     override fun setupDependencyInjection() {
         AndroidInjection.inject(this)

@@ -43,12 +43,18 @@ dependencies {
     implementation kotlinDependencies.javaxAnnotation
     implementation kotlinDependencies.javaxInject
     implementation kotlinDependencies.rxKotlin
+    implementation kotlinDependencies.rxandroid
     implementation kotlinDependencies.kotlin
-    implementation kotlinDependencies.coroutines
     implementation androidComponentDependencies.roomRuntime
     implementation androidComponentDependencies.roomCoroutines
+    implementation androidComponentDependencies.roomRxJava
+    implementation daggerDependencies.core
+    implementation daggerDependencies.android
+    implementation daggerDependencies.androidSupport
 
     kapt androidComponentDependencies.roomCompiler
+    kapt daggerDependencies.compiler
+    kapt daggerDependencies.processor
 
     compileOnly kotlinDependencies.javaxAnnotation
 

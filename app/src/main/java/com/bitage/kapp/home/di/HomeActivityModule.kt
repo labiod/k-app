@@ -1,6 +1,5 @@
 package com.bitage.kapp.home.di
 
-import androidx.lifecycle.ViewModelProviders
 import com.bitage.kapp.di.ActivityScope
 import com.bitage.kapp.dsl.createViewModel
 import com.bitage.kapp.home.HomePresenter
@@ -12,6 +11,7 @@ import com.bitage.kapp.home.HomeViewModel
 import com.bitage.kapp.home.HomeViewModelFactory
 import com.bitage.kapp.repository.ChallengeRepository
 import com.bitage.kapp.repository.UserRepository
+import com.bitage.kapp.user.GetUserInfoUseCase
 import dagger.Module
 import dagger.Provides
 import java.util.Date
@@ -31,6 +31,7 @@ class HomeActivityModule {
     /**
      * Provide viewModel for activity
      * @param repository - repository for challenges data
+     * @param getUserInfoUseCase - usecase for UserInfo
      * @return [HomeViewModel] implementation
      */
     @Provides
@@ -38,10 +39,10 @@ class HomeActivityModule {
     fun provideHomeViewModel(
         activity: HomeActivity,
         repository: ChallengeRepository,
-        userRepository: UserRepository
+        getUserInfoUseCase: GetUserInfoUseCase
     ): HomeViewModel {
         return createViewModel(activity) {
-            factory = HomeViewModelFactory(repository, userRepository, Date())
+            factory = HomeViewModelFactory(repository, getUserInfoUseCase, Date())
             modelClass = HomeViewModel::class.java
         }
     }
@@ -52,8 +53,5 @@ class HomeActivityModule {
      * @return [HomePresenter] implementation
      */
     @Provides
-    fun provideHomePresenter(
-        viewModel: HomeViewModel,
-        view: HomeView
-    ): HomePresenter = HomePresenterImpl(viewModel)
+    fun provideHomePresenter(): HomePresenter = HomePresenterImpl()
 }

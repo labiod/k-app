@@ -5,11 +5,16 @@ import androidx.lifecycle.ViewModelProvider
 import android.util.Log
 import com.bitage.kapp.presentation.Constants
 import com.bitage.kapp.repository.TemplateRepository
+import com.bitage.kapp.template.GetTemplateListUseCase
+import com.bitage.kapp.template.RemoveTemplateUseCase
 
 /**
  * Model factory class used to create [TemplateListViewModel] with given date
  */
-class TemplateListViewModelFactory(private val repository: TemplateRepository)
+class TemplateListViewModelFactory(
+    private val getTemplateListUseCase: GetTemplateListUseCase,
+    private val removeTemplateUseCase: RemoveTemplateUseCase
+)
     : ViewModelProvider.NewInstanceFactory() {
     /**
      * Create [TemplateListViewModel] for given date
@@ -19,7 +24,7 @@ class TemplateListViewModelFactory(private val repository: TemplateRepository)
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         try {
-            return TemplateListViewModel(repository) as T
+            return TemplateListViewModel(getTemplateListUseCase, removeTemplateUseCase) as T
         } catch (ex: InstantiationException) {
             Log.e(Constants.GLOBAL_TAG, "error:", ex)
             return super.create(modelClass)

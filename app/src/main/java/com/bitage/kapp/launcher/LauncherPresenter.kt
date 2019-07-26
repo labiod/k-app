@@ -2,12 +2,15 @@ package com.bitage.kapp.launcher
 
 import com.bitage.kapp.model.UserInfo
 import com.bitage.kapp.presentation.KPresenter
+import com.bitage.kapp.presentation.KViewModel
 import io.reactivex.functions.Action
 import io.reactivex.functions.Consumer
 
-class LauncherPresenter(private val viewModel: LauncherViewModel) : KPresenter<LauncherView>, LauncherView.Listener {
+class LauncherPresenter
+    : KPresenter<LauncherView, LauncherViewModel>, LauncherView.Listener {
 
     private var view: LauncherView? = null
+    private var viewModel: LauncherViewModel? = null
     override fun onCreate() {
         // Create presenter
     }
@@ -30,9 +33,13 @@ class LauncherPresenter(private val viewModel: LauncherViewModel) : KPresenter<L
     }
 
     override fun onWizardNext(fields: UserInfo) {
-        viewModel.setupUser(fields, Action {
+        viewModel?.setupUser(fields, Action {
             checkUserSetup()
         })
+    }
+
+    override fun attachViewModel(viewModel: LauncherViewModel) {
+        this.viewModel = viewModel
     }
 
     private fun initViewModel() {
@@ -40,7 +47,7 @@ class LauncherPresenter(private val viewModel: LauncherViewModel) : KPresenter<L
     }
 
     private fun checkUserSetup() {
-        viewModel.checkUserSetup(Consumer { result ->
+        viewModel?.checkUserSetup(Consumer { result ->
             if (result) {
                 view?.loadMainScreen()
             } else {

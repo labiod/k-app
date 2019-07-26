@@ -5,4 +5,4 @@ import com.bitage.kapp.presentation.KPresenter
 /**
  * Presenter for edit challenge screen
  */
-interface EditChallengePresenter : KPresenter<EditChallengeView>
+interface EditChallengePresenter : KPresenter<EditChallengeView, EditChallengeViewModel>

@@ -14,7 +14,7 @@ import javax.inject.Inject
 /**
  * Activity screen to show calendar view
  */
-class HomeActivity : KActivity<HomeView>() {
+class HomeActivity : KActivity<HomeView, HomeViewModel>() {
 
     /**
      * presenter for activity
@@ -27,6 +27,12 @@ class HomeActivity : KActivity<HomeView>() {
      */
     @Inject
     override lateinit var view: HomeView
+
+    /**
+     * view for activity
+     */
+    @Inject
+    override lateinit var viewModel: HomeViewModel
 
     /**
      * Setup dependency injection for this activity

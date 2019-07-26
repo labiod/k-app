@@ -3,23 +3,27 @@ package com.bitage.kapp
 import android.app.Activity
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import com.bitage.kapp.presentation.KPresenter
 import com.bitage.kapp.presentation.KView
+import com.bitage.kapp.presentation.KViewModel
 
 /**
  * Base activity class for K-App
  */
-abstract class KActivity<T : KView<*>> : AppCompatActivity(), Screen {
+abstract class KActivity<T : KView<Model>, Model : KViewModel> : AppCompatActivity(), Screen {
 
     /**
      * Get Presenter associated with extending Activity
      */
-    protected abstract val presenter: KPresenter<T>
+    protected abstract val presenter: KPresenter<T, Model>
 
     /**
      * Get view associated with extending Activity
      */
     protected abstract val view: T
+
+    abstract var viewModel: Model
 
     /**
      * Method call by android when create activity
@@ -32,7 +36,13 @@ abstract class KActivity<T : KView<*>> : AppCompatActivity(), Screen {
         presenter.onCreate()
         view.onCreate()
         view.onAttached(this)
+        presenter.attachViewModel(viewModel)
         presenter.attachView(view)
+    }
+
+    override fun onAttachFragment(fragment: Fragment?) {
+        super.onAttachFragment(fragment)
+        fragment?.let { presenter.attachFragment(it) }
     }
 
     /**

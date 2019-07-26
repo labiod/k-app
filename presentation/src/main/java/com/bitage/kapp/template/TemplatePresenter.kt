@@ -5,4 +5,4 @@ import com.bitage.kapp.presentation.KPresenter
 /**
  * Presenter for template screen
  */
-interface TemplatePresenter : KPresenter<TemplateView>
+interface TemplatePresenter : KPresenter<TemplateView, TemplateViewModel>

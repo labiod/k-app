@@ -42,7 +42,7 @@ configurations {
 }
 
 dependencies {
-    implementation project(':naw_views')
+    implementation project(':ui_lab')
     implementation project(':dsl')
     implementation project(':domain')
     implementation project(':data')
@@ -53,13 +53,16 @@ dependencies {
     implementation supportDependencies.design
     implementation supportDependencies.constraintLayout
     implementation kotlinDependencies.kotlin
+    implementation kotlinDependencies.rxKotlin
+    implementation kotlinDependencies.rxandroid
+    implementation kotlinDependencies.coroutines
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.1.0-alpha04"
     implementation androidComponentDependencies.archExtensions
     implementation androidComponentDependencies.roomRuntime
     implementation daggerDependencies.core
     implementation daggerDependencies.android
     implementation daggerDependencies.androidSupport
 
-    implementation 'androidx.constraintlayout:constraintlayout:1.1.2'
     kapt androidComponentDependencies.roomCompiler
     kapt daggerDependencies.compiler
     kapt daggerDependencies.processor

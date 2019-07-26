@@ -37,9 +37,5 @@ class UserActivityModule {
      * @return implementation of [UserPresenter]
      */
     @Provides
-    fun provideUserPresenter(
-        model: UserViewModel
-    ): UserPresenter {
-        return KAppUserPresenter(model)
-    }
+    fun provideUserPresenter(): UserPresenter = KAppUserPresenter()
 }

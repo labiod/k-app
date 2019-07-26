@@ -31,7 +31,7 @@ class HomeViewImpl : HomeView {
     }
     private lateinit var viewModel: HomeViewModel
     private lateinit var screen: Screen
-    private val dateChangeObserver = Observer<Date> {
+    private val dateChangeObserver: Observer<Date> = Observer {
         binding.selectedDay.text = it format "dd MMM, ''yy"
         viewModel.getDayChallengesState(Consumer { p ->
             binding.roundProgress.setProgress(p.first, p.second)
@@ -45,9 +45,9 @@ class HomeViewImpl : HomeView {
     }
 
     override fun onResume() {
-        binding.setLifecycleOwner(screen)
-
+        binding.lifecycleOwner = screen
         viewModel.dateData.observe(screen, dateChangeObserver)
+        viewModel.dateData.postValue(binding.calendarButton.getSelectedDate())
     }
 
     override fun onPause() {
@@ -69,9 +69,8 @@ class HomeViewImpl : HomeView {
     override fun attachViewModel(viewModel: HomeViewModel) {
         this.viewModel = viewModel
         binding.viewmodel = viewModel
+        binding.lifecycleOwner = screen
         with(binding) {
-
-
             leftButton.setOnClickListener {
                 val timeInMillis = calendarButton.getSelectedDate().time dayDiff -1
                 calendarButton.setDate(timeInMillis, true)

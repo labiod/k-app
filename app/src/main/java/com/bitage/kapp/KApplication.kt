@@ -1,7 +1,8 @@
 package com.bitage.kapp
 
 import com.bitage.kapp.di.DaggerApplicationComponent
-import com.bitage.kapp.di.module.RepositoryModule
+import com.bitage.kapp.di.DataModule
+import com.bitage.kapp.di.RepositoryModule
 import dagger.android.AndroidInjector
 import dagger.android.HasActivityInjector
 import dagger.android.support.DaggerApplication
@@ -15,6 +16,7 @@ open class KApplication : DaggerApplication(), HasActivityInjector {
         return DaggerApplicationComponent.builder()
             .application(this)
             .plus(RepositoryModule(this))
+//            .plus(DataModule())
             .build()
     }
 }

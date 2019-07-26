@@ -3,7 +3,9 @@ package com.bitage.kapp.editchallenge
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import android.util.Log
-import com.bitage.kapp.repository.ChallengeRepository
+import com.bitage.kapp.challenge.GetChallengeByIdUseCase
+import com.bitage.kapp.challenge.GetDefaultChallengeTypeValueUseCase
+import com.bitage.kapp.challenge.SetChallengeUseCase
 import com.bitage.kapp.presentation.Constants
 import java.util.Date
 
@@ -11,7 +13,9 @@ import java.util.Date
  * Model factory class used to create [EditChallengeViewModel] with given date
  */
 class EditChallengeViewModelFactory(
-    private val repository: ChallengeRepository,
+    private val getChallengeByIdUseCase: GetChallengeByIdUseCase,
+    private val setChallengeUseCase: SetChallengeUseCase,
+    private val getDefaultChallengeTypeValueUseCase: GetDefaultChallengeTypeValueUseCase,
     private val date: Date
 ) : ViewModelProvider.NewInstanceFactory() {
     /**
@@ -21,11 +25,11 @@ class EditChallengeViewModelFactory(
      */
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-        try {
-            return EditChallengeViewModel(repository, date) as T
+        return try {
+            EditChallengeViewModel(getChallengeByIdUseCase, setChallengeUseCase, getDefaultChallengeTypeValueUseCase, date) as T
         } catch (ex: InstantiationException) {
             Log.e(Constants.GLOBAL_TAG, "error:", ex)
-            return super.create(modelClass)
+            super.create(modelClass)
         }
     }
 }

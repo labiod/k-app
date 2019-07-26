@@ -13,8 +13,9 @@ dependencies {
 
     implementation kotlinDependencies.javaxAnnotation
     implementation kotlinDependencies.javaxInject
-    implementation kotlinDependencies.rxKotlin
     implementation kotlinDependencies.kotlin
+    implementation kotlinDependencies.rxKotlin
+    implementation kotlinDependencies.rxandroid
     implementation kotlinDependencies.coroutines
 
     testImplementation testDependencies.junit

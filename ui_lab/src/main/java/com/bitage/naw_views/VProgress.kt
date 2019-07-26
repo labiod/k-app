@@ -27,9 +27,10 @@ class VProgress(context: Context, attributeSet: AttributeSet?, defStyle: Int)
     private var max: Int = 0
     private val rand = Random(System.currentTimeMillis())
     private val animationHandler = Handler(Looper.getMainLooper())
-    private var lastCreateBubbleTime = 0L
     private var mod = 1
+    private val rect = RectF()
     private val animationRunnable = object : Runnable {
+        private var lastCreateBubbleTime = 0L
         override fun run() {
             val toRemove = arrayListOf<PointF>()
             if (bubbles.size < MAX_BUBBLES && System.currentTimeMillis() - lastCreateBubbleTime > BUBBLES_TIME_ELAPSE) {
@@ -67,8 +68,8 @@ class VProgress(context: Context, attributeSet: AttributeSet?, defStyle: Int)
     }
 
     fun setProgress(progress: Int, max: Int) {
-        var maxAngle = 360f
-        var vp = progress.toFloat() / max
+        val maxAngle = 360f
+        val vp = progress.toFloat() / max
         this.progress = progress
         this.max = max
         angle = maxAngle * vp
@@ -77,13 +78,13 @@ class VProgress(context: Context, attributeSet: AttributeSet?, defStyle: Int)
     }
 
     override fun onDraw(canvas: Canvas?) {
-        val rect = RectF(0f, 0f, width.toFloat(), height.toFloat())
+        rect.set(0f, 0f, width.toFloat(), height.toFloat())
         canvas?.drawArc(rect, diffAngle, angle, false, paint)
         bubbles.forEach { bubble ->
-            val waveRect = RectF(bubble.x, bubble.y, bubble.x + 20, bubble.y + 20)
-            canvas?.drawOval(waveRect, bubblePaint)
+            rect.set(bubble.x, bubble.y, bubble.x + 20, bubble.y + 20)
+            canvas?.drawOval(rect, bubblePaint)
         }
-//        canvas?.drawCircle(rect.centerX(), rect.centerY(), rect.width() / 2, borderPaint)
+        canvas?.drawCircle(rect.centerX(), rect.centerY(), rect.width() / 2, borderPaint)
     }
 
     fun setColor(color: Int) {

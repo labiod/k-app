@@ -4,7 +4,6 @@ import android.app.Application
 import com.bitage.kapp.KApplication
 import com.bitage.kapp.di.module.ActivityBuilder
 import com.bitage.kapp.di.module.AppModule
-import com.bitage.kapp.di.module.RepositoryModule
 import dagger.BindsInstance
 import dagger.Component
 import dagger.android.AndroidInjector
@@ -20,7 +19,8 @@ import javax.inject.Singleton
         AndroidSupportInjectionModule::class,
         AppModule::class,
         ActivityBuilder::class,
-        RepositoryModule::class
+        RepositoryModule::class,
+        DataModule::class
 ])
 interface ApplicationComponent : AndroidInjector<DaggerApplication> {
     /**
@@ -41,6 +41,12 @@ interface ApplicationComponent : AndroidInjector<DaggerApplication> {
          * @param module - repository module
          */
         fun plus(module: RepositoryModule): Builder
+
+        /**
+         * Method attach [DataModule] to application component
+         * @param module - repository module
+         */
+//        fun plus(module: DataModule): Builder
 
         /**
          * Build application component

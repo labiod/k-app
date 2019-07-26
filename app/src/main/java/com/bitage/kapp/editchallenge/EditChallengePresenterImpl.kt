@@ -5,12 +5,10 @@ import com.bitage.kapp.model.ChallengeType
 /**
  * Implementation of edit challenge presenter
  */
-class EditChallengePresenterImpl(
-    private val viewModel: EditChallengeViewModel,
-    val id: Long
-) : EditChallengePresenter {
+class EditChallengePresenterImpl(val id: Long) : EditChallengePresenter {
 
     private lateinit var view: EditChallengeView
+    private lateinit var viewModel: EditChallengeViewModel
 
     /**
      * Control presenter lifecycle. It should be called in Activity or fragment in onCreate method
@@ -25,6 +23,10 @@ class EditChallengePresenterImpl(
     override fun attachView(view: EditChallengeView) {
         this.view = view
         initViewModel()
+    }
+
+    override fun attachViewModel(viewModel: EditChallengeViewModel) {
+        this.viewModel = viewModel
     }
 
     /**

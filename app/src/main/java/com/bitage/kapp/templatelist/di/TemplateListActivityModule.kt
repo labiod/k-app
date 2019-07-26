@@ -1,7 +1,8 @@
 package com.bitage.kapp.templatelist.di
 
 import com.bitage.kapp.dsl.createViewModel
-import com.bitage.kapp.repository.TemplateRepository
+import com.bitage.kapp.template.GetTemplateListUseCase
+import com.bitage.kapp.template.RemoveTemplateUseCase
 import com.bitage.kapp.templatelist.KAppTemplateListPresenter
 import com.bitage.kapp.templatelist.KAppTemplateListView
 import com.bitage.kapp.templatelist.TemplateListActivity
@@ -24,10 +25,11 @@ class TemplateListActivityModule {
     @Provides
     fun provideTemplateListViewModel(
         activity: TemplateListActivity,
-        repository: TemplateRepository
+        getTemplateListUseCase: GetTemplateListUseCase,
+        removeTemplateUseCase: RemoveTemplateUseCase
     ): TemplateListViewModel {
         return createViewModel(activity) {
-            factory = TemplateListViewModelFactory(repository)
+            factory = TemplateListViewModelFactory(getTemplateListUseCase, removeTemplateUseCase)
             modelClass = TemplateListViewModel::class.java
         }
     }
@@ -45,7 +47,5 @@ class TemplateListActivityModule {
      * @return implementation of TemplateListPresenter for template list screen
      */
     @Provides
-    fun provideTemplateListPresenter(
-        model: TemplateListViewModel
-    ): TemplateListPresenter = KAppTemplateListPresenter(model)
+    fun provideTemplateListPresenter(): TemplateListPresenter = KAppTemplateListPresenter()
 }

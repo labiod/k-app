@@ -9,8 +9,10 @@ import io.reactivex.BackpressureStrategy
 import io.reactivex.Completable
 import io.reactivex.Flowable
 import io.reactivex.schedulers.Schedulers
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.util.Calendar
 import java.util.Date
 
@@ -24,26 +26,22 @@ class DBChallengesRepository(private val db: ChallengeDB) : ChallengeRepository 
      * @param date - given date
      * @return list of challenges for given date
      */
-    override fun getDayChallenges(date: Date): Flowable<List<Challenge>> {
-        val cal = Calendar.getInstance()
-        cal.time = date
-        cal.set(Calendar.HOUR, 0)
-        cal.set(Calendar.MINUTE, 0)
-        cal.set(Calendar.SECOND, 0)
-        cal.set(Calendar.MILLISECOND, 0)
-        val startDate = cal.time
-        cal.set(Calendar.HOUR, 23)
-        cal.set(Calendar.MINUTE, 59)
-        cal.set(Calendar.SECOND, 59)
-        cal.set(Calendar.MILLISECOND, 99)
-        val endDate = cal.time
-        val result: Flowable<List<Challenge>> = Flowable.create( { e ->
-            GlobalScope.launch {
-                val next = db.noteDao().getChallengeAtDate(startDate.time, endDate.time)
-                e.onNext(EntityMapperDsl.mapToChallengeList(next))
-            }
-        }, BackpressureStrategy.LATEST)
-        return result.subscribeOn(Schedulers.io())
+    override suspend fun getDayChallenges(date: Date): List<Challenge> {
+        return withContext(Dispatchers.IO) {
+            val cal = Calendar.getInstance()
+            cal.time = date
+            cal.set(Calendar.HOUR, 0)
+            cal.set(Calendar.MINUTE, 0)
+            cal.set(Calendar.SECOND, 0)
+            cal.set(Calendar.MILLISECOND, 0)
+            val startDate = cal.time
+            cal.set(Calendar.HOUR, 23)
+            cal.set(Calendar.MINUTE, 59)
+            cal.set(Calendar.SECOND, 59)
+            cal.set(Calendar.MILLISECOND, 99)
+            val endDate = cal.time
+            EntityMapperDsl.mapToChallengeList(db.noteDao().getChallengeAtDate(startDate.time, endDate.time))
+        }
     }
 
     /**
@@ -64,7 +62,6 @@ class DBChallengesRepository(private val db: ChallengeDB) : ChallengeRepository 
      * @param challenge - challenge to update
      */
     override fun update(challenge: Challenge): Completable {
-        android.util.Log.d("[KGB]", "update")
         val result = Completable.create { c ->
             GlobalScope.launch {
                 db.noteDao().insertChallenge(EntityMapperDsl.mapToChallengeEntity(challenge))

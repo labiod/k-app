@@ -3,6 +3,8 @@ package com.bitage.kapp.template.di
 import androidx.lifecycle.ViewModelProviders
 import com.bitage.kapp.dsl.createViewModel
 import com.bitage.kapp.repository.TemplateRepository
+import com.bitage.kapp.template.GetTemplateByIdUseCase
+import com.bitage.kapp.template.SetTemplateUseCase
 import com.bitage.kapp.template.TemplatePresenter
 import com.bitage.kapp.template.TemplateViewModel
 import com.bitage.kapp.template.TemplateActivity
@@ -27,10 +29,12 @@ class TemplateActivityModule {
     @Provides
     fun provideTemplateViewModel(
         activity: TemplateActivity,
+        getTemplateByIdUseCase: GetTemplateByIdUseCase,
+        setTemplateUseCase: SetTemplateUseCase,
         repository: TemplateRepository
     ): TemplateViewModel {
         return createViewModel(activity) {
-            factory = TemplateViewModelFactory(repository)
+            factory = TemplateViewModelFactory(getTemplateByIdUseCase, setTemplateUseCase)
             modelClass = TemplateViewModel::class.java
         }
     }
@@ -51,10 +55,9 @@ class TemplateActivityModule {
     @Provides
     fun providePresenter(
         activity: TemplateActivity,
-        model: TemplateViewModel,
         view: TemplateView
     ): TemplatePresenter {
         val id = activity.intent.getLongExtra(TemplateActivity.TEMPLATE_ID_KEY, -1)
-        return TemplatePresenterImpl(model, id)
+        return TemplatePresenterImpl(id)
     }
 }

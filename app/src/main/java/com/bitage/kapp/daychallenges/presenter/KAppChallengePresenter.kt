@@ -1,19 +1,22 @@
 package com.bitage.kapp.daychallenges.presenter
 
-import com.bitage.kapp.daychallenges.view.ChallengeListView
+import android.content.Intent
+import androidx.fragment.app.Fragment
+import com.bitage.kapp.daychallenges.view.KappChallengeListView
 import com.bitage.kapp.daychallenges.DayChallengeViewModel
-import com.bitage.kapp.daychallenges.view.ChallengeSubView
-import com.bitage.kapp.daychallenges.view.ChallengeView
+import com.bitage.kapp.daychallenges.fragment.ChallengeListFragment
+import com.bitage.kapp.daychallenges.fragment.AddOrEditChallengeFragment
+import com.bitage.kapp.daychallenges.view.ChallengeListView
+import com.bitage.kapp.editchallenge.EditChallengeActivity
 import com.bitage.kapp.model.Challenge
+import com.bitage.kapp.presentation.Constants
 
 /**
  * Implementation of presenter used to listed challenges for given date
  */
-class KAppChallengePresenter(
-    private val viewModel: DayChallengeViewModel
-) : ChallengePresenter, ChallengeListView.Listener {
-    private var view: ChallengeView? = null
-    private var subView: ChallengeSubView? = null
+class KAppChallengePresenter : ChallengePresenter, KappChallengeListView.Listener, AddOrEditChallengeFragment.Listener {
+    private var view: ChallengeListView? = null
+    private var viewModel: DayChallengeViewModel? = null
 
     /**
      * Control presenter lifecycle. It should be called in Activity or fragment in onCreate method
@@ -29,16 +32,24 @@ class KAppChallengePresenter(
         view?.onPause()
     }
 
-    override fun attachView(view: ChallengeView) {
+    override fun attachViewModel(viewModel: DayChallengeViewModel) {
+        this.viewModel = viewModel
+    }
+
+    override fun attachView(view: ChallengeListView) {
         view.onCreate()
-        view.attachViewModel(viewModel)
-        view.setChallengeActionListener(this)
+        viewModel?.let {
+            view.attachViewModel(it)
+        }
         this.view = view
     }
 
-    override fun attachFragmentView(subView: ChallengeSubView) {
-        view?.attachSubView(subView)
-        this.subView = subView
+    override fun attachFragment(fragment: Fragment) {
+        view?.attachFragment(fragment)
+        when(fragment) {
+            is AddOrEditChallengeFragment -> fragment.setListener(this)
+            is ChallengeListFragment -> fragment.setListener(this)
+        }
     }
 
     /**
@@ -52,7 +63,7 @@ class KAppChallengePresenter(
      * Delete all challenges from db
      */
     override fun deleteAll() {
-        viewModel.deleteAll()
+        viewModel?.deleteAll()
     }
 
     /**
@@ -62,16 +73,15 @@ class KAppChallengePresenter(
         view?.loadTemplateData()
     }
 
-    override fun onChallengeFinish(challenge: Challenge) {
-        viewModel.updateChallenge(challenge)
-        viewModel.updateProgress(challenge)
-    }
-
-    override fun onChallengeDelete(challenge: Challenge) {
-        viewModel.deleteChallenge(challenge)
-    }
-
     override fun onAddChallengeButtonClicked() {
+        view?.showAddEditChallengeFragment()
+    }
 
+    override fun onEditChallenge(challenge: Challenge) {
+        view?.showAddEditChallengeFragment(challenge.id)
+    }
+
+    override fun onChallengeSubmit(success: Boolean) {
+        view?.challengeSubmit(success)
     }
 }

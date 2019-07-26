@@ -5,14 +5,14 @@ import android.view.MenuItem
 import com.bitage.kapp.KActivity
 import com.bitage.kapp.R
 import com.bitage.kapp.daychallenges.presenter.ChallengePresenter
-import com.bitage.kapp.daychallenges.view.ChallengeView
+import com.bitage.kapp.daychallenges.view.ChallengeListView
 import dagger.android.AndroidInjection
 import javax.inject.Inject
 
 /**
  * Activity class that shows challenges for given date
  */
-class TodayChallengesActivity : KActivity<ChallengeView>() {
+class TodayChallengesActivity : KActivity<ChallengeListView, DayChallengeViewModel>() {
 
     /**
      * Presenter for this activity
@@ -24,7 +24,13 @@ class TodayChallengesActivity : KActivity<ChallengeView>() {
      * View for this activity
      */
     @Inject
-    override lateinit var view: ChallengeView
+    override lateinit var view: ChallengeListView
+
+    /**
+     * View for this activity
+     */
+    @Inject
+    override lateinit var viewModel: DayChallengeViewModel
 
     /**
      * Setup dependency injection for this activity

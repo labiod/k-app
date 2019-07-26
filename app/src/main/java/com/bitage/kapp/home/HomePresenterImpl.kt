@@ -5,10 +5,9 @@ import io.reactivex.functions.Consumer
 /**
  * Implementation of presenter for home screen
  */
-class HomePresenterImpl(
-    private val viewModel: HomeViewModel
-) : HomePresenter {
+class HomePresenterImpl: HomePresenter {
     private lateinit var view: HomeView
+    private lateinit var viewModel: HomeViewModel
     /**
      * Control presenter lifecycle. It should be called in Activity or fragment in onCreate method
      */
@@ -21,10 +20,13 @@ class HomePresenterImpl(
 
     override fun onPause() {}
 
+    override fun attachViewModel(viewModel: HomeViewModel) {
+        this.viewModel = viewModel
+    }
+
     override fun attachView(view: HomeView) {
         this.view = view
         view.attachViewModel(viewModel)
-        viewModel.getUserInfo(Consumer { userInfo -> view.setUserInfo(userInfo) })
     }
 
     /**

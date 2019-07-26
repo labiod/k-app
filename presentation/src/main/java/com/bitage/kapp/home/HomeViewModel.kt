@@ -1,15 +1,19 @@
 package com.bitage.kapp.home
 
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import com.bitage.kapp.model.Challenge
 import com.bitage.kapp.model.UserInfo
 import com.bitage.kapp.presentation.KViewModel
 import com.bitage.kapp.repository.ChallengeRepository
 import com.bitage.kapp.repository.UserRepository
-import io.reactivex.Single
+import com.bitage.kapp.user.GetUserInfoUseCase
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.functions.Consumer
+import io.reactivex.observers.DisposableObserver
 import io.reactivex.schedulers.Schedulers
+import io.reactivex.subscribers.DisposableSubscriber
+import kotlinx.coroutines.launch
 import java.util.Date
 
 /**
@@ -17,12 +21,23 @@ import java.util.Date
  */
 class HomeViewModel(
     private val challengeRepository: ChallengeRepository,
-    private val userRepository: UserRepository,
+    private val getUserUseCase: GetUserInfoUseCase,
     date: Date
 ) : KViewModel() {
+    val userInfo: MutableLiveData<UserInfo> = MutableLiveData()
     val dateData: MutableLiveData<Date> = MutableLiveData()
     init {
         dateData.postValue(date)
+        getUserUseCase.execute(object : DisposableSubscriber<UserInfo>() {
+            override fun onComplete() {}
+
+            override fun onNext(t: UserInfo) {
+                userInfo.postValue(t)
+            }
+
+            override fun onError(e: Throwable) {
+            }
+        })
     }
 
     /**
@@ -30,18 +45,12 @@ class HomeViewModel(
      */
     fun getDayChallengesState(onNext: Consumer<in Pair<Int, Int>>) {
         dateData.value?.let {
-            val result = challengeRepository.getDayChallenges(it)
-                .scan(Pair(0, 0)) { _, challenges -> Pair(countIfFinish(challenges), challenges.size) }
-            addDisposable(result.observeOn(AndroidSchedulers.mainThread()).subscribe(onNext))
+            viewModelScope.launch {
+                val result = challengeRepository.getDayChallenges(it)
+                val pair = Pair(countIfFinish(result), result.size)
+                onNext.accept(pair)
+            }
         }
-    }
-
-    fun getUserInfo(onNext: Consumer<in UserInfo>) {
-        addDisposable(userRepository.getUserInfo()
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribeOn(Schedulers.io())
-            .subscribe(onNext)
-        )
     }
 
     private fun countIfFinish(challenges: List<Challenge>): Int {
@@ -52,5 +61,10 @@ class HomeViewModel(
             }
         }
         return counter
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        getUserUseCase.dispose()
     }
 }

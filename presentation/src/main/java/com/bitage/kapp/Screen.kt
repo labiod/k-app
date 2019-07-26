@@ -17,4 +17,6 @@ interface Screen: LifecycleOwner {
     fun runOnUi(action: () -> Unit)
 
     fun getSupportFragmentManager(): FragmentManager
+
+    fun onBackPressed()
 }

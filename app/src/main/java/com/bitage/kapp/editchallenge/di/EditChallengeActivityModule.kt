@@ -1,9 +1,11 @@
 package com.bitage.kapp.editchallenge.di
 
 import com.bitage.dsl.createDate
+import com.bitage.kapp.challenge.GetChallengeByIdUseCase
+import com.bitage.kapp.challenge.GetDefaultChallengeTypeValueUseCase
+import com.bitage.kapp.challenge.SetChallengeUseCase
 import com.bitage.kapp.dsl.createViewModel
 import com.bitage.kapp.presentation.Constants
-import com.bitage.kapp.repository.ChallengeRepository
 import com.bitage.kapp.editchallenge.EditChallengeActivity
 import com.bitage.kapp.editchallenge.EditChallengePresenter
 import com.bitage.kapp.editchallenge.EditChallengePresenterImpl
@@ -28,10 +30,12 @@ class EditChallengeActivityModule {
     @Provides
     fun provideViewModel(
         activity: EditChallengeActivity,
-        repository: ChallengeRepository
+        getChallengeByIdUseCase: GetChallengeByIdUseCase,
+        setChallengeUseCase: SetChallengeUseCase,
+        getDefaultChallengeTypeValueUseCase: GetDefaultChallengeTypeValueUseCase
     ): EditChallengeViewModel {
         return createViewModel(activity) {
-            factory = EditChallengeViewModelFactory(repository, getCurrentDate(activity))
+            factory = EditChallengeViewModelFactory(getChallengeByIdUseCase, setChallengeUseCase, getDefaultChallengeTypeValueUseCase, getCurrentDate(activity))
             modelClass = EditChallengeViewModel::class.java
         }
     }
@@ -53,13 +57,9 @@ class EditChallengeActivityModule {
      * @return [EditChallengePresenter] instance
      */
     @Provides
-    fun providerEditChallengePresenter(
-        activity: EditChallengeActivity,
-        viewModel: EditChallengeViewModel,
-        view: EditChallengeView
-    ): EditChallengePresenter {
+    fun providerEditChallengePresenter(activity: EditChallengeActivity): EditChallengePresenter {
         val id = activity.intent.getLongExtra(Constants.CHALLENGE_ITEM_ID_KEY, -1)
-        return EditChallengePresenterImpl(viewModel, id)
+        return EditChallengePresenterImpl(id)
     }
 
     private fun getCurrentDate(activity: EditChallengeActivity): Date {

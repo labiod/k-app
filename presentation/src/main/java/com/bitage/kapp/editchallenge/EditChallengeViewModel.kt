@@ -1,21 +1,28 @@
 package com.bitage.kapp.editchallenge
 
-import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.bitage.kapp.presentation.KViewModel
+import com.bitage.kapp.challenge.GetChallengeByIdUseCase
+import com.bitage.kapp.challenge.GetDefaultChallengeTypeValueUseCase
+import com.bitage.kapp.challenge.SetChallengeUseCase
 import com.bitage.kapp.model.Challenge
 import com.bitage.kapp.model.ChallengeType
 import com.bitage.kapp.model.StepProgress
-import com.bitage.kapp.repository.ChallengeRepository
+import com.bitage.kapp.presentation.KViewModel
+import io.reactivex.observers.DisposableCompletableObserver
+import io.reactivex.subscribers.DisposableSubscriber
 import java.util.Date
-import java.util.concurrent.Executors
 
 /**
  * View model for edit challenge
  * Contains challenge that will be edit
  */
-class EditChallengeViewModel(private val repository: ChallengeRepository, private val date: Date) : KViewModel() {
+class EditChallengeViewModel(
+    private val getChallengeByIdUseCase: GetChallengeByIdUseCase,
+    private val setChallengeUseCase: SetChallengeUseCase,
+    private val getDefaultChallengeTypeValueUseCase: GetDefaultChallengeTypeValueUseCase,
+    private val date: Date
+) : KViewModel() {
     private val _challengeProgress = MutableLiveData<Challenge>()
     private val _challengeUpdate = MutableLiveData<Boolean>()
     /**
@@ -42,10 +49,19 @@ class EditChallengeViewModel(private val repository: ChallengeRepository, privat
      * @param noteId - challenge id
      */
     fun loadChallenge(noteId: Long) {
-        val note = repository.getChallengeById(noteId)
-        addDisposable(note.subscribe{ next ->
-            _challenge.postValue(next)
-        })
+        getChallengeByIdUseCase.execute(GetChallengeByIdUseCase.Params(noteId),
+            object : DisposableSubscriber<Challenge?>() {
+                override fun onComplete() {
+                }
+
+                override fun onNext(next: Challenge?) {
+                    _challenge.postValue(next)
+                }
+
+                override fun onError(e: Throwable) {
+                }
+            }
+        )
     }
 
     /**
@@ -57,12 +73,19 @@ class EditChallengeViewModel(private val repository: ChallengeRepository, privat
      * @param series - challenge series
      */
     fun applyChanges(challengeType: ChallengeType, step: Int, progress: StepProgress, goal: Int, series: Int) {
-        addDisposable(repository.update(_challenge.value?.applyChanges(step, progress, goal, series)
-            ?: Challenge(null, challengeType, step, progress, date, series, goal))
-            .subscribe {
+        val params = SetChallengeUseCase.Params(
+            _challenge.value?.applyChanges(step, progress, goal, series)
+                ?: Challenge(null, challengeType, step, progress, date, series, goal)
+        )
+        setChallengeUseCase.execute(params, object : DisposableCompletableObserver() {
+            override fun onError(e: Throwable) {
+
+            }
+
+            override fun onComplete() {
                 _challengeUpdate.postValue(true)
             }
-        )
+        })
     }
 
     /**
@@ -70,9 +93,19 @@ class EditChallengeViewModel(private val repository: ChallengeRepository, privat
      * @param challengeType - given challenge type
      */
     fun loadChallengeProgress(challengeType: ChallengeType) {
-        val progress = repository.getDefaultChallengeValues(challengeType)
-        addDisposable(progress.subscribe { challenge ->
-            _challengeProgress.postValue(challenge)
-        })
+        getDefaultChallengeTypeValueUseCase.execute(
+            GetDefaultChallengeTypeValueUseCase.Params(challengeType),
+            object : DisposableSubscriber<Challenge>() {
+                override fun onComplete() {
+                }
+
+                override fun onNext(ch: Challenge) {
+                    _challengeProgress.postValue(ch)
+                }
+
+                override fun onError(t: Throwable?) {
+                }
+            }
+        )
     }
 }

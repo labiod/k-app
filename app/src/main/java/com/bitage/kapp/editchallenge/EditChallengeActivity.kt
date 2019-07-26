@@ -8,7 +8,7 @@ import javax.inject.Inject
  * This activity is a setting screen for choose challenge
  * It's bind layout R.layout.edit_challenge
  */
-class EditChallengeActivity : KActivity<EditChallengeView>() {
+class EditChallengeActivity : KActivity<EditChallengeView, EditChallengeViewModel>() {
 
     /**
      * Presenter for activity
@@ -21,6 +21,12 @@ class EditChallengeActivity : KActivity<EditChallengeView>() {
      */
     @Inject
     override lateinit var view: EditChallengeView
+
+    /**
+     * View for activity
+     */
+    @Inject
+    override lateinit var viewModel: EditChallengeViewModel
 
     /**
      * Setup dependency injection for this activity

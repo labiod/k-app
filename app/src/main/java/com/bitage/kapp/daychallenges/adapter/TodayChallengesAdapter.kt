@@ -1,9 +1,8 @@
-package com.bitage.kapp.ui.adapter
+package com.bitage.kapp.daychallenges.adapter
 
 import android.content.Intent
 import androidx.databinding.DataBindingUtil
 import android.graphics.Color
-import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -77,9 +76,7 @@ class TodayChallengesAdapter(private val challengesModel: DayChallengeViewModel)
             }
 
             holder.binding.challengeEditButton.setOnClickListener {
-                val intent = Intent(it.context, EditChallengeActivity::class.java)
-                intent.putExtra(Constants.CHALLENGE_ITEM_ID_KEY, item.id)
-                it.context.startActivity(intent)
+                listener?.onChallengeEdit(item)
             }
 
             holder.binding.challengeDeleteButton.setOnClickListener {

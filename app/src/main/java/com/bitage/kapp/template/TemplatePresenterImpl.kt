@@ -3,11 +3,9 @@ package com.bitage.kapp.template
 /**
  * Implementation of presenter for template screen
  */
-class TemplatePresenterImpl(
-    private val model: TemplateViewModel,
-    private val id: Long
-) : TemplatePresenter {
+class TemplatePresenterImpl(private val id: Long) : TemplatePresenter {
     private lateinit var view: TemplateView
+    private lateinit var viewModel: TemplateViewModel
 
     /**
      * Control presenter lifecycle. It should be called in Activity or fragment in onCreate method
@@ -19,10 +17,13 @@ class TemplatePresenterImpl(
 
     override fun onPause() {}
 
-
     override fun attachView(view: TemplateView) {
         this.view = view
         initViewModel()
+    }
+
+    override fun attachViewModel(viewModel: TemplateViewModel) {
+        this.viewModel = viewModel
     }
 
     /**
@@ -33,9 +34,9 @@ class TemplatePresenterImpl(
     }
 
     private fun initViewModel() {
-        view.attachViewModel(model)
+        view.attachViewModel(viewModel)
         if (id != -1L) {
-            model.loadTemplate(id)
+            viewModel.loadTemplate(id)
         }
     }
 }

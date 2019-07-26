@@ -5,4 +5,4 @@ import com.bitage.kapp.presentation.KPresenter
 /**
  * presenter for home screen
  */
-interface HomePresenter : KPresenter<HomeView>
+interface HomePresenter : KPresenter<HomeView, HomeViewModel>

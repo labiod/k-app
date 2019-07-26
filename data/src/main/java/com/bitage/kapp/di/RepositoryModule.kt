@@ -1,4 +1,4 @@
-package com.bitage.kapp.di.module
+package com.bitage.kapp.di
 
 import android.app.Application
 import com.bitage.kapp.repository.DBChallengesRepository

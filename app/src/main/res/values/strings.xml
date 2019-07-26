@@ -24,6 +24,9 @@
     <string name="your_challenges_title">Your Challenges!</string>
     <string name="your_challenges_menu_template_data">Load data from template</string>
     <string name="your_challenges_menu_delete_all">Delete all</string>
+    <string name="challenge_list_delete_msg">Are you sure you want to remove this challenge?</string>
+    <string name="dialog_button_cancel">Cancel</string>
+    <string name="dialog_button_confirm">Confirm</string>
 
     <!-- ChalllengeEdit screen -->
     <string name="challenge_settings_confirm">Confirm</string>

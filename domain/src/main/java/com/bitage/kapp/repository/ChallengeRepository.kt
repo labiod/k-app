@@ -28,7 +28,7 @@ interface ChallengeRepository {
      * @param date - given date
      * @return list of challenges found for given date
      */
-    fun getDayChallenges(date: Date): Flowable<List<Challenge>>
+    suspend fun getDayChallenges(date: Date): List<Challenge>
 
     /**
      * Delete all challenges

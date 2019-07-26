@@ -6,6 +6,8 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.bitage.kapp.entity.ChallengeEntity
+import io.reactivex.Flowable
+import io.reactivex.rxkotlin.Flowables
 
 /**
  * Dao class that retrieve and manipulate (update/insert/delete) challenges data from database
