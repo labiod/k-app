@@ -1,0 +1,63 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
+
+configurations.all {
+    resolutionStrategy {
+        force "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    }
+}
+
+android {
+    compileSdkVersion versions.compileSdkVersion
+
+    defaultConfig {
+        minSdkVersion versions.minSdkVersion
+        targetSdkVersion versions.targetSdkVersion
+        versionCode versions.versionCode
+        versionName versions.versionName
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    lintOptions {
+        abortOnError true
+        checkReleaseBuilds false
+        ignoreWarnings false
+        warningsAsErrors true
+    }
+
+}
+
+dependencies {
+    implementation project(':domain')
+
+    implementation kotlinDependencies.javaxAnnotation
+    implementation kotlinDependencies.javaxInject
+    implementation kotlinDependencies.rxKotlin
+    implementation kotlinDependencies.rxandroid
+    implementation kotlinDependencies.kotlin
+    implementation androidComponentDependencies.roomRuntime
+    implementation androidComponentDependencies.roomCoroutines
+    implementation androidComponentDependencies.roomRxJava
+    implementation daggerDependencies.core
+    implementation daggerDependencies.android
+    implementation daggerDependencies.androidSupport
+
+    kapt androidComponentDependencies.roomCompiler
+    kapt daggerDependencies.compiler
+    kapt daggerDependencies.processor
+
+    compileOnly kotlinDependencies.javaxAnnotation
+
+    testImplementation testDependencies.junit
+    testImplementation testDependencies.mockito
+}

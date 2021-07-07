@@ -1,0 +1,23 @@
+apply plugin: 'kotlin'
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+configurations.all {
+    resolutionStrategy {
+        force "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    }
+}
+
+dependencies {
+
+    implementation kotlinDependencies.javaxAnnotation
+    implementation kotlinDependencies.javaxInject
+    implementation kotlinDependencies.kotlin
+    implementation kotlinDependencies.rxKotlin
+    implementation kotlinDependencies.rxandroid
+    implementation kotlinDependencies.coroutines
+
+    testImplementation testDependencies.junit
+    testImplementation testDependencies.mockito
+}

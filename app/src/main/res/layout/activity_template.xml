@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <data>
+        <variable
+            name="viewmodel"
+            type="com.bitage.kapp.template.TemplateViewModel" />
+    </data>
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.40" />
+
+        <TextView
+            android:id="@+id/template_name_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:padding="8dp"
+            android:text="@string/template_name_label_text"
+            android:labelFor="@+id/template_name"
+            app:layout_constraintEnd_toStartOf="@+id/guideline"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <EditText
+            tools:ignore="Autofill"
+            android:id="@+id/template_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:inputType="text"
+            android:text="@{viewmodel.template.templateName}"
+            app:layout_constraintBottom_toBottomOf="@+id/template_name_label"
+            app:layout_constraintStart_toStartOf="@+id/guideline"
+            app:layout_constraintEnd_toEndOf="parent"
+            />
+
+        <TextView
+            android:id="@+id/challenges_for_template_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:labelFor="@+id/challenge_goal"
+            android:padding="8dp"
+            android:text="@string/challenges_for_template_label_text"
+            app:layout_constraintEnd_toStartOf="@+id/guideline"
+            app:layout_constraintTop_toBottomOf="@id/template_name_label" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/challenges_list"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/challenges_for_template_label" />
+        <Button
+            android:id="@+id/add_next_challenge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/template_add_new_button_label"
+            app:layout_constraintStart_toEndOf="@+id/guideline"
+            app:layout_constraintTop_toBottomOf="@id/challenges_list"/>
+
+        <Button
+            android:id="@+id/confirm_changes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:background="#11000000"
+            android:drawableStart="@drawable/confirm_button_drawable"
+            android:drawablePadding="8dp"
+            android:padding="8dp"
+            android:text="@string/challenge_settings_confirm"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/add_next_challenge" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

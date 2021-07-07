@@ -1,15 +1,22 @@
 apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
+apply plugin: 'kotlin-android-extensions'
+
+apply plugin: 'org.jetbrains.dokka-android'
 
 android {
-    compileSdkVersion 27
-    buildToolsVersion "27.0.3"
+    compileSdkVersion versions.compileSdkVersion
+    buildToolsVersion versions.buildToolsVersion
+
     defaultConfig {
-        applicationId "com.kgb.k_app"
-        minSdkVersion 21
-        targetSdkVersion 27
-        versionCode 1
-        versionName "1.0"
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        minSdkVersion versions.minSdkVersion
+        targetSdkVersion versions.targetSdkVersion
+        versionCode versions.versionCode
+        versionName versions.versionName
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
     }
     buildTypes {
         release {
@@ -17,15 +24,86 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    dataBinding {
+        enabled true
+    }
+
+    lintOptions {
+        abortOnError true
+        checkReleaseBuilds false
+        ignoreWarnings false
+        warningsAsErrors true
+    }
+}
+
+configurations {
+    ktlint
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+    implementation project(':ui_lab')
+    implementation project(':dsl')
+    implementation project(':domain')
+    implementation project(':data')
+    implementation project(':presentation')
+
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation supportDependencies.appCompatV7
+    implementation supportDependencies.design
+    implementation supportDependencies.constraintLayout
+    implementation kotlinDependencies.kotlin
+    implementation kotlinDependencies.rxKotlin
+    implementation kotlinDependencies.rxandroid
+    implementation kotlinDependencies.coroutines
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.1.0-alpha04"
+    implementation androidComponentDependencies.archExtensions
+    implementation androidComponentDependencies.roomRuntime
+    implementation daggerDependencies.core
+    implementation daggerDependencies.android
+    implementation daggerDependencies.androidSupport
+
+    kapt androidComponentDependencies.roomCompiler
+    kapt daggerDependencies.compiler
+    kapt daggerDependencies.processor
+    compileOnly kotlinDependencies.javaxAnnotation
+
+    ktlint kotlinDependencies.ktlint
+
+    testImplementation testDependencies.junit
+    kaptAndroidTest daggerDependencies.compiler
+    androidTestImplementation(testDependencies.espressoCore, {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    compile 'com.android.support:appcompat-v7:27.1.1'
-    compile 'com.android.support:design:27.1.1'
-    compile 'com.android.support.constraint:constraint-layout:2.0.0-alpha2'
-    testCompile 'junit:junit:4.12'
+}
+
+dokka {
+    outputFormat = 'html'
+    outputDirectory = "$buildDir/javadoc"
+    skipEmptyPackages = true
+    reportUndocumented = true
+}
+
+task ktlint(type: JavaExec, group: "verification") {
+    description = "Check Kotlin code style."
+    main = "com.github.shyiko.ktlint.Main"
+    classpath = configurations.ktlint
+    args "src/**/*.kt"
+    // to generate report in checkstyle format prepend following args:
+    // "--reporter=plain", "--reporter=checkstyle,output=${buildDir}/ktlint.xml"
+    // see https://github.com/shyiko/ktlint#usage for more
+}
+check.dependsOn ktlint
+
+task ktlintFormat(type: JavaExec, group: "formatting") {
+    description = "Fix Kotlin code style deviations."
+    main = "com.github.shyiko.ktlint.Main"
+    classpath = configurations.ktlint
+    args "-F", "src/**/*.kt"
+}
+
+task javadoc(type: Javadoc) {
+    source = android.sourceSets.main.java.srcDirs
+    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+    destinationDir = file("../javadoc/")
 }

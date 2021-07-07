@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <import type="com.bitage.kapp.helper.BindingUtil" />
+        <variable
+            name="progress"
+            type="com.bitage.kapp.model.StepProgress[]" />
+        <variable
+            name="steps"
+            type="Integer[]" />
+        <variable
+            name="challenges"
+            type="com.bitage.kapp.model.ChallengeType[]" />
+        <variable
+            name="viewmodel"
+            type="com.bitage.kapp.editchallenge.EditChallengeViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.40" />
+
+        <TextView
+            android:id="@+id/challenge_name_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:labelFor="@+id/challenge_step"
+            android:padding="8dp"
+            android:text="@string/challenge_name_label_text"
+            app:layout_constraintEnd_toStartOf="@+id/guideline"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Spinner
+            android:id="@+id/challenge_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:entries="@{BindingUtil.convertChallengesArrayToStrings(challenges, context)}"
+            android:selectedItemPosition="@{BindingUtil.getIndexForChallenge(viewmodel.challenge.challengeName)}"
+            android:textSize="26sp"
+            app:layout_constraintBottom_toBottomOf="@+id/challenge_name_label"
+            app:layout_constraintStart_toStartOf="@+id/guideline" />
+
+        <TextView
+            android:id="@+id/challenge_step_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:labelFor="@+id/challenge_step"
+            android:padding="8dp"
+            android:text="@string/challenge_step_label_text"
+            app:layout_constraintEnd_toStartOf="@+id/guideline"
+            app:layout_constraintTop_toBottomOf="@+id/challenge_name_label" />
+
+        <Spinner
+            android:id="@+id/challenge_step"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginBottom="8dp"
+            app:bindData="@{steps}"
+            app:layout_constraintBottom_toTopOf="@+id/challenge_step_progress_label"
+            app:layout_constraintStart_toStartOf="@+id/guideline"
+            app:selectItem="@{viewmodel.challenge.step}" />
+
+        <TextView
+            android:id="@+id/challenge_step_progress_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:labelFor="@+id/challenge_step_progress"
+            android:padding="8dp"
+            android:text="@string/challenge_step_progresslabel_text"
+            app:layout_constraintEnd_toStartOf="@+id/guideline"
+            app:layout_constraintTop_toBottomOf="@+id/challenge_step_label" />
+
+        <Spinner
+            android:id="@+id/challenge_step_progress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginBottom="8dp"
+            app:bindData="@{progress}"
+            app:selectItem="@{viewmodel.challenge.progress}"
+            app:layout_constraintBottom_toBottomOf="@+id/challenge_step_progress_label"
+            app:layout_constraintStart_toStartOf="@+id/guideline"
+            />
+
+        <TextView
+            android:id="@+id/challenge_goal_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:labelFor="@+id/challenge_goal"
+            android:padding="8dp"
+            android:text="@string/challenge_goal_label_text"
+            app:layout_constraintEnd_toStartOf="@+id/guideline"
+            app:layout_constraintTop_toBottomOf="@+id/challenge_step_progress_label" />
+
+        <EditText
+            android:id="@+id/challenge_goal"
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:inputType="number"
+            android:text="@{Integer.toString(viewmodel.challenge.goal)}"
+            app:layout_constraintBottom_toBottomOf="@+id/challenge_goal_label"
+            app:layout_constraintStart_toStartOf="@+id/guideline"
+            app:layout_constraintTop_toTopOf="@+id/challenge_goal_label"
+            tools:ignore="Autofill" />
+
+        <TextView
+            android:id="@+id/challenge_series_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:labelFor="@+id/challenge_series"
+            android:padding="8dp"
+            android:text="@string/challenge_series_label_text"
+            app:layout_constraintEnd_toStartOf="@+id/guideline"
+            app:layout_constraintTop_toBottomOf="@+id/challenge_goal" />
+
+        <EditText
+            android:id="@+id/challenge_series"
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:inputType="number"
+            android:text="@{Integer.toString(viewmodel.challenge.series)}"
+            app:layout_constraintBottom_toBottomOf="@+id/challenge_series_label"
+            app:layout_constraintStart_toStartOf="@+id/guideline"
+            app:layout_constraintTop_toTopOf="@+id/challenge_series_label"
+            tools:ignore="Autofill" />
+
+        <Button
+            android:id="@+id/confirm_changes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:background="#11000000"
+            android:drawableStart="@drawable/confirm_button_drawable"
+            android:drawablePadding="8dp"
+            android:padding="8dp"
+            android:text="@string/challenge_settings_confirm"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/challenge_goal_label" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

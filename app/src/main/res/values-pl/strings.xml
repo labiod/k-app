@@ -1,0 +1,61 @@
+<resources>
+    <string name="app_name">K-app</string>
+
+    <string name="challenge_current_level_format">%1$d/%2$d</string>
+
+    <!-- Level progress text -->
+    <string name="level_beginner">Początkujący</string>
+    <string name="level_intermediate">Zaawansowany</string>
+    <string name="level_progression">Przejściowy</string>
+    <string name="level_custom">Użytkownika</string>
+    <string name="challenge_pushup_name">Pompki</string>
+    <string name="challenge_pullup_name">Podciągnięcia</string>
+    <string name="challenge_squat_name">Przysiady</string>
+    <string name="challenge_leg_raise_name">Unoszenie nóg</string>
+    <string name="challenge_bridge_name">Mostek</string>
+    <string name="challenge_handstand_pushup_name">Stanie na głowie</string>
+
+    <!-- Home screen -->
+    <string name="home_screen_manage_template_menu">Zarządzanie szablonami</string>
+    <string name="home_screen_manage_user_menu">Menage user</string>
+    <string name="home_hello_user_text">Hello $User</string>
+
+    <!-- TodayChallenges screen -->
+    <string name="your_challenges_title">Twoje wyzwania!</string>
+    <string name="your_challenges_menu_template_data">Załaduj dane z szablonu</string>
+    <string name="your_challenges_menu_delete_all">Usuń wszystko</string>
+    <string name="challenge_list_delete_msg">Are you sure you want to remove this challenge?</string>
+    <string name="dialog_button_cancel">Cancel</string>
+    <string name="dialog_button_confirm">Confirm</string>
+
+
+    <!-- ChalllengeEdit screen -->
+    <string name="challenge_settings_confirm">Potwierdź</string>
+    <string name="challenge_name_label_text">Nazwa wyzwania:</string>
+    <string name="challenge_step_label_text">Poziom wyzwania:</string>
+    <string name="challenge_step_progresslabel_text">postęp:</string>
+    <string name="challenge_goal_label_text">Liczba powtórzeń:</string>
+    <string name="challenge_series_label_text">Liczba serii:</string>
+    <string name="challenge_item_goal_text">Cel:</string>
+    <string name="challenge_finish_button_desc">finish challenge button</string>
+    <string name="challenge_settings_button_desc">settings challenge button</string>
+    <string name="edit_challenge_title">Edytuj wyzwanie</string>
+    <string name="new_challenge_title">Dodaj nowe wyzwanie</string>
+
+    <!-- Template screen -->
+    <string name="template_name_label_text">Nazwa szablonu:</string>
+    <string name="challenges_for_template_label_text">Dodaj wyzwanie:</string>
+    <string name="template_add_new_button_label">Dodaj nowy…</string>
+    <string name="template_challenge_delete_button_desc">template challenge delete button</string>
+
+    <!-- RoundCalendarView -->
+    <string name="show_progress_templ_text">%1$d/%2$d</string>
+    <string name="round_calendar_left_buttont_desc">left</string>
+    <string name="round_calendar_right_button_desc">right</string>
+    <string name="round_calendar_expand_button_desc">expand calendar button</string>
+
+    <!-- Template list screen -->
+    <string name="template_edit_button_desc">template edit button</string>
+    <string name="template_delete_button_desc">template delete button</string>
+    <string name="template_list_header">Your templates:</string>
+</resources>

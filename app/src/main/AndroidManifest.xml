@@ -1,23 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.kgb.k_app">
+    package="com.bitage.kapp">
 
     <application
-        android:allowBackup="true"
+        android:name=".KApplication"
+        android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".ChallengesActivity"
+            android:name=".launcher.LauncherActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme"
+            android:noHistory="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.VIEW" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".home.HomeActivity"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".daychallenges.TodayChallengesActivity"
+            android:theme="@style/AppTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".template.TemplateActivity"
+            android:theme="@style/AppTheme" />
+        <activity android:name=".editchallenge.EditChallengeActivity" />
+        <activity android:name=".templatelist.TemplateListActivity" />
+        <activity android:name=".user.UserActivity" />
     </application>
 
 </manifest>
